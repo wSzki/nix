@@ -21,7 +21,7 @@ source ~/.zplug/init.zsh
 	#zplug install
 #fi
 
-export DOTFILES=$HOME/.dot
+export DOTFILES=$HOME/.config
 export BOX=$DOTFILES/box
 
 ########################### PLUGINS ##################################
@@ -73,9 +73,11 @@ autoload -Uz compinit
 compinit
 
 ######################## NIX ###################################
-alias nrc="vim ~/.nix/configuration.nix"
-alias rebuild="~/.nix/rebuild"
-
+alias nrc="vim ~/.nix/config/nix/configuration.nix"
+alias rebuild="~/.nix/bin/nix/rebuild"
+alias tmux="tmux -f ~/.nix/config/tmux/tmux.conf"
+alias gitap="git add . && git status && git commit -m backup && git push"
+alias back="cd ~/.nix && gitap"
 ######################## TMUX ###################################
 
 #if [ "$TMUX" = "" ]; then tmux; fi
@@ -168,7 +170,6 @@ alias delete="mv -t ~/.Trash/"
 alias ..="cd .."
 alias cddl="cd ~/Downloads"
 alias wip="cd ~/42/wip"
-alias back="~/.dot/backup.sh"
 alias autopush="git add .; git status; git commit -m "autopush"; git push"
 alias n0="vim $BOX/notes.md"
 alias n1="vim ~/.dot/box/todo/todo.md"

@@ -297,3 +297,14 @@ af49ce60900903fe183e03202b95e1b6|file:///home/wsz/.nix/.gitignore|17|1|V|
 	!./config/conky
 128b51d79c80815a6f5a394c938ad230|file:///home/wsz/.nix/.gitignore|18|11|v|
 	conky
+b1b0efe3ca6b422bef021b54ac1058af|file:///home/wsz/.dot/zsh/zshrc|76|1|V|zsh
+	alias nrc="vim ~/.nix/config/nix/configuration.nix"
+	alias rebuild="~/.nix/bin/nix/rebuild"
+	alias tmux="tmux -f ~/.nix/config/tmux/tmux.conf"
+919c53684d8161d32a8cb0562b133448|file:///home/wsz/.nix/config/zsh/zshrc|80|1|V|zsh
+	alias nrc="vim ~/.nix/configuration.nix"
+	alias rebuild="~/.nix/rebuild"
+c253bd91c0000993ed28824eda9319bc|file:///home/wsz/.nix/bin/nix/rebuild|1|1|V|
+	sudo cp ~/.nix/config/configuration.nix /etc/nixos/configuration.nix ; sudo nixos-rebuild switch
+0b975d6dea9d129605b8ca638262fd14|file:///home/wsz/.nix/config/zsh/zshrc|173|7|V|zsh
+	alias back="~/.dot/backup.sh"
