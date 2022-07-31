@@ -1,6 +1,4 @@
 
-
-
 ./config/*
 !./config/bat
 !./config/zsh
@@ -14,6 +12,8 @@
 !./config/pulse
 !./config/mpv
 !./config/autorandr
+!./config/conky
+!./config/nix
 
 
 

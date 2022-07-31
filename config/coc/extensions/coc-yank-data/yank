@@ -289,3 +289,11 @@ f4c1b6660cbc166650305c1bab21ef68|file:///home/wsz/.nix/.gitignore|13|1|V|
 	!./config/pulse
 e44e2c00e3289dd5e45444fc1f1c24b1|file:///home/wsz/.nix/.gitignore|15|1|V|
 	!./config/mpv
+063250ad3a7fff61043221ddadce451c|file:///home/wsz/.nix/.gitignore|16|1|V|
+	!./config/autorandr
+b8c42b881969b0c5b992711230e5fb51|file:///home/wsz/.nix/.gitignore|17|11|v|
+	autorandr
+af49ce60900903fe183e03202b95e1b6|file:///home/wsz/.nix/.gitignore|17|1|V|
+	!./config/conky
+128b51d79c80815a6f5a394c938ad230|file:///home/wsz/.nix/.gitignore|18|11|v|
+	conky

@@ -1,0 +1,392 @@
+
+###################################
+
+# KEYWORDS
+
+scaleList
+
+hush
+
+###################################
+
+# INFO
+(get notes from scale) n (scale "major" "0..7")
+
+waves       :	sine
+				cosine
+				square
+				tri
+				saw
+				isaw { output 0 to 1 }
+
+random      :	rand  { 0 to 1 }
+				irand { 0 to N, int }
+
+smooth rand :	perlin
+				perlinWith (val)
+				perlin2 (val)
+				perlin2With (val) (val)
+
+choose      :	choose [0,1,..]
+				chooseBy "0 0.25 0.5" [0, 2, 3]
+				wchoose [(0,0.25),(2,0.5),(3,0.25)]
+				wchooseBy "0 0.4 0.7" [(0,0.25),(2,0.5),(3,0.25)]}
+
+# SYNTHS
+#########
+basic    | imp, psin, pmsin, gabor, cyclo
+input    | in, inr
+drumkit  | superkick, superhat, supersnare, superclap, super808
+physical | supermandolin, supergong, superpiano, superhex, supervibe
+analogue | supersquare, supersaw, superpwm, supercomparator
+digital  | superchip, supernoise
+
+
+# SAMPLES
+##########
+( load a sample )                | s "bd"
+( change sample ordinality )     | n 2
+( convert midi to note )         | midinote 62
+( change start time of sample )  | begin "<0 0.25 0.5>"
+( change finish time of sample ) | end "<0 0.25 0.5>"
+( play sample N times in loop )  | loop "2.3"
+
+# CUT
+#####
+(cut sample when another starts on same cutgroup)   | cut "1"
+(cut only sample when it recours)                   | cut "-1"
+(creative use of cut)                               | sound "bev(3,8)" # cut "[1 2 4]*2"
+(handle duration of the space 1 is until next note) | # legato "1"
+
+
+# GRANULARIZATION
+###################
+(cuts each sample into parts)                            | chop 16
+(like cuts but bits organized differently)               | striate 8
+(specify the length of the parts) striate'               | 16 (1/4)
+(granulate every sample but every other grain is silent) | gap 8
+(cuts sample into pieces and rearrange into pattern)     | slice 8 "7 2 4 1 2 [0..4]"
+
+# SOMETIMES
+############
+Apply function to a pattern with different possibility
+
+(100%) | always       (# crush 2)
+(90%)  | almostAlways (fast 2)
+(75%)  | often        (slow 3)
+(50%)  | sometimes    (rev)
+(25%)  | rarely       (# speed 2)
+(10%)  | almostNever  (# accelerate 2)
+(0%)   | never        (# cut 1)
+
+(can choose   percentual)          | sometimesBy 0.93 (jux (rev))
+(as sometimes but on cycles)       | someCycles (# crush 3)
+(as sometimes but with probabilty) | someCyclesBy 0.64 (# speed 3)
+
+# RANDOMNESS AND CHANCE
+########################
+(randomly remove events from a pattern, 50% of the time)                  | degrade
+(randomly remove events from a pattern with probability)                  | degradeBy 0.7
+(play pattern randomly)                                                   | randcat [s "bd2 sn", sound "jvbass3"]
+(chop the sample into pieces and play a random one each cycle)            | randslice 32
+(repeat each cycle a given number of times)                               | repeatCycles 3
+(divide the pattern into number of parts and combine them radomly)        | scramble 3
+(divide the pattern into number of parts and combine without replacement) | shuffle 3
+(repeat a pattern at random speeds)                                       | stripe 2
+(repeat a pattern at random speeds but also slow down by n)               | slowstripe 3
+
+
+# TIME FUNCTIONS
+#################
+(make pattern sound a bit like breakbeat)                               | brak "bd sn"
+(divides a pattern into a number of pats then cycles apply function)    | chunk 4 (# speed 2)
+(chunk in reverse direction)                                            | chunk'
+(speed up pattern)                                                      | fast 2
+(slow down pattern)                                                     | slow 2
+(make sample fit the given number of cycles)                            | loopAt 4
+(shift pattern backward in time)                                        | every 4 (0.25 <~)
+(shift pattern foreward in time)                                        | every 4 (0.25 ~>)
+(speed up pattern and increase speed control)                           | hurry 3
+(divide a pattern, play the subdivisions and increment them each cycle) | iter 4
+(iter in reverse direction)                                             | iter' 3
+(truncate a pattern)                                                    | trunc 0.75
+(like truncate but fill the cycle)                                      | linger 0.25
+(applies rev to a pattern every other cycle)                            | palindrome
+(reverse the pattern)                                                   | rev
+(breaks each cycles and then delay every piece by n)                    | swingBy (1/4)
+(alias for swingBy (1/3))                                               | swing
+(play a portion of a pattern)                                           | zoom (0.25, 0.75)
+(turn a continuous pattern into a discrete one)                         | segment 2 $ irand 23
+(round a floating point value into an integer)                          | quantise 1 $ range 0 7 $ sine
+
+# OTHER FUNCTIONS
+#################
+(append two patterns)                   | append (s "bd sn") (s "arpy jvbass")
+(append two patterns into single cycle) | fastAppend (s "bd sn") (s "arpy jvbass")
+
+# BINARY
+########
+(tell a pattern when it should play with true or false) | struct "t ~ f t"
+(convert a number to binary, 8 bit)                     | binary 132
+(convert a number to binary, n bit)                     | binaryN n 132
+(convert an ascii char to binary, 8 bit each char)      | ascii "hey"
+
+# SPEED
+#######
+change tempo, factor)                 | cps "<1 0.5 2>"
+(change sample speed)                 | speed "<1 -1>"
+(speed up or down sample)             | accelerate "<0 1 -1>"
+(give swing feel, 0 human, 1 machine) | nudge 0.7
+(multiplies pattern speed)            | spaceOut [1, 0.5, 2.5] $ s "bd*4"
+(change pitch, in semitones)          | up "<0 1 5>"
+(change how speed parameter is considered):
+    "r" (default): multiplies sample playback rate
+    "c": playback rate relative to cycle length
+    "s": playback length in seconds
+
+# HIGH ORDER
+############
+(apply another function conditionally)                            | every 3 (fun)
+(add offset to every)                                             | every' 3 1 (fun)
+(apply a function according to the boolean pattern)               | while "[f t]/2" (# crush 3) $ s "bd"
+(apply function to some cycles)                                   | whenmod 4 3 (fast 4) $ s "bd sn"
+(applies another function to matching events in a pattern)        | fix (# crush 3) (n "[1,4]")
+(run every with different arguments)                              | foldEvery [3,4,5] (fast 2)
+(apply one or another function conditionally)                     | ifp (rand > 0.7) (striate 4) (# coarse "24 48")
+(applies stereo effects with a function)                          | jux (rev)
+(parametrize pan of jux with values from 0 to 1)                  | juxBy 0.5 (rev)
+(apply a function over the same pattern)                          | superimpose (fast 2)
+(apply different functions to same pattern)                       | layer [id, rev, fast 2]
+(superimpose but with an offset in cycle time)                    | off 0.25 (# crush 2)
+(apply different functions for every cycle)                       | spread ($) [rev, fast 2]
+(apply different functions for every cycle, randomly)             | spreadr ($) [rev, fast 2]
+(apply different functions in a single cycle)                     | fastspread (s) [(# speed 2), striate 3]
+(run pattern of patterns)                                         | ur
+(apply one control pattern to list of patterns)                   | weave 4 (pan sine) [s "bd", s "casio"]
+(apply a list of functions to a pattern)                          | weaveWith 3 (s "bd sn") [fast 2, chop 16]
+(apply a function only on a part of a pattern)                    | within (0, 0.5) (fast 2)
+(repeats each event the given number of times)                    | ply 3 $ s "bd sn"
+(add a sort of delay to pattern elements with reduction and time) | stut 4 0.5 0.1 $ s "bd sn"
+(like stut by applying a function every step)                     | stutWith 4 0.5 (|* speed 1.5) $ s "bd sn"
+
+# SAMPLE LIST
+#############
+
+808         (6)
+808bd       (25)
+808cy       (25)
+808hc       (5)
+808ht       (5)
+808lc       (5)
+808lt       (5)
+808mc       (5)
+808mt       (5)
+808oh       (5)
+808sd       (25)
+909         (1)
+ab          (12)
+ade         (10)
+ades2       (9)
+ades3       (7)
+ades4       (6)
+alex        (2)
+alphabet    (26)
+amencutup   (32)
+armora      (7)
+arp         (2)
+arpy        (11)
+auto        (11)
+baa         (7)
+baa2        (7)
+bass        (4)
+bass0       (3)
+bass1       (30)
+bass2       (5)
+bass3       (11)
+bassdm      (24)
+bassfoo     (3)
+battles     (2)
+bd          (24)
+bend        (4)
+bev         (2)
+bin         (2)
+birds       (10)
+birds3      (19)
+bleep       (13)
+blip        (2)
+blue        (2)
+bottle      (13)
+breaks125   (2)
+breaks152   (1)
+breaks157   (1)
+breaks165   (1)
+breath      (1)
+bubble      (8)
+can         (14)
+casio       (3)
+cb          (1)
+cc          (6)
+chin        (4)
+circus      (3)
+clak        (2)
+click       (4)
+clubkick    (5)
+co          (4)
+coins       (1)
+control     (2)
+cosmicg     (15)
+cp          (2)
+cr          (6)
+crow        (4)
+d           (4)
+db          (13)
+diphone     (38)
+diphone2    (12)
+dist        (16)
+dork2       (4)
+dorkbot     (2)
+dr          (42)
+dr2         (6)
+dr55        (4)
+dr_few      (8)
+drum        (6)
+drumtraks   (13)
+e           (8)
+east        (9)
+electro1    (13)
+em2         (6)
+erk         (1)
+f           (1)
+feel        (7)
+feelfx      (8)
+fest        (1)
+fire        (1)
+flick       (17)
+fm          (17)
+foo         (27)
+future      (17)
+gab         (10)
+gabba       (4)
+gabbaloud   (4)
+gabbalouder (4)
+glasstap    (3)
+glitch      (8)
+glitch2     (8)
+gretsch     (24)
+gtr         (3)
+h           (7)
+hand        (17)
+hardcore    (12)
+hardkick    (6)
+haw         (6)
+hc          (6)
+hh          (13)
+hh27        (13)
+hit         (6)
+hmm         (1)
+ho          (6)
+hoover      (6)
+house       (8)
+ht          (16)
+if          (5)
+ifdrums     (3)
+incoming    (8)
+industrial  (32)
+insect      (3)
+invaders    (18)
+jazz        (8)
+jungbass    (20)
+jungle      (13)
+juno        (12)
+jvbass      (13)
+kicklinn    (1)
+koy         (2)
+kurt        (7)
+latibro     (8)
+led         (1)
+less        (4)
+lighter     (33)
+linnhats    (6)
+lt          (16)
+made        (7)
+made2       (1)
+mash        (2)
+mash2       (4)
+metal       (10)
+miniyeah    (4)
+monsterb    (6)
+moog        (7)
+mouth       (15)
+mp3         (4)
+msg         (9)
+mt          (16)
+mute        (28)
+newnotes    (15)
+noise       (1)
+noise2      (8)
+notes       (15)
+numbers     (9)
+oc          (4)
+odx         (15)
+off         (1)
+outdoor     (6)
+pad         (3)
+padlong     (1)
+pebbles     (1)
+perc        (6)
+peri        (15)
+pluck       (17)
+popkick     (10)
+print       (11)
+proc        (2)
+procshort   (8)
+psr         (30)
+rave        (8)
+rave2       (4)
+ravemono    (2)
+realclaps   (4)
+reverbkick  (1)
+rm          (2)
+rs          (1)
+sax         (22)
+sd          (2)
+seawolf     (3)
+sequential  (8)
+sf          (18)
+sheffield   (1)
+short       (5)
+sid         (12)
+sine        (6)
+sitar       (8)
+sn          (52)
+space       (18)
+speakspell  (12)
+speech      (7)
+speechless  (10)
+speedupdown (9)
+stab        (23)
+stomp       (10)
+subroc3d    (11)
+sugar       (2)
+sundance    (6)
+tabla       (26)
+tabla2      (46)
+tablex      (3)
+tacscan     (22)
+tech        (13)
+techno      (7)
+tink        (5)
+tok         (4)
+toys        (13)
+trump       (11)
+ul          (10)
+ulgab       (5)
+uxay        (3)
+v           (6)
+voodoo      (5)
+wind        (10)
+wobble      (1)
+world       (3)
+xmas        (1)
+yeah        (31)
+

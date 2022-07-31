@@ -1,0 +1,31 @@
+--- Plaits 1  # A comment
+1 [min = 0 max = 16 ]   ENGINE
+2 [def = 127] AMP
+3 [def = 63]  PAN
+4 [def = 127] SPEED
+5 [def = 0]   HARM
+7 [def = 0]   MORPH
+8 [def = 0]   TIMBRE
+  
+#10 [slider = 0] Waveform
+#11 [min = 32, max = 96] Detune
+#12 [def = 127] Volume
+#0 [slider = 0] Waveform
+#1 [min = 32, max = 96] Detune
+#2 [def = 127] Volume
+#23 [slider = 0] Waveform
+#17 [min = 32, max = 96] Detune
+#18 [def = 127] Volume
+#19 [slider = 0] Waveform
+#42 [min = 32, max = 96] Detune
+#41 [def = 127] Volume
+
+--- LFO
+[cc = 13] Rate
+14 Fade
+38 [slider = 0] Waveform
+63 [min = 32, max = 96] Detune
+77 [def = 127] Volume
+59 [slider = 0] Waveform
+88 [min = 32, max = 96] Detune
+44 [def = 127] Volume

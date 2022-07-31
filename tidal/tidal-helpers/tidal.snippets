@@ -1,0 +1,407 @@
+
+snippet \808bd "Description" A
+d1 $ "{super808}%4"
+|+| n "0"
+# amp  (1.0)
+# pan  (1.0)
+# room (0.0)
+# size (0.0)
+# rate (2.0)
+endsnippet
+
+snippet \slow "Description" A
+(slow 2 $ range 0.0 1.0 sine)
+endsnippet
+
+snippet \\p "Description" A
+p "$1" $ "{$1}%4"
+|+| n "{[0]}%4"
+endsnippet
+
+# MUTABLE INSTRUMENTS
+
+snippet \plaits "Description" A
+p "plaits" $ s "{plaits}"
+|+| n "{[0]}%2"
+# amp       1.0
+# gain      1.0
+# pan       0.0
+# engine    0
+# harm      0.5
+# morph     0.5
+# level     1.0
+# lpgdecay  0.0
+# lpgcolour 0.0
+endsnippet
+
+snippet \braids "Description" A
+p "braids" $ s "{braids}"
+|+| n "{ 0 } % 2"
+# amp    0.0
+# gain   0.0
+# pan    0.0
+# model  0
+# timbre 0.0
+# color  0.0
+endsnippet
+
+
+snippet \c1 "Description" A
+p "c1" $ "{tides}%1"
+|+| n "{c'ninesus4'*8 d'ninesus4'*8}%0.25"
+# octave 4
+# slope 0.5
+# verbwet  0.7
+# verbtime 0.9
+# verbgain 0.7
+# pan (slow 2 $ range 0.0 1.0 sine)
+# attack 0.5
+# release 5
+endsnippet
+
+snippet \tides "Description" A
+p "tides" $ s "{tides}"
+|+| n "{ 0 } % 2"
+# amp         0.0
+# gain        0.0
+# pan         0.0
+# mode        0
+# tidesshape  0.0
+# tidessmooth 0.0
+# slope       0.0
+# shift       0.0
+endsnippet
+
+snippet \verb "Description" A
+# verbwet  0.0
+# verbtime 0.0
+# verbgain 0.0
+# verbhp   0.0
+# verb w t d h = verbgain 1 # verbwet w # verbtime t # verbdamp d # verbhp h
+endsnippet
+
+snippet \clouds "Description" A
+# cloudspitch  0.0
+# cloudspos    0.0
+# cloudssize   0.0
+# cloudsdens   0.0
+# cloudstex    0.0
+# cloudswet    0.0
+# cloudsgain   0.0
+# cloudsspread 0.0
+# cloudsrvb    0.0
+# cloudsfb     0.0
+# cloudsfreeze 0.0
+# cloudsmode   0.0
+# cloudslofi   0.0
+//clouds      p s d t = cloudsgain 1 # cloudspos p # cloudssize s # cloudsdens d # cloudstex t
+//cloudsblend w s f r = cloudsgain 1 # cloudswet w # cloudsspread s # cloudsfb f # cloudsrvb r
+
+endsnippet
+
+snippet \rings "Description" A
+# ringsfreq      0.0
+# ringsstruct    0.0
+# ringsbright    0.0
+# ringsdamp      0.0
+# ringspos       0.0
+# ringsmodel     0.0
+# ringspoly      0.0
+# ringsinternal  0.0
+# ringseasteregg 0.0
+//rings f s b d p = ringsfreq f # ringsstruct s # ringsbright b # ringsdamp d # ringspos p
+endsnippet
+
+snippet \ripples "Description" A
+# ripplescf    0.0
+# ripplesreson 0.0
+# ripplesdrive 0.0
+//ripples c r d = ripplescf c # ripplesreson r # ripplesdrive d
+endsnippet
+
+
+snippet \element "Description" A
+# elementspitch       0.0
+# elementsstrength    0.0
+# elementscontour     0.0
+# elementsbowlevel    0.0
+# elementsblowlevel   0.0
+# elementsstrikelevel 0.0
+# elementsflow        0.0
+# elementsmallet      0.0
+# elementsbowtimb     0.0
+# elementsblowtimb    0.0
+# elementsstriketimb  0.0
+# elementsgeom        0.0
+# elementsbright      0.0
+# elementsdamp        0.0
+# elementspos         0.0
+# elementsspace       0.0
+# elementsmodel       0.0
+# elementseasteregg   0.0
+endsnippet
+
+snippet \warps "Description" A
+# warpsalgo      0.0
+# warpstimb      0.0
+# warpsosc       0.0
+# warpsfreq      0.0
+# warpsvgain     0.0
+# warpseasteregg 0.0
+endsnippet
+
+
+# Effects
+
+snippet \fx "Description" A
+# scram    0.0
+# binshift 0.0
+# crush    0.0
+# delay    0.0
+# delayt   0.0
+# delayfb  0.0
+# krush    0.0
+# kcutoff  0.0
+# leslie   0.0
+# lrate    0.0
+# lsize    0.0
+# freeze   0.0
+# smear    0.0
+# room     0.0
+# size     0.0
+# dry      0.0
+# ring     0.0
+# ringf    0.0
+# ringdf   0.0
+# coarse   0.0
+# squiz    0.0
+# waveloss 0.0
+endsnippet
+
+snippet \env "Description" A
+# attack  0
+# sustain 0
+# release 0
+//# hold  0
+endsnippet
+
+snippet \filt "Description" A
+# lpf 0
+# lpq 0.0
+# hpf 0
+# hpq 0.0
+# bpf 0
+# bpq 0.0
+# djf 0.0
+endsnippet
+
+snippet \spectral "Description" A
+# comb    0.0
+# xsdelay 0.0
+# tsdelay 0.0
+# hbrick  0.0
+# lbrick  0.0
+# real    0.0
+# imag    0.0
+# enhance 0.0
+endsnippet
+
+# Oscilators
+snippet silence "Pattern a"
+silence
+endsnippet
+
+snippet sine "Fractional => Pattern a"
+sine
+endsnippet
+
+snippet cosine "Fractional => Pattern a"
+cosine
+endsnippet
+
+snippet square "Fractional => Pattern a"
+square
+endsnippet
+
+snippet tri "Fractional => Pattern a"
+tri
+endsnippet
+
+snippet saw "Fractional => Pattern a"
+saw
+endsnippet
+
+snippet isaw "Fractional => Pattern a"
+isaw
+endsnippet
+
+
+####################
+snippet choose "[a] -> Pattern a"
+choose [${1:any}]
+endsnippet
+
+snippet chooseBy "Pattern Double -> [a] -> Pattern a"
+chooseBy "${1:doubles}" [${2:any}]
+endsnippet
+
+snippet wchoose "[(a, Double)] -> Pattern a"
+wchoose [(${1:any}, ${2:double})]
+endsnippet
+
+snippet wChooseBy "Pattern Double -> [(a,Double)] -> Pattern a"
+wChooseBy "${1:doubles}" [(${2:any}, ${3:double})]
+endsnippet
+
+
+####################
+# Random Functions
+####################
+snippet rand "Factorial => Pattern a"
+rand
+endsnippet
+
+snippet	irand "Num a => Int -> Pattern a"
+irand
+endsnippet
+
+snippet perlin "Pattern Double"
+perlin
+endsnippet
+
+snippet perlinWith "Pattern Double -> Pattern Double"
+perlinWith ${1:double}
+endsnippet
+
+snippet perlin2 "Pattern Double -> Pattern Double"
+perlinWith ${1:double}
+endsnippet
+
+snippet perlin2With "Pattern Double -> Pattern Double -> Pattern Double"
+perlinWith ${1:double} ${2:double}
+endsnippet
+
+####################
+# Control Functions
+####################
+snippet accelerate "Pattern Double -> ControlPattern"
+accelerate "${1:double}"
+endsnippet
+
+snippet attack "Pattern Double -> ControlPattern"
+attack "${1:double}"
+endsnippet
+
+snippet bandf "Pattern Double -> ControlPattern"
+bandf "${1:double}"
+endsnippet
+
+snippet bandq "Pattern Double -> ControlPattern"
+bandq "${1:double}"
+endsnippet
+
+snippet begin "Pattern Double -> ControlPattern"
+begin "${1:double}"
+endsnippet
+
+snippet bpf "Pattern Double -> ControlPattern"
+bpf "${1:double}"
+endsnippet
+
+snippet bpq "Pattern Double -> ControlPattern"
+bpq "${1:double}"
+endsnippet
+
+snippet coarse "Pattern Int -> ControlPattern"
+coarse "${1:int}"
+endsnippet
+
+snippet crush "Pattern Double -> ControlPattern"
+crush "${1:double}"
+endsnippet
+
+snippet cut "Pattern Int -> ControlPattern"
+cut "${1:int}"
+endsnippet
+
+snippet cutoff "Pattern Double -> ControlPattern"
+cutoff "${1:double}"
+endsnippet
+
+snippet delay "Pattern Double -> ControlPattern"
+delay "${1:double}"
+endsnippet
+
+snippet delayfb "Pattern Double -> ControlPattern"
+delayfb "${1:double}"
+endsnippet
+
+snippet delaytime "Pattern Double -> ControlPattern"
+delaytime "${1:double}"
+endsnippet
+
+snippet end "Pattern Double -> ControlPattern"
+end "${1:double}"
+endsnippet
+
+snippet gain "Pattern Double -> ControlPattern"
+gain "${1:double}"
+endsnippet
+
+snippet hcutoff "Pattern Double -> ControlPattern"
+hcutoff "${1:double}"
+endsnippet
+
+snippet hpf "Pattern Double -> ControlPattern"
+hpf "${1:double}"
+endsnippet
+
+snippet hresonance "Pattern Double -> ControlPattern"
+hresonance "${1:double}"
+endsnippet
+
+snippet hpq "Pattern Double -> ControlPattern"
+hpq "${1:double}"
+endsnippet
+
+snippet leslie "Pattern Double -> ControlPattern"
+leslie "${1:double}"
+endsnippet
+
+snippet loop "Pattern Double -> ControlPattern"
+loop "${1:double}"
+endsnippet
+
+snippet lpf "Pattern Double -> ControlPattern"
+lpf "${1:double}"
+endsnippet
+
+snippet n "Pattern Int -> ControlPattern"
+n "${1:int}"
+endsnippet
+
+snippet nudge "Pattern Double -> ControlPattern"
+nudge "${1:double}"
+endsnippet
+
+####################
+snippet sound "Pattern String -> ControlPattern"
+s "${1:samples}" 
+endsnippet
+
+
+snippet	bootstrap "bootstrap a 2-stack project"
+do
+  let masterGain = 1
+  let s1G = 1
+  let s2G = 1
+  let s1 = silence 
+         # gain s1G 
+         # orbit 0
+  let s2 = silence 
+         # gain s2G 
+         # orbit 1
+  d1 $ stack [s1, s2] # masterGain
+endsnippet
+
+

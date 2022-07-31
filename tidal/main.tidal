@@ -1,0 +1,546 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.tidal                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wszurkow <wszurkow@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/21 01:00:37 by wszurkow          #+#    #+#             */
+/*   Updated: 2022/07/21 01:00:54 by wszurkow         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+setcps (30/60/4)
+
+
+panic
+
+setI "c1" $ "c4'm7sharp9'o"
+
+setI "c2" $ "d4'm7sharp9'o"
+setI "c3" $ "f4'min7'o"
+
+p "tides" $ slow 2 $ "{tides}%1"
+|+| n "{^c1 ^c2 ^c3}%1"
+|+| n "{0}%1"
+# slope 0.5
+# lpf 4000
+# attack 4
+# hold 4
+# release 5
+#room 0.9
+# size 0.9
+# hpf 500
+
+p "tides2"
+$ arp "up"
+$ n "{^c1 ^c2 ^c3}%1"
+# "{tides}%1"
+#amp 0.1
+
+
+
+panic
+
+
+
+# verb w t d h = verbgain 1 # verbwet w # verbtime t # verbdamp d # verbhp h
+
+
+d2 $ "{tides}%0.25"
+|+| n (shuffle 2 "{0 4 7 9 11 14 -3}%0.2")
+# room 1
+# size 1
+
+d1 $ "{tides}%4"
+|+| n "{[-12]}%4"
+# amp 1
+
+
+
+
+p "plaits" $ "{plaits}%4"
+|+| n "{[0 7 4 9 11]}%4"
+# verbwet  0.0
+# verbtime 0.0
+# verbgain 0.0
+# verbhp   0.0
+# room 1
+# size 1
+
+
+p "plaits" $ s "{plaits}%2"
+# amp       1.0
+# gain      1.0
+# pan       0.0
+# engine    6
+# morph     0.69
+# level     1.0
+# lpgdecay  7.8
+# lpgcolour 0.0
+# release 5
+
+d1 $ n ("{0 -5 7}%16")
+
+# s "superpiano"
+o
+
+
+d3 $ "{[bd, hh]}%4"
+|+| n "{[0]}%4"
+
+
+d1 $ n (arp "<up down diverge>" "<a'm6'8 e'7sus8'8>") # sound "superpiano"
+
+hush
+
+p "plaits" $ s "{[plaits plaits?]}%8"
+|+| n "{-24}%8"
+# amp       1.0
+# gain      1.0
+# pan        (select "{1}%8" [fast 64 $ rand])
+# engine    13
+# morph      0.89
+# harm     (select "{1}%8" [fast 64 $ rand])
+# release (select "{1}%8" [fast 64 $ rand])
+# level     1.0
+# lpgdecay  0.0
+# lpgcolour 0.0
+# verbwet  0.6
+# verbtime 0.4
+# verbgain 0.2
+# verbhp   0.0
+
+
+p "plaits2" $ s "{[plaits? plaits?] [plaits? plaits?]}%8"
+|+| n "{0 0 0 0 7 9 4}%8"
+# amp       1.0
+# gain      1.0
+# pan        (select "{1}%8" [fast 64 $ rand])
+# engine    13
+# morph      0.89
+# harm     (select "{1}%8" [fast 64 $ rand])
+# release (select "{1}%8" [fast 64 $ rand])
+# level     1.0
+# lpgdecay  0.0
+# lpgcolour 0.0
+# verbwet  0.6
+# verbtime 0.4
+# verbgain 0.2
+# verbhp   0.0
+
+
+p "plaits3" $ s "{plaits _ _}%8"
+|+| n "{-24}%8"
+# amp       1.0
+# gain      1.0
+# pan        (select "{1}%8" [fast 64 $ rand])
+# engine    13
+# morph      0.89
+# harm     (select "{1}%8" [fast 64 $ rand])
+# release (select "{1}%8" [fast 64 $ rand])
+# level     1.0
+# lpgdecay  0.0
+# lpgcolour 0.0
+# verbwet  0.6
+# verbtime 0.4
+# verbgain 0.2
+# verbhp   0.0
+
+
+
+p "cp:16" $ brak "{bd cp:16}%16"
+|+| n "{[0]}%16"
+#amp 1
+# level 0
+
+
+once $ "{tides}%4"
+|+| n "{[0]}%4"
+
+d1 $ fast 1 $ "{808bd}%16"
+|+| n "{0 1 3}%16"
+# amp "{2 0.1 0.1 0.1}%16"
+
+p "808bd" $ "{808bd}%4"
+|+| n "{[7]}%4"
+# amp 8
+
+
+p "plaits" $ "{plaits}%4"
+|+| n "{4 7 14}%16"
+
+p "bdd" $ "808bd"
+|+| n "0 0 0 0"
+# amp 2
+
+
+panic
+
+p "tides" $ "{tides?}%2"
+|+| n (shuffle 2 "{0 4 7 9 11 14 -3}%2")
+# amp 1
+# octave (fast 128 $  irand 5 + 2)
+# slope (fast 128 $  rand - 0.5 )
+# verbwet  0.6
+# verbtime 0.9
+# verbgain 0.7
+# verbhp   0.0
+
+p "tides2" $ "{tides}%1"
+|+| n "{c'ninesus4'*8 d'ninesus4'*8}%0.25"
+# octave 4
+# slope 0.9
+# verbwet  0.7
+# verbtime 0.9
+# verbgain 0.7
+# pan (slow 2 $ range 0.0 1.0 sine)
+# attack 0.5
+# release 5
+
+panic
+
+p "tides2" $ "{tides?}%1"
+|+| n (shuffle 1 "{0 4? 7 9 11? -3?}%1")
+# amp 0.5
+# pan 1
+# slope (fast 8 $ range 0.0 0.5 rand)
+# release (fast 8 $ range 0.0 0.9 rand)
+# room 1
+# size 1
+
+p "tides5" $ "{tides? tides? tides?}%8"
+|+| n (shuffle 4 "-5 0 4 7 9 -3")
+# octave 6
+# amp 0.0
+# pan 1
+# verbwet  0.6
+# verbtime 0.9
+# verbgain 0.7
+# verbhp   0.0
+
+
+
+p "buenos" $ "{buenos}%4"
+|+| n "{[0]}%4"
+
+husho
+
+p "pebbles" $ "{lt:0}%1"
+|+| n "{[0]}%1"
+# amp 1
+
+d1 $ "{bd}%4"
+#amp 1
+
+p "hh" $ "{hh}%8"
+|+| n "{[0]}%8"
+#amp "{0.5 0.5 2 0.5}%8"
+#release "{0.1 0.1 0.8 0.1}%8"
+
+hush
+
+panic
+
+p "tides6" $ "tides "
+|+| n (shuffle 4 "")
+# octave 4
+# amp 1
+# pan 1
+# verbwet  0.0
+# verbtime 0.0
+# verbgain 0.0
+# verbhp   0.0
+
+
+
+# verb w t d h = verbgain 1 # verbwet w # verbtime t # verbdamp d # verbhp h
+
+
+p "tides" $ "{tides}%4"
+|+| n "{[0]}%4"
+
+hush
+
+p "909, [~ hh]" $ "{909, [~ ~ hh ~]}%4"
+|+| n "{[0]}%4"
+# verbwet  0.0
+# verbtime 0.0
+# verbgain 0.0
+
+p "bueno" $ "{buenos}%4"
+|+| n "{[0]}%3"
+# amp 2
+# pan 2
+# verbwet  0.0
+# verbtime 0.6
+# verbgain 0.6
+# verbhp   0.6
+
+
+p "plaits2" $ s "{plaits}"
+|+| n "{[-2 ~ 4 -5 ~]}%2"
+# amp       1.0
+# gain      1.0
+# pan       0.0
+# engine    13
+# harm      0.5
+# verbwet  0.0
+# verbtime 0.6
+# verbgain 0.6
+
+
+p "909" $ "{909}%4"
+|+| n "{[0]}%4"
+# amp 2
+
+
+hush
+
+
+# verb w t d h = verbgain 1 # verbwet w # verbtime t # verbdamp d # verbhp h
+
+p "piano" $ "{superpiano}%2"
+|+| n "{4 7 9 0}%2"
+# velocity 1.0
+# sustain 0.5
+# detune 0.2
+
+hush
+
+d1 $ "{supersaw}%4"
+|+| n "-11*4"
+# amp        (1.0)
+# pan        (1.0)
+# lpf (100)
+#amp 1
+
+d1 $ "{super808}%4"
+|+| n "-12"
+# amp        (2.0)
+# pan        (1.0)
+# room       (0)
+# size       (1.8)
+# rate       (2)
+
+
+d2 $ "{hh}%4"
+|+| n "{[0]}%4"
+
+# accelerate (0.0)
+# pitch1     (1.0)
+# decay      (1.0)
+
+p "hh" $ "{~ hh}%8"
+|+| n "{[0]}%8"
+# amp 8
+
+d1 $ sound "plaits"
+# timbre (cF 1 "8")
+# harm (cF 1 "7")
+# morph (cF 1 "6")
+
+
+# lpf 500
+# verbwet  (0)
+# verbtime (0)
+# verbgain (0)
+# verbhp   0.0
+# amp (cF 1 "12")
+
+# verb w t d h = verbgain 1 # verbwet w # verbtime t # verbdamp d # verbhp h
+
+
+
+
+
+hush
+
+d1.silence()
+
+	d5 $ fast 2 $ n "{0, 3 7 3 <0 7>}(5,8)" |-24 # sustain 0.1 # s "plaits" # engine (irand 15) # room 0.4 # gain 0.7
+
+  harm = pF "harm"
+
+ let timbre = pF "timbre"
+let morph = pF "morph"
+let engine = pI "engine"
+
+
+p 7 $ s "{tides}"
+|+| n "{[0 -3] [4|-3] [7|-8] [9 21] [11|14]}%4"
+# engine 0
+
+# cloudssize 1.5
+
+# cloudsrvb
+# cloudswet 1
+# release 2
+
+p "plaits" $ s "{plaits}"
+|+| n "{-36}%2"
+# engine 6
+# amp 1
+# harm (slow 0.2 $ range 0.0 0.65 rand)
+# morph (slow 0.6 $ range 0.0 0.65 rand)
+# shift 0.7
+# verbwet 1
+# verbtime 0.8
+# verbgain 1
+# lpg 0.7 0.5
+# release 2
+# lpf 4000
+
+hush
+
+p 2 $ s "{tides}"
+|+| n "{-2}%8"
+# engine 0
+# cloudssize 1.5
+# cloudsrvb 1
+# cloudswet 1
+
+o
+
+p "imp" $ fast 2 $ s "imp"
+# release 0.05
+# ringsfreq      0.0
+# ringsstruct    0.0
+# ringsbright    0.0
+# ringsdamp      0.0
+# ringspos       0.0
+# ringsmodel     0.0
+# ringspoly      0.0
+# ringsinternal  0.0
+# ringseasteregg 0.0;
+
+//rings f s b d p = ringsfreq f # ringsstruct s # ringsbright b # ringsdamp d # ringspos p
+
+
+d1 $
+sound "{hh [hh:8 [hh:8 | [hh | ~ | hh ] hh ]]}%8"
+# amp ("{2 0 1 0.5}%8")
+|+| n "0"
+
+# amp (slow 1.5 $ range 0 2 sine)
+
+d7 $
+sound "{[super808 | bd | superkick | bd | ~?  | ~? | ~ ]}%16"
+# amp (1)
+|+| n "0"
+# voice(0)
+# rate(0.0)
+# amp (0.3)
+
+d9 $ s "{~ ~ supersnare ~}%8" # amp(1.5)
+
+d3 $ s "{<[bd8]> }%4" # amp(8)
+
+d8 $ s "buenos:5"
+#lpf(500)
+#att(0.5)
+#rel(5)
+#size(0.6)
+#room(0.5)
+# room(0)
+# pan (slow 0.5 $ range 0 2 sine)
+
+d8 $ s "buenos:5 buenos:1 buenos:2"
+|+| n "-24"
+#lpf(500)
+#att(0.5)
+#rel(5)
+#size(0.6)
+#room(0.5)
+# pan (slow 0.5 $ range 0 2 sine)
+
+d1 $  slow 8 $ striate' 32 "[0.5 0.7 0.8 0.4 0.3]" (s "buenos:1")
+
+hush
+
+hush
+
+d5 $ s "supersaw"
+|+| n "{[0|3|12][-2|5][7|10]}%1"
+#attack(0)
+#lpf(500)
+#decay(0.1)
+#release(0.05)
+#size(0.9)
+#room(0.8)
+#delay(0.5)
+#voice(0.5)
+
+d6 $ s "supersaw"
+|+| n "{[0|3|12][-2|5][7|10]}%3"
+#attack(0)
+#lpf(500)
+#decay(0.1)
+#release(0.05)
+#size(0.9)
+#room(0.8)
+#amp(0.3)
+
+d7 $ s "supersaw"
+|+| n "{[0|3|12][-2|5][7|10]}%1.25"
+#attack(0)
+#lpf(500)
+#decay(0.1)
+#release(0.1)
+#size(0.9)
+#room(0.8)
+#amp(0.1)
+
+
+
+
+
+d8 $ s "supersaw"
+|+| n "{-12}%8"
+#attack(0)
+#lpf(10000)
+
+hush
+
+
+xsdelay (slow 2 $ range 0.5 1 sine)
+# tsdelay (slow 1 $ range 0.5 1 sine)
+
+
+d4 $ s "supersaw"
+|+| n "[-12  0 0] 4 7 9 11 14 -2"
+# speed (slow 1.5 $ range 0.5 2 tri)
+# lpf (range 200 5000 $ sine)
+# decay "[1 0.2]/4"
+# voice "[0.5 0]/8"
+# delay (0)
+# xsdelay (slow 2 $ range 0.5 1 sine)
+# tsdelay (slow 3 $ range 0.5 1 sine)
+# freeze (0)
+# rel (0.01)
+# ring (1)
+# ringf (5000)
+
+
+d8 $ s "{bass0 ~ ~ ~ ~}%4"
+
+
+
+
+d4 $ silence
+
+d1 $ s "bd hh bd hh"
+
+d2 $ s "[~ hh]*4"
+
+d3 $ s "~ sn ~ sn " # amp (2)
+
+
+d9 $ note "0 -2 -5"
+   # sound "<superpiano supersquare supersaw>"
+
+hush
+
+
+
+d2 $ s "hh:2 ~ hh:3 cp"

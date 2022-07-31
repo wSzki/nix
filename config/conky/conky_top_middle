@@ -1,0 +1,37 @@
+
+
+
+
+conky.config={
+		own_window_colour = 'fabd2f',
+		color0 = 'fabd2f',
+		draw_shades = false,
+		own_window_argb_visual = true,
+		alignment ='top_middle',
+		gap_x = 20,
+		gap_y =10,
+		out_to_console=true,
+		out_to_stderr=false,
+		template0 = [[${top_mem name \1}${alignr}${top_mem mem \1}%]],
+		update_interval=100000000000,
+	 	use_xft = true
+};
+
+
+conky.text = [[
+${font terminus:size=8}${color white}${color 666666}
+${exec echo ""}
+${exec rsstail -1 -u https://hnrss.org/frontpage | cut -d' ' -f2-}
+
+${color 777777}
+${exec rsstail -1 -u https://archlinux.org/feeds/news/ | cut -d' ' -f2- }
+
+${color 888888}
+${exec rsstail -1 -u http://www.synthtopia.com/feed/ | cut -d' ' -f2- }
+
+${color 999999}
+${exec rsstail -1 -u https://www.synthanatomy.com/feed  | cut -d' ' -f2-}
+
+]]
+
+

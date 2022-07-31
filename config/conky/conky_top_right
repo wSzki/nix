@@ -1,0 +1,26 @@
+
+
+
+
+conky.config={
+		own_window_colour = 'fabd2f',
+		color0 = 'fabd2f',
+		draw_shades = false,
+		own_window_argb_visual = true,
+		alignment ='top_right',
+		gap_x = 20,
+		gap_y =10,
+		out_to_console=true,
+		out_to_stderr=false,
+		template0 = [[${top_mem name \1}${alignr}${top_mem mem \1}%]],
+		update_interval=10000000,
+	 	use_xft = true
+};
+
+
+conky.text = [[
+${font terminus:size=10}${color 999999}
+${exec cat ~/.dot/box/todo/todo.md }
+]]
+
+
