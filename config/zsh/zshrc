@@ -112,7 +112,7 @@ fi
 #export DOTFILES="$(echo $HOME/dotfiles | tr -d '\r')"
 
 alias tlprc="sudo vim /etc/tlp.conf"
-alias vrc="cd $DOTFILES/vim  && vim -c 'NeoTreeFocusToggle' && cd -"
+alias vrc="cd $DOTFILES/nvim  && vim -c 'NeoTreeFocusToggle' && cd -"
 alias zpf="vim $DOTFILES/zsh/zprofile"
 alias zrc="vim $DOTFILES/zsh/zshrc"
 alias xrc="vim $DOTFILES/xorg/xinitrc"
