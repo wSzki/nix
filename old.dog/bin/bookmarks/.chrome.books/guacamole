@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/bin/chromium --app="https://guacamole.42.fr/#/"

@@ -1,0 +1,2 @@
+#!/bin/bash
+librewolf --new-window 'https://fullstackopen.com/en/'

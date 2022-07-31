@@ -1,0 +1,4 @@
+#!/bin/bash
+
+
+st -c notes -e vim -u ~/Tree/Suckless/notes/.vimrc ~/Tree/Suckless/notes/bucket.md & i3-msg "workspace n"

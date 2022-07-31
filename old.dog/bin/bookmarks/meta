@@ -1,0 +1,3 @@
+librewolf --new-window 'https://metatags.io/'
+#!/bin/bash
+/bin/chromium --app='https://metatags.io/'

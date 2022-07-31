@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/bin/chromium --app="file:///home/wsz/.pod/gdb-refcard.pdf"
+#/bin/chromium --app="https://www.koryschneider.com/tab/"

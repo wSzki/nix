@@ -1,0 +1,10 @@
+
+
+
+
+
+sclang & << EOF
+FoxDot.start()
+EOF
+
+python -m FoxDot &

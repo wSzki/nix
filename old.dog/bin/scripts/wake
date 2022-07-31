@@ -1,0 +1,5 @@
+
+
+#!/bin/bash
+
+xautolock -disable && echo "Disabling xautolock" && sleep $1 && xautolock -enable && echo "Enabling xautolock" && exit & disown

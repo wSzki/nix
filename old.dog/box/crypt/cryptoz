@@ -1,0 +1,123 @@
+#!/usr/bin/env python3
+# coding=utf-8
+
+import json
+from requests import Request, Session
+from forex_python.converter import CurrencyRates
+#new
+from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
+
+import os
+import sys
+
+API_KEY = "7dbbcb48-0623-4cb6-81a8-a6403f533fe6"
+PRICE_CHANGE_PERIOD_H = '1h' # Available: '1h', '24h', '7d'
+PRICE_CHANGE_PERIOD_D = '24h' # Available: '1h', '24h', '7d'
+PRICE_CHANGE_PERIOD_W = '7d' # Available: '1h', '24h', '7d'
+PRICE_CHANGE_PERIOD_M = '30d' # Available: '1h', '24h', '7d'
+PRICE_CHANGE_URGENT_PERCENT = 10
+
+API_URL = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
+coin = os.environ.get('BLOCK_INSTANCE', 'bitcoin')
+
+parameters = {
+        'slug': coin
+        }
+headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': API_KEY,
+        }
+
+session = Session()
+session.headers.update(headers)
+
+r = session.get(API_URL, params=parameters)
+data = json.loads(r.text)['data']
+data = data[list(data.keys())[0]]
+
+base = 'USD'
+quote = data['quote'][base]
+price = float(quote['price'])
+
+
+########################
+#########
+c = CurrencyRates()
+Currency = c.get_rate('USD', 'EUR')  #convert USD to EURO
+if price > 1000 :
+    eur_price = round(price * Currency / 1000, 1);
+    eur_price = str(eur_price) + 'k'
+else:
+    eur_price = round(price * Currency, 1);
+
+if (price > 1000):
+    price = (round(price / 1000, 1));
+else:
+    price = round(price, 1);
+colored_price = '<span bgcolor="#191d20" fgcolor="#4C566A">' +str(price)+ '</span>'
+
+    # Only USD as base currently supported by free version of Coinmarketcap API, AFAIK
+if price > 100: precision = 0
+elif price > 0.1: precision = 0
+else: precision = 0
+
+
+# percentChange = float(quote['percent_change_' + PRICE_CHANGE_PERIOD_H])
+# percentChangeFormat = '<span bgcolor="{}" color="#191d20">{}{:.2f}%</span>'
+percentChange = int(quote['percent_change_' + PRICE_CHANGE_PERIOD_H])
+percentChangeFormat = '<span bgcolor="{}" color="#191d20">{}{}%</span>'
+# percentChangeFormat = '<span color="{}">{}{:.2f}%</span>'
+if percentChange > 0: percentChangeInfo_h = percentChangeFormat.format('#A3BE8C', ' ', percentChange)
+elif percentChange == 0: percentChangeInfo_h = percentChangeFormat.format('#BBBBBB', ' ', percentChange)
+else: percentChangeInfo_h = percentChangeFormat.format('#ea6962', ' ', percentChange)
+if percentChange > PRICE_CHANGE_URGENT_PERCENT:
+    if percentChange > 0: percentChangeInfo_h = percentChangeFormat.format('#d8a657', ' ', percentChange)
+    elif percentChange == 0: percentChangeInfo_h = percentChangeFormat.format('#BBBBBB', ' ', percentChange)
+    else: percentChangeInfo_h = percentChangeFormat.format('#ea6962', ' ', percentChange)
+
+# percentChange = float(quote['percent_change_' + PRICE_CHANGE_PERIOD_D])
+# percentChangeFormat = '<span bgcolor="{}" color="#191d20">{}{:.2f}%</span>'
+percentChange = int(quote['percent_change_' + PRICE_CHANGE_PERIOD_D])
+percentChangeFormat = '<span bgcolor="{}" color="#191d20">{}{}%</span>'
+if percentChange > 0: percentChangeInfo_d = percentChangeFormat.format('#A3BE8C', ' ', percentChange)
+elif percentChange == 0: percentChangeInfo_d = percentChangeFormat.format('#BBBBBB', ' ', percentChange)
+else: percentChangeInfo_d = percentChangeFormat.format('#ea6962', ' ', percentChange)
+if percentChange > PRICE_CHANGE_URGENT_PERCENT:
+    if percentChange > 0: percentChangeInfo_d = percentChangeFormat.format('#d8a657', ' ', percentChange)
+    elif percentChange == 0: percentChangeInfo_d = percentChangeFormat.format('#BBBBBB', ' ', percentChange)
+    else: percentChangeInfo_d = percentChangeFormat.format('#ea6962', ' ', percentChange)
+
+# percentChange = float(quote['percent_change_' + PRICE_CHANGE_PERIOD_W])
+# percentChangeFormat = '<span bgcolor="{}" color="#191d20">{}{:.2f}%</span>'
+percentChange = int(quote['percent_change_' + PRICE_CHANGE_PERIOD_W])
+percentChangeFormat = '<span bgcolor="{}" color="#191d20">{}{}%</span>'
+# percentChangeFormat = '<span color="{}">{}{:.2f}%</span>'
+if percentChange > 0: percentChangeInfo_w = percentChangeFormat.format('#A3BE8C', ' ', percentChange)
+elif percentChange == 0: percentChangeInfo_w = percentChangeFormat.format('#BBBBBB', ' ', percentChange)
+else: percentChangeInfo_w = percentChangeFormat.format('#ea6962', ' ', percentChange)
+if percentChange > PRICE_CHANGE_URGENT_PERCENT:
+    if percentChange > 0: percentChangeInfo_w = percentChangeFormat.format('#d8a657', ' ', percentChange)
+    elif percentChange == 0: percentChangeInfo_w = percentChangeFormat.format('#BBBBBB', ' ', percentChange)
+    else: percentChangeInfo_w = percentChangeFormat.format('#ea6962', ' ', percentChange)
+
+# percentChangeFormat = '<span color="{}">{}{:.2f}%</span>'
+# percentChange = float(quote['percent_change_' + PRICE_CHANGE_PERIOD_M])
+# percentChangeFormat = '<span bgcolor="{}" color="#191d20">{}{:.2f}%</span>'
+percentChange = int(quote['percent_change_' + PRICE_CHANGE_PERIOD_M])
+percentChangeFormat = '<span bgcolor="{}" color="#191d20">{}{}%</span>'
+if percentChange > 0: percentChangeInfo_m = percentChangeFormat.format('#A3BE8C', ' ', percentChange)
+elif percentChange == 0: percentChangeInfo_m = percentChangeFormat.format('#BBBBBB', ' ', percentChange)
+else: percentChangeInfo_m = percentChangeFormat.format('#ea6962', ' ', percentChange)
+if percentChange > PRICE_CHANGE_URGENT_PERCENT:
+    if percentChange > 0: percentChangeInfo_m = percentChangeFormat.format('#d8a657', ' ', percentChange)
+    elif percentChange == 0: percentChangeInfo_m = percentChangeFormat.format('#BBBBBB', ' ', percentChange)
+    else: percentChangeInfo_m = percentChangeFormat.format('#ea6962', ' ', percentChange)
+
+print(('{} {} {} {} {}').format(data['symbol'], eur_price, percentChangeInfo_d, percentChangeInfo_w, percentChangeInfo_m)) # Full Text
+# print(('{} {} {} {} {} {}').format(data['symbol'], eur_price, percentChangeInfo_h, percentChangeInfo_d, percentChangeInfo_w, percentChangeInfo_m)) # Full Text
+# print(('{} {} {:.' + str(precision) + 'f} {} {} {} {}').format(data['symbol'],eur_price, price, percentChangeInfo_h, percentChangeInfo_d, percentChangeInfo_w, percentChangeInfo_m)) # Full Text
+# print(('{} {:.' + str(precision) + 'f} {}').format(data['symbol'], price, percentChangeInfo)) # Full Text
+# print(('{} {:.' + str(precision) + 'f}').format(data['symbol'], price)) # Short Text
+
+# if percentChange > PRICE_CHANGE_URGENT_PERCENT:
+    # exit(33)

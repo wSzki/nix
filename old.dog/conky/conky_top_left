@@ -1,0 +1,52 @@
+
+
+
+
+conky.config={
+		own_window_colour = 'fabd2f',
+		draw_shades = false,
+		own_window_argb_visual = true,
+		alignment ='top_left',
+		gap_x = 20,
+		gap_y =10,
+		out_to_stderr=false,
+		update_interval=30,
+	 	use_xft = true,
+		draw_graph_borders = true,
+		font = "Terminus:size=9",
+};
+
+
+conky.text = [[
+${font Scientifica:size=8}
+${exec echo ""}
+${color grey}RAM ${membar 4}
+${color grey}CPU ${cpubar 4}
+${font terminus:size=8}${color white}
+${color 999999}
+${exec ps -a | head -10}
+${color 999999}
+${execi 3600 duf /}
+${color 999999}
+${execi 3600 duf ~/}
+${color 999999}
+${execi 3600 lfs}
+
+MEM
+${memgraph  30,254 A3BE8C A3BE8C }
+CPU
+${cpugraph cpu0 30,254 EBCB8B EBCB8B }
+${cpugraph cpu1 30,254 d8a657 d8a657 }
+${cpugraph cpu2 30,254 e78a4e e78a4e }
+${cpugraph cpu3 30,254 ea6962 ea6962 }
+
+ETH
+${downspeedgraph enp0s31f6 30,254 7C9C90 7C9C90 }
+WIFI
+${downspeedgraph wlp4s0 30,254 7C9C90 7C9C90 }
+
+TEMP
+${execgraph "sensors | grep 'Core 0' | awk '{print $3}' | cut -b2,3" 30,254 7C9C90 7C9C90 }
+]]
+
+

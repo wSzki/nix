@@ -1,0 +1,4 @@
+#!/bin/bash
+librewolf --new-window 'https://www.nerdfonts.com/cheat-sheet'
+#!/bin/bash
+librewolf --new-window 'https://www.nerdfonts.com/cheat-sheet'

@@ -1,0 +1,43 @@
+#!/bin/sh
+
+SCHEDULE_FILE=~/.dot/sch.md
+BUFFER_FILE=~/.dot/sch.buffer.md
+
+sed -i '/ﱢﱢﱢﱢﱢ/d' $SCHEDULE_FILE
+echo "ﱢﱢﱢﱢﱢ `date +'%a %b %d %H:%M:%S %Y'`" >> $SCHEDULE_FILE
+sed -zi 's/2021\n/2021 /g' $SCHEDULE_FILE
+sed -zi 's/2022\n/2022 /g' $SCHEDULE_FILE
+sed -zi 's/2023\n/2023 /g' $SCHEDULE_FILE
+sed -zi 's/2024\n/2024 /g' $SCHEDULE_FILE
+sort -k 6n -k 3M -k 4n $SCHEDULE_FILE > $BUFFER_FILE
+mv $BUFFER_FILE $SCHEDULE_FILE
+sed -i '/^$/d' $SCHEDULE_FILE
+
+#sed -i 's/###\(.*\) 2021/###\1/g' $SCHEDULE_FILE
+#sed -i 's/job \(.*\) at /## [ job \1 ]\n/g' sch.md
+#sed -i 's/job \(.*\) at /### [\1] /g' sch.md
+##########
+#sed -i 's/at /at\n/g' sch.md
+
+
+#sed -z 's/2021\n/2021 /g' sch.md
+
+
+#sort -k 6 -k 3M -k 4 -k 5 sch.md
+
+
+
+#echo "~/.dot/bin/scripts/notify_wait.sh && notify-send $msg" | at $hh:$mm $day $num
+# If the notification daemon isn't running then launch it
+#if ! pgrep -f "dunst" > /dev/null; then
+    #/usr/lib/notification-daemon/notification-daemon &
+#fi
+
+## Wait for the notification daemon to finish launching
+#while ! pgrep -f "dunst" > /dev/null; do
+
+    ## Set optional delay
+    #sleep
+
+#done
+

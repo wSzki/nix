@@ -1,0 +1,7 @@
+#!/bin/bash
+
+qjackctl &
+cd ~/Tree/Rack
+./Rack
+
+

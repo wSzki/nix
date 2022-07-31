@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+
+clear
+echo ""
+cd ~/42/ft_containers/src
+ls ./containers_test/srcs/vector
+echo ""
+read -ep "Enter main test name:" NAME
+g++ -I ./ -Wall -Werror -Wextra -std=c++98 -fsanitize=address -I ./ ./containers_test/srcs/vector/$NAME.cpp

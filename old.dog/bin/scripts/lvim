@@ -1,0 +1,2 @@
+
+/bin/nvim -c "colorscheme typewriter | AirlineTheme base16_classic_light | set background=light" $1

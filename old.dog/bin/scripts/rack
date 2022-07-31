@@ -1,0 +1,7 @@
+#!/bin/bash
+
+pasuspender -- jackd &
+jackd -r -d alsa &> /dev/null &
+cd ~/.tmp/Rack/
+./Rack
+#killall jackd

@@ -1,0 +1,20 @@
+killall mpv
+killall mpv
+killall mpv
+
+EXEC="mpv"
+
+if [ $# -eq 0 ]; then
+	cd ~/.config/mpv && $EXEC --playlist=playlist  --shuffle --no-video --loop-playlist & disown
+	#cd ~/.config/mpv && $EXEC --playlist=playlist --shuffle --no-video --loop-playlist &>/dev/null & disown
+	exit 1
+fi
+
+if [ $1 == "k" ]; then
+	exit 1
+fi
+
+if [ $1 == "v" ]; then
+	cd ~/.config/mpv && $EXEC --playlist=playlist  --shuffle --loop-playlist & disown
+	exit 1
+fi

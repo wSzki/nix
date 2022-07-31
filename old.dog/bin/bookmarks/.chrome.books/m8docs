@@ -1,0 +1,2 @@
+#!/bin/bash
+/bin/chromium --app='https://www.notion.so/dc3fe39bbc464879ac984f0a69cc61bf?v=fd554243d3fa43558901cf96984120b9'

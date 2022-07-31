@@ -1,0 +1,2 @@
+#!/bin/bash
+/bin/chromium --app='https://profile.intra.42.fr/'

@@ -1,0 +1,2 @@
+#!/bin/bash
+/bin/librewolf 'https://app.raindrop.io/my/-1'

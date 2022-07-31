@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/bin/chromium --app="https://discord.com/channels/774300457157918772/786931334547243068"

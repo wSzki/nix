@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+st -c orca -e orca-c ~/Tree/Orca-c/patches/default2
+
+
+

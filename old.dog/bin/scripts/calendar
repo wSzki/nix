@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ st -c calendar -f mono:pixelsize=20 -e calcurse & i3-msg "workspace c"
+ 

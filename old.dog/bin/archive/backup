@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# DOTFILES
+
+#cd ~/Tree/Suckless/i3
+#cp ~/.bg.png ~/.zshrc ~/.vimrc ~/.xinitrc ~/.xbindkeysrc ./
+
+# i3 CONFIGURATION
+#sudo cp ~/.config/i3/i3status.conf ./
+#sudo cp ~/.config/i3/config ./
+#sudo cp ~/.config/i3/i3blocks.conf ./
+#sudo cp ~/.config/i3/i3blocks2.conf ./
+
+
+#cp -r ~/.config ./dotfilesConfig
+
+# RULES
+
+#sudo cp /etc/X11/xorg.conf.d/40-touchpad.conf ./
+#sudo cp /etc/udev/rules.d/99-lowbat.rules ./
+
+
+################# PUSH ####################
+#cd ~/Tree/Suckless
+#gitap

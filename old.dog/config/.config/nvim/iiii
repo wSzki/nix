@@ -1,0 +1,59 @@
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+"let &packpath = &runtimepath
+"let g:UltiSnipsSnippetDirectories=["UltiSnips", "snippets"]
+set termguicolors
+source ~/.vimrc
+
+"lua << EOF
+"require'nvim-tree'.setup()
+"EOF
+
+"lua << EOF
+"require'bufferline'.setup{
+"highlights = {
+"fill = {
+"guifg = '#fabd2f',
+"guibg = '#191d20',
+"}
+"}
+"}
+"EOF
+
+"lua << EOF
+"require'bufferline'.setup{
+"highlights = {
+"	fill = {
+"		guifg = '#fabd2f',
+"		guibg = '#191d20',
+"		},
+"	background = {
+"		guifg = '#a9b665',
+"		guibg = '#191d20'
+"		},
+"	tab = {
+"		guifg = '#fabd2f',
+"		guibg = '#fabd2f'
+"		},
+"	tab_selected = {
+"		guifg = '#fabd2f',
+"		guibg = '#191d20'
+"		},
+"	buffer_selected = {
+"		guifg = '#fabd2f',
+"		guibg = '#191d20',
+"		gui = "bold,italic"
+"		},
+"	close_button_visible = {
+"		guifg = '#fabd2f',
+"		guibg = '#191d20'
+"		},
+"	close_button = {
+"		guibg = '#191d20'
+"		},
+"	modified_visible= {
+"		guifg = '#fabd2f',
+"		guibg = '#191d20',
+"		},
+"	}
+"}
+"EOF

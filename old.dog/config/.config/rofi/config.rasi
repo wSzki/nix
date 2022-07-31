@@ -1,0 +1,11 @@
+
+@theme "slate.rasi"
+element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}
+listview {
+	lines: 7;
+	columns: 3;
+}
+

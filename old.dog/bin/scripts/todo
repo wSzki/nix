@@ -1,0 +1,4 @@
+#!/bin/bash
+
+vim ~/.dot/todo
+#st -c notes -e vim -u ~/Tree/Suckless/notes/.vimrc ~/Tree/Suckless/notes/todo.md & i3-msg "workspace n"

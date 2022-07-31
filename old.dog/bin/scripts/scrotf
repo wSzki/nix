@@ -1,0 +1,4 @@
+#!/bin/bash
+
+scrot --focused
+mv ~/20*scrot.png ~/.share

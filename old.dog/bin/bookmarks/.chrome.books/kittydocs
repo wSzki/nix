@@ -1,0 +1,3 @@
+#/bin/bash
+
+/bin/chromium --app="https://sw.kovidgoyal.net/kitty/conf.html"

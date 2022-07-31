@@ -1,0 +1,6 @@
+#!/bin/bash
+
+/bin/chromium --app="https://mail.google.com/mail/u/0/#all" &
+/bin/chromium --app="https://mail.google.com/mail/u/1/#all"
+
+

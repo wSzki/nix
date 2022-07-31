@@ -1,0 +1,12 @@
+#!/bin/sh
+
+#pactl list sources short
+cd ~/.m8c
+pacmd load-module module-loopback latency_msec=1 & disown
+pacat -r --latency-msec=1 -d alsa_input.usb-DirtyWave_M8_8826160-02.analog-stereo | pacat -p --latency-msec=1 -d alsa_output.pci-0000_00_1f.3.analog-stereo & disown
+/usr/local/bin/m8c &&
+killall pacat
+killall pacmd
+killall pulseaudio
+killall m8c
+exit 0

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if  pgrep qjoypad; then pkill qjoypad; sleep 1; fi & wait
+qjoypad &
+/bin/chromium --app='https://derkyjadex.github.io/M8WebDisplay/' &

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+read -p "URL : " url
+read -p "Name : " name
+dest=~/.dot/bin/bookmarks
+
+touch $dest/$name
+chmod 755 $dest/$name
+
+echo "#!/bin/bash" >> $dest/$name
+echo "/bin/chromium --app='$url'" >> $dest/$name

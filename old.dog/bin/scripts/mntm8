@@ -1,0 +1,3 @@
+cd
+sudo mount -t exfat /dev/mmcblk0p1 ~/.m8
+cd ~/.m8

@@ -1,0 +1,3 @@
+#!/bin/bash
+#!/bin/bash
+librewolf --new-window 'https://github.com/wSzki?tab=repositories'

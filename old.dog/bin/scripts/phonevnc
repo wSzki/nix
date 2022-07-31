@@ -1,0 +1,13 @@
+
+#!/bin/bash
+
+#xrandr --newmode 720x1440_60.00 87.25 720 776 848 976 1440 1443 1453 1493 -hsync +vsync
+xrandr --newmode "504x500_60.00"   19.50  504 520 568 632  500 503 513 521 -hsync +vsync
+xrandr --addmode VIRTUAL1 504x500_60.00
+xrandr --output VIRTUAL1 --mode 720x1440_60.00 --left-of eDP1
+#st -e ls
+x11vnc -display :0 -clip xinerama0 -viewonly -multiptr  -noxdamage
+#x11vnc -display :0 -clip xinerama0 -viewonly -multiptr -ncache 10 -noxdamage
+#x11vnc -usepw -display :0 -clip xinerama0 -viewonly -multiptr -ncache 10
+#-noxrecord -ncachecr -auth guess -forever -noxdamage -repeat -rfbauth /etc/x11vnc/vncpwd -rfbport -shared
+

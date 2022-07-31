@@ -1,0 +1,2 @@
+#!/bin/bash
+/bin/chromium --app='https://parcelsapp.com/en/tracking/LZ146502409FR'

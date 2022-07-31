@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd  ~/Desktop/100r/Orca-c/build/
+./orca 
+
+
+

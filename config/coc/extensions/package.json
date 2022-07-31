@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "coc-clangd": ">=0.23.0",
+    "coc-cmake": ">=0.2.1",
+    "coc-diagnostic": ">=0.23.4",
+    "coc-explorer": ">=0.24.4",
+    "coc-sh": ">=0.7.0",
+    "coc-snippets": ">=3.0.14",
+    "coc-symbol-line": ">=0.0.17",
+    "coc-yank": ">=1.2.1"
+  }
+}

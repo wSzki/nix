@@ -1,0 +1,10 @@
+#!/bin/bash
+
+git add .
+git status
+
+read -ep "Enter commit name:" commit
+
+git commit -m "$commit"
+#git push origin HEAD
+git push

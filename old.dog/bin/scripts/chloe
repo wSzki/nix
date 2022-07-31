@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+
+# Message
+read -e text
+mess=$(php -r "echo urlencode(\"$text\");")
+
+# votre log free mobile
+#login=17184244
+login=41563069
+# votre key générée par free
+k=MJ9N1b28zsNG5X
+# envoi du sms avec curl
+curl "https://smsapi.free-mobile.fr/sendmsg?user="$login"&pass="$k"&msg="$mess""
+

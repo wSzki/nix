@@ -1,0 +1,2 @@
+#!/bin/bash
+librewolf --new-window 'https://app.slack.com/client/T039P7U66/C3QG85SG6'

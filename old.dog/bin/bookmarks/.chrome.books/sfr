@@ -1,0 +1,2 @@
+#!/bin/bash
+/bin/chromium --app='https://www.sfr.fr/cas/login?service=https%3A%2F%2Fwww.red-by-sfr.fr%2Faccueil%2Fj_spring_cas_security_check&theme=espaceclientred#redclicid=X_Menu_EspaceClient'

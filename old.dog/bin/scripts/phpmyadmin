@@ -1,0 +1,11 @@
+
+#!/bin/bash
+
+ifconfig | grep inet | awk '{print $2}' | grep 192 | {
+
+    read -r ip
+
+    /bin/chromium --app="http://$ip/phpmyadmin"
+
+    echo '$ip'
+}

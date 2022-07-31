@@ -1,0 +1,32 @@
+[Capture]
+screenshot_width = 1920
+screenshot_height = 1080
+screenshot_offset_x = 0
+screenshot_offset_y = 0
+screenshot_delay = 0.2
+
+[UI]
+window_width = 1920
+window_height = 1080
+bgcolor = #191d20
+frame_active_color = #fabd2f
+frame_inactive_color = #191d20
+frame_missing_color = #191d20
+tile_missing_color = #191d20
+grid_x = 3
+workspaces = 12
+padding_percent_x = 5
+padding_percent_y = 5
+spacing_percent_x = 4
+spacing_percent_y = 4
+frame_width_px = 1
+names_show = True
+names_font = Fixedsys
+names_fontsize = 25
+names_color = white
+highlight_percentage = 50
+
+[Daemon]
+forced_update_interval = 10.0
+debounce_period = 1.0
+

@@ -1,0 +1,2 @@
+
+kitty -c .config/kitty/kitty.light.conf

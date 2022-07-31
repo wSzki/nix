@@ -1,0 +1,24 @@
+#!/bin/sh
+
+
+
+read -ep "URL: " URL
+read -ep "QLT : " QLT
+
+#if [ $QLT -eq 0 ]; then
+	#mpv --ytdl-format=22 "$URL " &>/dev/null & disown
+	#exit 0
+#fi
+
+if [ $QLT == "720" ]; then
+	mpv --ytdl-format=22 "$URL" &>/dev/null & disown
+	exit 0
+fi
+
+if [ $QLT == "360" ]; then
+	mpv --ytdl-format=18 "$URL" &>/dev/null & disown
+	exit 0
+fi
+
+
+

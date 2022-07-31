@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+git pull
+read -p "Press ENTER to continue" commit
+gitap
+read -p "Press ENTER to continue" commit
+git checkout master
+read -p "Press ENTER to continue" commit
+git pull
+read -p "Press ENTER to continue" commit
+git merge wsz
+read -p "Press ENTER to continue" commit
+git push
+read -p "Press ENTER to continue" commit
+git checkout wsz
+

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+/bin/chromium --app="https://bandcamp.com/htols/feed"
+
+
+

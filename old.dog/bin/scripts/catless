@@ -1,0 +1,6 @@
+
+
+
+#!/bin/bash
+
+ccat --color=always "$1" | less -r

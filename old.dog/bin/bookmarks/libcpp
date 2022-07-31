@@ -1,0 +1,2 @@
+#!/bin/bash
+librewolf --new-window 'https://www.tutorialspoint.com/cpp_standard_library/index.htm'

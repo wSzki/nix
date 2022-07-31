@@ -1,0 +1,6 @@
+
+
+
+#!/bin/bash
+pdftotext -layout $1 - | bat --color=always | less -r
+

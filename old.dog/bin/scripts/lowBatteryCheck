@@ -1,0 +1,31 @@
+#!/bin/sh
+
+acpi -b | grep "Battery 0" | awk -F'[,:%]' '{print $2, $3}' | {
+  read -r status capacity
+
+#  if [ "$status" = Discharging -a "$capacity" = 11 ]; then
+#    mpv ~/Desktop/Suckless/installScript/bell.wav &>/dev/null
+#  fi
+
+  if [ "$status" = Discharging -a "$capacity" -lt 10 ]; then
+    #echo "[!][!][!][!][!][!][!][!][!][!][!]"
+    i3parrotwarning
+  fi
+
+  if [ "$status" = Unknown -a "$capacity" -lt 10 ]; then
+    #                                       echo "[!][!][!][!][!][!][!][!][!][!][!]"
+    i3parrotwarning
+  fi
+
+#  if [ "$status" = Discharging -a "$capacity" = 6 ]; then
+#    mpv ~/Desktop/Suckless/installScript/bell.wav &>/dev/null
+#  fi
+
+#  if [ "$status" = Discharging -a "$capacity" -lt 5 ]; then
+#    systemctl suspend && slock
+#  fi
+
+ # if [ "$status" = Unknown -a "$capacity" -lt 4 ]; then
+ #   systemctl suspend && slock
+ # fi
+}

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+clear
+echo ""
+cd ~/42/ft_containers/src/containers_test/ && ./do.sh vector

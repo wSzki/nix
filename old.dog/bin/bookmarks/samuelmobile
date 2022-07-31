@@ -1,0 +1,2 @@
+#!/bin/bash
+/bin/chromium --app='https://xd.adobe.com/view/e6424bcf-1db4-4fe6-a418-dd2d8408ae03-b311/specs/'

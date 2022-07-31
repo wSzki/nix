@@ -1,0 +1,2 @@
+#!/bin/bash
+/bin/chromium --app='https://clients.boursorama.com/'

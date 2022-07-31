@@ -1,0 +1,24 @@
+
+
+
+
+
+
+
+
+
+{
+	"librewolf" : "firefox",
+    "firefox": "firefox",
+    "Chromium": "chrome",
+    "chrome": "chrome",
+    "google-chrome": "chrome",
+    "kitty": "terminal",
+    "thunderbird": "envelope",
+    "jetbrains-idea-ce": "edit",
+    "nautilus": "folder-open",
+    "clementine": "music",
+    "vlc": "play",
+    "signal": "comment",
+    "_no_match": "question"
+}

@@ -1,0 +1,6 @@
+
+
+
+#!/bin/bash
+
+cp -r "$1" $POD && cd $POD && autopush && cd -

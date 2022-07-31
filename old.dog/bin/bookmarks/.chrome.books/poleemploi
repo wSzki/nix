@@ -1,0 +1,5 @@
+#!/bin/bash
+
+/bin/chromium --app="https://candidat.pole-emploi.fr/espacepersonnel/"
+
+

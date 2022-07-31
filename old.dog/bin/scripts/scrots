@@ -1,0 +1,4 @@
+#!/bin/bash
+
+scrot -s
+mv ~/20*scrot.png ~/Downloads

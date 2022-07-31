@@ -1,0 +1,11 @@
+#!/bin/bash
+#/bin/chromium --app='https://xd.adobe.com/view/d2158c9e-c34f-40d3-863d-9fad27e81b53-8746/?fullscreen' &
+#/bin/chromium --app='https://www.instagram.com/tv/CZRoscIp808/' &
+#/bin/chromium --app="https://xd.adobe.com/view/77f109d0-6c9a-47e3-bc0a-c4d1da7e9cf1-22a2/screen/7efe6695-4d69-4998-96f2-65ecacf34afd/" &
+#!/bin/bash
+#/bin/chromium --app='https://xd.adobe.com/view/d2158c9e-c34f-40d3-863d-9fad27e81b53-8746/?fullscreen'
+#!/bin/bash
+#/bin/chromium --app='https://xd.adobe.com/view/c8f1298f-1f2b-4e48-9a79-fed6f2fdcdfd-9da2/'
+
+
+/bin/chromium --app="https://xd.adobe.com/view/cd29141b-1705-43c9-a38a-811eafe13244-987a/"

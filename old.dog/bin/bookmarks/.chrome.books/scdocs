@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/bin/chromium --app="https://thormagnusson.gitbooks.io/scoring/content/introduction.html"

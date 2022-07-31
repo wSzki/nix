@@ -1,0 +1,8 @@
+
+#!/bin/sh
+
+xrandr --newmode 720x1440_60.00 87.25 720 776 848 976 1440 1443 1453 1493 -hsync +vsync
+xrandr --addmode VIRTUAL1 720x1440_60.00
+xrandr --output VIRTUAL1 --mode 720x1440_60.00 --left-of eDP1
+x11vnc -usepw -display :0 -clip xinerama0 -viewonly -multiptr -ncache 10
+

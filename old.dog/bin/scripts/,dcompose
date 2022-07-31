@@ -1,0 +1,11 @@
+
+
+
+
+
+
+
+
+
+
+kitty -e nvim -u ~/.dot/vim/init.vim ~/inception/srcs/docker-compose.yml & disown

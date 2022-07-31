@@ -1,0 +1,291 @@
+d1ffc512c3ec0d39ca474ae28837e05f|file:///home/wsz/.nix/configuration.nix|151|1|V|nix
+	  neovim
+8939e84242ebbfbd9903f7d938e048c7|file:///home/wsz/.nix/configuration.nix|150|1|V|nix
+	  vim
+7c3e32f85111c836effbd8c794d8fbca|file:///home/wsz/.nix/configuration.nix|30|1|V|nix
+	programs.neovim.viAlias = true;
+2e7e37bed9d1d421e0faafb3362573ab|file:///home/wsz/.nix/configuration.nix|99|1|V|nix
+	#######
+8505aa856874319e53c1180378da4d75|file:///home/wsz/.nix/config/i3/config|29|22|v|i3config
+	exec 
+bfcecdca76a92b5e7c25794ccc42fc66|file:///home/wsz/.nix/config/i3/config|65|50|V|i3config
+	exec_always --no-startup-id /usr/bin/i3expo-daemon
+f9a7e298482c2fc3c526b3648a8cb96d|file:///home/wsz/.dot/xorg/xinitrc|29|1|V|sh
+	xsetroot -solid '#191d20' &
+8f01084e4ec42c3a9e791690f84df71c|file:///home/wsz/.nix/config/i3/config|31|29|v|i3config
+	/usr/bin/i3expo-daemon
+	
+6aa999f92fa45c1dabeda0777bca83f7|file:///home/wsz/.nix/config/i3/config|30|29|V|i3config
+	#exec_always --no-startup-id /usr/bin/i3expo-daemon
+4db07fe746866b100b3bbad5455b4353|file:///home/wsz/.nix/configuration.nix|145|24|v|nix
+	s;
+			enable = true;
+		5      extraPackages = with 
+3f239724a8dcc8e49091d718c9ed9543|file:///home/wsz/.nix/configuration.nix|216|35|V|nix
+	                         scientifica
+	                         roboto
+	                         nerdfonts
+0e4331e22203a8e844ddf75258773579|file:///home/wsz/.nix/configuration.nix|190|3|v|nix
+	                         
+dda4cb474f8b4490d483c6e4cd164ce2|file:///home/wsz/.nix/configuration.nix|191|3|v|nix
+	                       
+eb9fa6c83a532948839b3190a6615e0e|file:///home/wsz/.nix/configuration.nix|206|2|V|nix
+	  scientifica
+	  roboto
+	  nerdfonts
+8a79de34d9c0ebc11b2a11090eb8ccb2|file:///home/wsz/.nix/configuration.nix|206|2|V|nix
+	  scientifica
+	  roboto
+	  nerdfonts
+	
+d5b13f8f0e52937b03114dd26e0d38f4|file:///home/wsz/.nix/configuration.nix|179|3|V|nix
+	  mplus-outline-fonts
+8f6869758a39f420d79dc2c7832317e1|file:///home/wsz/.nix/configuration.nix|178|3|V|nix
+	  fira-code-symbols
+72b51d702710de21a9ce12f4c63ffbd3|file:///home/wsz/.nix/configuration.nix|177|3|V|nix
+	  fira-code
+d917ed6e11d4a0aa794cafada617ae9e|file:///home/wsz/.nix/configuration.nix|175|3|V|nix
+	  noto-fonts-emoji
+da54d3ce3e8b72fb04a008d163f0ca60|file:///home/wsz/.nix/configuration.nix|174|3|V|nix
+	  noto-fonts-cjk
+3ccd27f5df1056bb76757c86a6d704b7|file:///home/wsz/.nix/configuration.nix|176|3|V|nix
+	  dina-font
+8bb398f0960fbc1ab414d11e22b726c1|file:///home/wsz/.nix/configuration.nix|115|30|V|nix
+	        RUNTIME_PM_ON_BAT=auto
+7bb0edd98f22430a03b67f853e83c2ca|file:///home/wsz/.nix/configuration.nix|114|5|v|nix
+	        
+0cf31b2c283ce3431794586df7b0996d|file:///home/wsz/.nix/configuration.nix|117|5|v|nix
+	    
+8f6dd8c93850b71bbc682a727e7f1525|file:///home/wsz/.nix/configuration.nix|123|61|V|nix
+	# https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
+b9953d72477191306dbaff9e4ac6153b|file:///home/wsz/.nix/configuration.nix|133|1|V|nix
+	boot.extraModprobeConfig = lib.mkMerge [
+49349de310eacc12d113ea6fd00b48df|file:///home/wsz/.nix/configuration.nix|133|1|V|nix
+	  "options snd_hda_intel power_save=1"
+9d7e64f2477c1af2f257103652394e47|file:///home/wsz/.nix/configuration.nix|133|1|V|nix
+	  # enable wifi power saving (keep uapsd off to maintain low latencies)
+517d797d49fd0d47f63aec56af1c9892|file:///home/wsz/.nix/configuration.nix|133|1|V|nix
+	  "options iwlwifi power_save=1 uapsd_disable=1"
+9fe5d4c901dc1f4163b97a3f6795c053|file:///home/wsz/.nix/configuration.nix|263|31|V|nix
+	                         autorandr
+a87345b45510d7fac72b080bf633f303|file:///home/wsz/.nix/configuration.nix|257|30|V|nix
+	                         conky
+8d86f12f7198a9aa00022b9df55b20e4|file:///home/wsz/.nix/configuration.nix|263|26|V|nix
+	                         arandr
+	                         conky
+774f2fb5056853e722facdab65941101|file:///home/wsz/.nix/configuration.nix|265|19|V|nix
+	                         unclutter
+	                         feh
+c956fc7b7fb279bc1149818be74bfc3c|file:///home/wsz/.nix/configuration.nix|265|24|V|nix
+	                         pulseaudio
+	                         pavucontrol
+ed7b3cf3330b004007adac9e646ae7b2|file:///home/wsz/.nix/configuration.nix|264|26|V|nix
+	                         youtube-dl
+ee7c5105b58725f4beddc53846bed1be|file:///home/wsz/.nix/configuration.nix|271|29|V|nix
+	                         htop
+2775e1468934e758d4685805f1cbd09e|file:///home/wsz/.nix/configuration.nix|275|32|V|nix
+	                         # Tools
+b8448f6a7c3cfbc8bc9d418f95e4faa7|file:///home/wsz/.nix/configuration.nix|270|37|V|nix
+	                         # Monitoring
+f4345943ad30d53b09e895a892413b57|file:///home/wsz/.nix/configuration.nix|265|29|V|nix
+	                         rofi
+f7814240055e0d99623082796356ab7f|file:///home/wsz/.nix/configuration.nix|264|31|V|nix
+	                         rsstail
+b33a2d626f116b4f67b2133a90af0031|file:///home/wsz/.dot/conky/conky_top_left|25|20|V|
+	${font terminus_font:size=8}${color white}
+69e6687e29c1a6298593fcbe0faae7f3|file:///home/wsz/.nix/configuration.nix|254|1|V|nix
+	users.users.wsz  = {
+	    shell        = pkgs.zsh;
+		isNormalUser = true;
+		description  = "wsz";
+		extraGroups  = [ "networkmanager" "wheel" "video" ];
+		packages     = with pkgs; [
+	                         # -- Audio
+	                         mpv
+	                         pulseaudio
+	                         pavucontrol
+	                         youtube-dl
+	                         # -- Data
+	                         croc
+	                         # -- Web
+	                         librewolf
+	                         #chromium
+	                         #firefox
+	                         #qutebrowser
+	                         #surf
+	                         # -- Utils
+	                         zplug
+	                         htop
+	                         nmap
+	                         rsstail
+	                         # -- Desktop GUI
+	                         #authy
+	                         bitwarden
+	                         element-desktop
+	                         tdesktop
+	                         signal-desktop
+				];
+	};
+d8e260ac0cdf0c38bfbf34c871f1df12|file:///home/wsz/.nix/configuration.nix|294|28|V|nix
+	                         mpv
+81cde62360234296bb7b7c3226da2bf8|file:///home/wsz/.nix/configuration.nix|297|28|V|nix
+	                         croc
+a0ebf90c6cca27563073e87e21bb1f3b|file:///home/wsz/.nix/configuration.nix|304|28|V|nix
+	                         zplug
+b3605c78a119fbb16a7583238b1cea74|file:///home/wsz/.nix/configuration.nix|304|28|V|nix
+	                         nmap
+8fb771b6f4e0c6d4ad755aa40036689e|file:///home/wsz/.nix/configuration.nix|306|28|V|nix
+	                         bitwarden
+f98d4a43bba845829971c0619c89c6ec|file:///home/wsz/.nix/configuration.nix|306|28|V|nix
+	                         element-desktop
+d9b3b50fe1551345f4bf303cf1320314|file:///home/wsz/.nix/configuration.nix|306|28|V|nix
+	                         tdesktop
+ee9cf2275eb687d4ea4c4ed0a52e7211|file:///home/wsz/.nix/configuration.nix|306|28|V|nix
+	                         signal-desktop
+2c1f93d43248abb30b585bbf2815ac8a|file:///home/wsz/.nix/config/zsh/.zprofile|10|1|V|zsh
+	export PATH="$DOTFILE/bin/scripts:$PATH"
+	export PATH="$DOTFILE/bin/bookmarks:$PATH"
+a933d8c2fe87a30d866330ba824fcfdd|file:///home/wsz/.nix/configuration.nix|86|10|V|nix
+	  PATH="$DOT/bin/scripts:$PATH";
+	  PATH="$DOT/bin/bookmarks:$PATH";
+5ffb5f0d0de78321df46fc7c93ca64a3|file:///home/wsz/.nix/configuration.nix|92|3|v|nix
+	PATH
+fb456a23fd3333c3f05e80b2874aa952|file:///home/wsz/.nix/configuration.nix|86|23|V|nix
+	  XDG_CACHE_HOME  = "\${HOME}/.cache";
+	  XDG_CONFIG_HOME = "\${HOME}/.config";
+a6112418d189a8f0bd58ce31cbd9c512|file:///home/wsz/.nix/configuration.nix|86|23|V|nix
+	  XDG_BIN_HOME    = "\${HOME}/.local/bin";
+	  XDG_DATA_HOME   = "\${HOME}/.local/share";
+60d2e3c04849210be97d321640dfe1cd|file:///home/wsz/.nix/config/zsh/.zprofile|12|8|v|zsh
+	FZF_DEFAULT_OPTS='--height 50%' 
+1c4b3b6f46fcf33dbe401937a0273dd0|file:///home/wsz/.nix/configuration.nix|87|10|V|nix
+	  FZF_DEFAULT_OPTS='--height 50%'
+41cae371f2d3c4e26c60a1b8db551fc1|file:///home/wsz/.nix/configuration.nix|88|20|V|nix
+	  "\${XDG_BIN_HOME}"
+7ce1291011bf70d8885f89f98fa18732|file:///home/wsz/.nix/configuration.nix|302|1|v|nix
+	users.users.sc  = {
+	    shell        = pkgs.zsh;
+		isNormalUser = true;
+		description  = "wsz";
+		extraGroups  = [ "networkmanager" "wheel" "video" ];
+		packages     = with pkgs; [
+	                         # -- Audio
+	                         supercollider-with-plugins
+	                         ghc
+	                         cabal-install
+	                         pulseaudio
+	                         pavucontrol
+	                         # -- Data
+	                         # -- Web
+	                         librewolf
+	                         #chromium
+	                         #firefox
+	                         #qutebrowser
+	                         #surf
+	                         # -- Utils
+	                         # -- Desktop GUI
+	                         #authy
+				];
+	};
+10cf0311450d6f445c28e5efea9fbd5f|file:///home/wsz/.nix/configuration.nix|334|17|V|nix
+	                         # -- Audio
+	                         supercollider-with-plugins
+2d87733c0143d5b99604ffb9f59fcc57|file:///home/wsz/.nix/configuration.nix|334|17|V|nix
+	                         ghc
+	                         cabal-install
+5fb1cb7e810ce10e9d6fa88db7ebcc45|file:///home/wsz/.nix/configuration.nix|334|17|V|nix
+	                         pulseaudio
+c330a3c48279dc3623ce3408f3222c0b|file:///home/wsz/.nix/configuration.nix|334|17|V|nix
+	                         pavucontrol
+795fc11db748c91f84d45a78b1e908da|file:///home/wsz/.nix/configuration.nix|334|17|V|nix
+	                         # -- Data
+6576578a26aa42add6d6ce48db637ffb|file:///home/wsz/.nix/configuration.nix|334|17|V|nix
+	                         # -- Web
+43534974853c323db5c62c6c0975020a|file:///home/wsz/.nix/configuration.nix|335|17|V|nix
+	                         #chromium
+	                         #firefox
+27129b98882ba9da92da3aa00f192448|file:///home/wsz/.nix/configuration.nix|335|17|V|nix
+	                         #qutebrowser
+	                         #surf
+77001dfa3cef9ef73ef6ab9677a8f4b2|file:///home/wsz/.nix/configuration.nix|335|17|V|nix
+	                         # -- Utils
+	                         # -- Desktop GUI
+9ad84d20ff03918275df2f61e95b7301|file:///home/wsz/.nix/configuration.nix|335|17|V|nix
+	                         #authy
+3add47a41e127b40e0a9865032f5f511|file:///home/wsz/.dot/vim/syntax.vim|57|29|v|vim
+	EBCB8B
+d903d0cdbd15062ab07789a75d86dc4b|file:///home/wsz/.dot/vim/syntax.vim|64|29|v|vim
+	a9b665
+34c4b3f3cbf471242063db91ca5dcd3e|file:///home/wsz/.nix/configuration.nix|328|1|V|nix
+	users.users.test  = {
+	    shell        = pkgs.zsh;
+		isNormalUser = true;
+		description  = "wsz";
+		extraGroups  = [ "networkmanager" "wheel" "video" ];
+		packages     = with pkgs; [
+	                         librewolf
+				];
+	};
+d560bb955baa5c4dce1bfba9d80501db|file:///home/wsz/.nix/configuration.nix|344|26|V|nix
+	                         librewolf
+421b47ffd946ca083b65cd668c6b17e6|file:///home/wsz/.nix/configuration.nix|342|45|v|nix
+	video
+5b8675211c8b33123b11ed085d77cc5f|file:///home/wsz/.nix/configuration.nix|35|1|V|nix
+	environment.variables.EDITOR = "nvim";
+bba181676558a522b4bd186a4d4aa563|file:///home/wsz/.nix/configuration.nix|35|36|V|nix
+	#programs.neovim.enable       = true;
+	programs.neovim.viAlias      = true;
+e66d15a828b4b01d69ed0d1136f52f55|file:///home/wsz/.nix/config/zsh/html.html|13|1|V|html
+		<p>Bonjour</p>
+656cf48611c81b6f7902283096aeb7b7|file:///home/wsz/.nix/config/zsh/html.html|11|1|V|html
+	<div class="backgroundRed">
+		<p>Bonjour</p>
+		<p>Bonjour</p>
+		<p>Bonjour</p>
+		<p>Bonjour</p>
+		<p>Bonjour</p>
+		...
+	
+	</div>
+64249f1150e9a0d9491697f8339033bb|file:///home/wsz/.nix/config/zsh/html.html|43|1|V|html
+		...
+ca232ca2f6c1bc9898f5571887ea0434|file:///home/wsz/.nix/config/zsh/html.html|33|1|V|html
+		<p>Aurevoir</p>
+5c89098ec7c89cce7713f8b4f7c9d82a|file:///home/wsz/.nix/config/zsh/html.html|26|1|V|html
+	<div class="bold fontSize 40px">
+	
+7e7acd0117eeb58b8f1fc7c2e95ebd27|file:///home/wsz/.nix/config/zsh/html.html|26|1|V|html
+	</div>
+	
+4d18520602234fb3aa25e57d1392b136|file:///home/wsz/studiosamuel/src/src_desktop/components/Header.jsx|107|1|V|javascriptreact
+	
+					{MoreOrLess}
+7985dd3a5920f68685b1c966fc407538|file:///home/wsz/studiosamuel/src/src_desktop/components/Header.jsx|106|4|V|javascriptreact
+					<LinkMacro
+						to="/"
+cb0fd59b68c3a2e527ace32d27ba266d|file:///home/wsz/studiosamuel/src/src_desktop/components/Header.jsx|106|4|V|javascriptreact
+						textSize="fontSize34 sackersBold"
+						pos="center"
+110e15adac784a27e824da0092df9a5a|file:///home/wsz/studiosamuel/src/src_desktop/components/Header.jsx|106|4|V|javascriptreact
+						text="STUDIO SAMUEL"
+					/>
+14756727cbadf9675c6944993ffb1b72|file:///home/wsz/.nix/init.sh|13|1|V|sh
+	ln -S $DOT/config ~/.config
+6c038b5b9f6967b5d178b88134a823a8|file:///home/wsz/.zshenv|1|1|V|zsh
+	ZDOTDIR=~/.nix/config/zsh/
+5802bc05b760b159cafce3f232506b93|file:///home/wsz/.nix/init.sh|14|22|V|sh
+	ln -S $DOT/config/zsh/ ~/.config
+22bab21db26b96e6215068f6e7e2f253|file:///home/wsz/.dot/xorg/xinitrc|38|1|V|sh
+	rm -rf ~/Desktop/ &
+c504fb289a755fb433adad92f8edea43|file:///home/wsz/.nix/.gitignore|4|1|V|
+	./config/*
+4c27e15d0a6f707e91c666c795e1b115|file:///home/wsz/.nix/.gitignore|5|1|v|
+			   
+601a9b7bed31e24263c3c10323b6c6f0|file:///home/wsz/.nix/.gitignore|5|1|V|
+	!./config/bat
+f4c1b6660cbc166650305c1bab21ef68|file:///home/wsz/.nix/.gitignore|13|1|V|
+	!./config/i3
+91ec3d15c2ea1606ccd3626f95d624ad|file:///home/wsz/.nix/.gitignore|14|1|V|
+	!./config/pulse
+e44e2c00e3289dd5e45444fc1f1c24b1|file:///home/wsz/.nix/.gitignore|15|1|V|
+	!./config/mpv
