@@ -11,3 +11,6 @@ mv            \
 
 echo "ZDOTDIR=~/.nix/config/zsh/" > .zshenv
 
+cd ~/.config/
+git clone https://github.com/musnix/musnix
+

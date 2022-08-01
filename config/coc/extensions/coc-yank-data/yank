@@ -308,3 +308,385 @@ c253bd91c0000993ed28824eda9319bc|file:///home/wsz/.nix/bin/nix/rebuild|1|1|V|
 	sudo cp ~/.nix/config/configuration.nix /etc/nixos/configuration.nix ; sudo nixos-rebuild switch
 0b975d6dea9d129605b8ca638262fd14|file:///home/wsz/.nix/config/zsh/zshrc|173|7|V|zsh
 	alias back="~/.dot/backup.sh"
+1a9d867566bf2c71638d63e1d6fa9976|file:///home/wsz/.nix/config/nix/configuration.nix|319|46|V|nix
+	                         haskellPackages.ghcup
+c740ce75f316166a9542333b828ee46b|file:///home/wsz/.nix/config/nix/configuration.nix|315|28|V|nix
+	                         ghc
+80a0a58f0241ae6fea319147d5c63351|file:///home/wsz/.nix/config/nix/configuration.nix|315|33|V|nix
+	                         cabal-install
+73e5e623760499c16f42a00dad41c320|file:///home/wsz/.nix/config/nix/configuration.nix|317|28|V|nix
+	                         ghc
+	                         haskell-language-server
+	                         cabal-install
+1d8060c38a3809ca65968207111199b9|file:///home/wsz/.nix/bin/tidal/install/install.sh|4|29|V|sh
+	curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+a7362ed10bb385d7f91f5f66dace5ab4|file:///home/wsz/.nix/config/nix/configuration.nix|319|1|V|nix
+	                         supercollider-with-plugins
+3fca786c6f6b58814f5d73c5b9b3b954|file:///home/wsz/.nix/bin/tidal/bin/2022-07-31.tidal|4|1|V|tidal
+	d1 $ s "bd"
+73a14172b9e303c2fd198756d12561aa|file:///home/wsz/.nix/config/nix/configuration.nix|310|30|V|nix
+	                         stack
+d7c3f2e9b048c304f719ba6af8e27395|file:///home/wsz/.nix/config/nix/configuration.nix|91|1|V|nix
+	    "\$DOT/bin/bookmarks"
+cc7f223cbb438a29e44f58b37d13123e|file:///home/wsz/.nix/bin/tidal/install/install.sh|7|1|V|sh
+	cp ./*.so ~/.local/share/SuperCollider/Extensions
+3d3301c500289291757edc20ef594e3a|file:///home/wsz/.nix/bin/tidal/bin/tidalvim|33|74|v|sh
+	tidal
+5c3c952d40192d0308018b59c3f1d9cd|file:///home/wsz/.nix/bin/tidal/bin/tidalvim|33|19|v|sh
+	sclang $TIDAL_PATH/BootSuperDirt.sc
+4038fc8b4348c03d9fef418a2eada764|file:///home/wsz/.nix/bin/tidal/BootTidal.hs|79|20|V|haskell
+	--:script ~/.nix/bin/tidal/synths/mutable.hs
+348c42a7a00bcc07bb0957f6dae9e4a6|file:///home/wsz/.nix/bin/tidal/bin/tidalvim|33|57|v|sh
+	sleep 
+e8a3a7df087e4e39a9bb15f15526c35c|file:///home/wsz/.nix/bin/tidal/bin/tidalvim|4|19|V|sh
+	export PIPEWIRE_LATENCY="8192/48000"
+39f377a4a5e500810e825d728ade0b2f|file:///home/wsz/.nix/bin/tidal/bin/tidalvim|10|1|V|sh
+	TIDAL_BOOT_PATH=${TIDAL_BOOT_PATH:-"/usr/share/haskell-tidal/BootTidal.hs"}
+a264823c3f16901d9ab054c2bb4a4ef3|file:///home/wsz/.nix/bin/tidal/bin/tidalvim|10|1|V|sh
+	GHCI=${GHCI:-""}
+ea3aa6883492b6b0a183440ca4f4a816|file:///home/wsz/.nix/bin/tidal/main.tidal|23|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{^c1 ^c2 ^c3}%1"
+	|+| n "{0}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 0.9
+	# size 0.9
+	# hpf 500
+6d4b01a0fc2a94afe80658a1a054d163|file:///home/wsz/.nix/bin/tidal/main.tidal|89|1|V|tidal
+	d3 $ "{[bd, hh]}%4"
+	|+| n "{[0]}%4"
+588d39bce7c5fcae6a8529c3997387ea|file:///home/wsz/.nix/bin/tidal/main.tidal|95|1|V|tidal
+	hush
+5aca275bebcb644b87cb39f2fef750c0|file:///home/wsz/.nix/config/nix/configuration.nix|309|57|V|nix
+	                         supercolliderPlugins.sc3-plugins
+be59636e1e365356c663f535d5ace7a6|file:///home/wsz/.nix/bin/tidal/install/install.sh|7|25|v|sh
+	 ~/.local/share/SuperCollider/Extensions
+	
+7d5db1bb3ed764d3bf73993e42166991|file:///home/wsz/.nix/bin/tidal/install/install.sh|10|1|V|sh
+	wget https://github.com/supercollider/sc3-plugins/releases/download/Version-3.11.1/sc3-plugins-3.11.1-Source.tar.bz2
+e7c26173b227175e5f74f28c8b509fbe|file:///home/wsz/.nix/bin/tidal/install/install.sh|12|42|V|sh
+	cd ~/.local/share/SuperCollider/Extensions
+876c4bdfa177aaa501da3d7dcc65292c|file:///home/wsz/.nix/bin/tidal/install/install.sh|12|1|v|sh
+	
+	cd sc3-plugins
+	mkdir build && cd build
+	# for both scsynth and supernova plugins; set -DSUPERNOVA=OFF to build only scsynth plugins
+	cmake -DSC_PATH=../supercollider -DCMAKE_BUILD_TYPE=Release -DSUPERNOVA=ON ..
+	cmake --build . --config Release
+	
+	
+a888c15bf0d5d6466e33633a5b3994df|file:///home/wsz/.nix/bin/tidal/install/install.sh|9|1|v|sh
+	
+	git clone --recursive https://github.com/supercollider/sc3-plugins.git
+	git clone --recursive https://github.com/supercollider/supercollider.git
+	
+	cd sc3-plugins
+	mkdir build && cd build
+	# for both scsynth and supernova plugins; set -DSUPERNOVA=OFF to build only scsynth plugins
+	cmake -DSC_PATH=../supercollider -DCMAKE_BUILD_TYPE=Release -DSUPERNOVA=ON ..
+	cmake --build . --config Release
+	
+	
+	
+ac3f0799875d0af4a7e0840f507df00d|file:///home/wsz/.nix/bin/tidal/install/install.sh|17|1|V|sh
+	cmake --build . --config Release
+4dbb7c20ad0fed58399f04835ecce643|file:///home/wsz/.nix/bin/tidal/main.tidal|50|1|V|tidal
+	d2 $ "{tides}%0.25"
+	|+| n (shuffle 2 "{0 4 7 9 11 14 -3}%0.2")
+	# room 1
+	# size 1
+4661e7c02640527bb55ec278d0561d6e|file:///home/wsz/.nix/bin/tidal/main.tidal|55|1|V|tidal
+	d1 $ "{tides}%4"
+	|+| n "{[-12]}%4"
+	# amp 1
+682cf09ee0f67da3da93a3953c707b7b|file:///home/wsz/.nix/bin/tidal/main.tidal|62|1|V|tidal
+	p "plaits" $ "{plaits}%4"
+	|+| n "{[0 7 4 9 11]}%4"
+	# verbwet  0.0
+	# verbtime 0.0
+	# verbgain 0.0
+	# verbhp   0.0
+	# room 1
+	# size 1
+cd9b86b4d4b96b2aef260df8b50a89f4|file:///home/wsz/.nix/config/nix/configuration.nix|145|18|V|nix
+	      "thinkpad_acpi"
+b8d8927edea4fa150e663eb6cde47b78|file:///home/wsz/.nix/bin/tidal/main.tidal|72|1|V|tidal
+	p "plaits" $ s "{plaits}%2"
+	# amp       1.0
+	# gain      1.0
+	# pan       0.0
+	# engine    6
+	# morph     0.69
+	# level     1.0
+	# lpgdecay  7.8
+	# lpgcolour 0.0
+	# release 5
+1c17e82a03897aacc2378ce2d74ddee9|file:///home/wsz/.nix/bin/tidal/main.tidal|83|1|V|tidal
+	d1 $ n ("{0 -5 7}%16")
+75bd7c882146a3e885a417b89468d55c|file:///home/wsz/.nix/bin/tidal/install/install.sh|10|20|V|sh
+	git clone --recursive https://github.com/supercollider/sc3-plugins.git
+	git clone --recursive https://github.com/supercollider/supercollider.git
+dc1ba2e34a0c8b67d3607e3e6b963c8f|file:///home/wsz/.nix/bin/tidal/install/install.sh|11|1|V|sh
+	cd sc3-plugins
+	mkdir build && cd build
+2dcd26c7f26444c4bcf20c1e210c2f64|file:///home/wsz/.nix/bin/tidal/install/install.sh|11|1|V|sh
+	# for both scsynth and supernova plugins; set -DSUPERNOVA=OFF to build only scsynth plugins
+	cmake -DSC_PATH=../../supercollider -DCMAKE_BUILD_TYPE=Release -DSUPERNOVA=ON ..
+285b93a63add9669aced55ab28998709|file:///home/wsz/.nix/bin/tidal/install/install.sh|11|1|V|sh
+	cmake --build . --config Release
+	
+73674663804153e64f3fcaa20a42ee58|file:///home/wsz/.nix/bin/tidal/main.tidal|165|1|V|tidal
+	p "808bd" $ "{808bd}%4"
+	|+| n "{[7]}%4"
+	# amp 8
+c1a9a474d030d4706c8346a0d15a48a5|file:///home/wsz/.nix/bin/tidal/main.tidal|178|1|V|tidal
+	panic
+3a812f378d37793d080229f1ad26a0e1|file:///home/wsz/.nix/bin/tidal/main.tidal|173|1|V|tidal
+	p "bdd" $ "808bd"
+	|+| n "0 0 0 0"
+	# amp 2
+85db695918919cbad925a8415436b83d|file:///home/wsz/.nix/bin/tidal/main.tidal|180|1|V|tidal
+	p "tides" $ "{tides?}%2"
+	|+| n (shuffle 2 "{0 4 7 9 11 14 -3}%2")
+	# amp 1
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.6
+	# verbtime 0.9
+	# verbgain 0.7
+	# verbhp   0.0
+661bef09f4a903a87c6ff71728bb5199|file:///home/wsz/.nix/bin/tidal/main.tidal|190|1|V|tidal
+	p "tides2" $ "{tides}%1"
+	|+| n "{c'ninesus4'*8 d'ninesus4'*8}%0.25"
+	# octave 4
+	# slope 0.9
+	# verbwet  0.7
+	# verbtime 0.9
+	# verbgain 0.7
+	# pan (slow 2 $ range 0.0 1.0 sine)
+	# attack 0.5
+	# release 5
+7ed91f9c4c1303bae96b8e8406f11c19|file:///home/wsz/.nix/bin/tidal/main.tidal|203|1|V|tidal
+	p "tides2" $ "{tides?}%1"
+	|+| n (shuffle 1 "{0 4? 7 9 11? -3?}%1")
+	# amp 0.5
+	# pan 1
+	# slope (fast 8 $ range 0.0 0.5 rand)
+	# release (fast 8 $ range 0.0 0.9 rand)
+	# room 1
+	# size 1
+5ac91930d6ec2cfc007967a53526234c|file:///home/wsz/.nix/bin/nix/init.sh|14|1|V|sh
+	cd ~/.config/nix/
+	git clone https://github.com/musnix/musnix
+ee2d4dae426963005ab2e659032b7482|file:///home/wsz/.nix/config/nix/configuration.nix|54|14|V|nix
+	musnix.enable = true;
+6e87b66e73982439f6bfc7801f9666a8|file:///home/wsz/.nix/bin/tidal/main.tidal|245|1|V|tidal
+	p "tides6" $ "tides "
+	|+| n (shuffle 4 "")
+	# octave 4
+	# amp 1
+	# pan 1
+	# verbwet  0.0
+	# verbtime 0.0
+	# verbgain 0.0
+	# verbhp   0.0
+6588188b10219a3c2bfb7f48702de5f0|file:///home/wsz/.nix/bin/tidal/main.tidal|236|1|V|tidal
+	p "hh" $ "{hh}%8"
+	|+| n "{[0]}%8"
+	#amp "{0.5 0.5 2 0.5}%8"
+	#release "{0.1 0.1 0.8 0.1}%8"
+eeb873126e0e8232ec97b9bb8ff82f8e|file:///home/wsz/.nix/bin/tidal/main.tidal|265|1|V|tidal
+	p "909, [~ hh]" $ "{909, [~ ~ hh ~]}%4"
+	|+| n "{[0]}%4"
+	# verbwet  0.0
+	# verbtime 0.0
+	# verbgain 0.0
+d3dcfafb73f1fe70f7e006548cce3a96|file:///home/wsz/.nix/config/nix/configuration.nix|55|50|V|nix
+	# Remove sound.enable or turn it off if you had it set previously, it seems to cause conflicts with pipewire
+405625bd39df8de91a7b0119102eebe5|file:///home/wsz/.nix/config/nix/configuration.nix|58|1|V|nix
+	services.pipewire     = {
+a1b524aef59999ebe03514f2ce31f2b4|file:///home/wsz/.nix/config/nix/configuration.nix|61|31|V|nix
+	    enable              = true;
+1f07857c15fbb7fb275520c52a8b25da|file:///home/wsz/.nix/config/nix/configuration.nix|56|25|V|nix
+	# rtkit is optional but recommended
+05219fea07f312763c9870625197f134|file:///home/wsz/.nix/config/nix/configuration.nix|60|1|V|nix
+	    alsa.enable         = true;
+	    alsa.support32Bit   = true;
+	    pulse.enable        = true;
+	    jack.enable         = true;
+4f5a640e7a2229f7084890bdabe6421b|file:///home/wsz/.nix/config/nix/configuration.nix|59|3|V|nix
+	services.pipewire     = {
+	};
+c1225a2c0ac728833cbdbd5eb4bf8d0e|file:///home/wsz/.nix/config/nix/configuration.nix|31|1|V|nix
+	# Backlight control
+afa86fc332b71a2a558fc13b1cc3786f|file:///home/wsz/.nix/config/nix/configuration.nix|40|1|V|nix
+	networking.firewall = {
+	  enable = true;
+e21cce5119ef639f5b318797a71ab451|file:///home/wsz/.nix/config/nix/configuration.nix|45|1|V|nix
+	  enable = true;
+6da21913556715301a76e595114193a5|file:///home/wsz/.nix/config/nix/configuration.nix|56|1|V|nix
+	musnix.enable            = true;
+	sound.enable             = false; # Remove sound.enable or turn it off if you had it set previously, it seems to cause conflicts with pipewire
+	security.rtkit.enable    = true;  # rtkit is optional but recommended
+	services.pipewire.enable = true;
+c17eb30d66ab2bb9cdf8e4a0154044f4|file:///home/wsz/.nix/config/nix/configuration.nix|123|1|V|nix
+	services.tlp = {
+	  enable = false;
+a1b1653f0520b5c3078afa40dff84f0e|file:///home/wsz/.nix/config/nix/configuration.nix|125|13|V|nix
+	  enable = false;
+ff06731ef07ac502bbd4589f2af5e8c3|file:///home/wsz/.nix/config/nix/configuration.nix|122|13|V|nix
+	services.upower.enable = false;
+	services.tlp.enable = false;
+3f0b38e111488e7b99129544ef95595f|file:///home/wsz/.nix/config/nix/configuration.nix|110|1|V|nix
+	networking.networkmanager.enable = true;
+	#networking.wireless.enable      = true;  # Enables wireless support via wpa_supplicant.
+f9d6a7348db6c8029f9429305bf84e8a|file:///home/wsz/.nix/config/nix/configuration.nix|148|1|V|nix
+	#services.upower.enable = true;
+0ea09b52f7704637f03e527b21841eae|file:///home/wsz/.nix/config/nix/configuration.nix|44|37|V|nix
+	#programs.neovim.enable       = true;
+68934a3e9455fa72420237eb05902327|file:///home/wsz/.nix/config/nix/configuration.nix|37|36|v|nix
+	false
+a68cc7f15ea58bb48740101cd39fe29b|file:///home/wsz/.nix/config/nix/configuration.nix|215|1|V|nix
+	services.redshift.enable      = true;
+b5b0b3959b02f828c65279a8c69f0097|file:///home/wsz/.nix/config/nix/configuration.nix|184|1|V|nix
+	services.autorandr.enable         = true;
+2c1d4c1e8337a32eb04e14a47558b5c2|file:///home/wsz/.nix/config/nix/configuration.nix|239|1|V|nix
+	nixpkgs.config.allowUnfree = true;
+6b77bd121a0fa912b7bf780cb9b30b3c|file:///home/wsz/.nix/config/nix/configuration.nix|211|1|V|nix
+	programs.zsh.enable = true;
+a90aa499e5b374b1a5adf54bf5c3f570|file:///home/wsz/.nix/config/nix/configuration.nix|41|1|V|nix
+	services.tlp.enable              = true; # Power management
+	musnix.enable                    = true;
+7dcf494447cb0315f3caf927657d7bc6|file:///home/wsz/.nix/config/nix/configuration.nix|19|1|V|nix
+	# Touchpad
+	services.xserver.libinput.enable                    = true;
+	services.xserver.libinput.touchpad.middleEmulation  = true;
+	services.xserver.libinput.touchpad.naturalScrolling = true;
+	services.xserver.libinput.touchpad.tapping          = true;
+70a2660a402657c6221fa30373b54569|file:///home/wsz/.nix/config/nix/configuration.nix|100|15|V|nix
+	##############.
+ef7466a794fae4f1446a816349310a6b|file:///home/wsz/.nix/config/nix/configuration.nix|98|12|V|nix
+	# Bootloader
+	boot.loader.systemd-boot.enable      = true;
+	boot.loader.efi.canTouchEfiVariables = true;
+	boot.loader.efi.efiSysMountPoint     = "/boot/efi";
+	systemd.extraConfig                  = ''DefaulTimeOutStopSec=10s'';
+2c1bd2ab22b233d394e797faaba3991b|file:///home/wsz/.nix/config/nix/configuration.nix|153|43|V|nix
+	###########################################
+76d3a922cc24396a4f87d02b9cee52dd|file:///home/wsz/.nix/config/nix/configuration.nix|153|41|V|nix
+	# Select internationalisation properties.
+	time.timeZone            = "Europe/Paris";
+	i18n.defaultLocale       = "en_US.utf8";
+	i18n.extraLocaleSettings = {
+		LC_ADDRESS           = "fr_FR.utf8";
+		LC_IDENTIFICATION    = "fr_FR.utf8";
+		LC_MEASUREMENT       = "fr_FR.utf8";
+		LC_MONETARY          = "fr_FR.utf8";
+		LC_NAME              = "fr_FR.utf8";
+		LC_NUMERIC           = "fr_FR.utf8";
+		LC_PAPER             = "fr_FR.utf8";
+		LC_TELEPHONE         = "fr_FR.utf8";
+		LC_TIME              = "fr_FR.utf8";
+	};
+9e18a05755ff15521f5d39e4fc83be4b|file:///home/wsz/.nix/config/nix/configuration.nix|101|14|V|nix
+	##############
+b7289a642524d24ebe6a5d338c17a26b|file:///home/wsz/.nix/config/nix/configuration.nix|99|12|V|nix
+	# Networking
+	networking.hostName              = "t460"; # Define your hostname.
+	# Configure network proxy if necessary
+	#networking.proxy.default        = "http://user:password@proxy:port/";
+	#networking.proxy.noProxy        = "127.0.0.1,localhost,internal.domain";
+5b086233caf00afa7b5eb0da9db13c15|file:///home/wsz/.nix/config/nix/configuration.nix|53|1|V|nix
+	networking.firewall = {
+dd72f4b7590995f5336c32855c1ceeab|file:///home/wsz/.nix/config/nix/configuration.nix|53|1|V|nix
+	networking.firewall = {
+	  allowedTCPPorts      = [ 80 443 ];
+a5b35bc6347d698857e274feb63f7565|file:///home/wsz/.nix/config/nix/configuration.nix|58|36|V|nix
+	  allowedTCPPorts      = [ 80 443 ];
+602cc008058d6cec0df3d1685581cefc|file:///home/wsz/.nix/config/nix/configuration.nix|51|1|V|nix
+	############
+30348d7895325e0a4e8a3813c5a8fee8|file:///home/wsz/.nix/config/nix/configuration.nix|49|1|V|nix
+	# Firewall #
+	networking.firewall.allowedTCPPorts = [ 80 443 ];
+	networking.firewall.allowedUDPPortRanges = [ { from = 0; to = 0; } ];
+0b36dc6defe2f31be291c5ae65142990|file:///home/wsz/.nix/config/nix/configuration.nix|163|4|V|nix
+	# Redshift
+	services.redshift.temperature = {day = 3750; night = 3750;};
+	location.latitude             = 0.0;
+	location.longitude            = 0.0;
+14fbb95a457a5881897d70d04b5d9f99|file:///home/wsz/.nix/config/nix/configuration.nix|167|9|V|nix
+	#########
+04c94baca5b97a4738de3fdc444428c5|file:///home/wsz/.nix/config/nix/configuration.nix|165|7|V|nix
+	# Fonts
+	fonts.fonts = with pkgs; [
+	  noto-fonts
+	  liberation_ttf
+	  fira-code-symbols
+	  proggyfonts
+	  scientifica
+	  roboto
+	  nerdfonts
+	];
+15a08c110ab4db41696125c923f1c14b|file:///home/wsz/.nix/config/nix/configuration.nix|44|8|V|nix
+	# Neovim
+	#environment.variables.EDITOR = "nvim";
+	#programs.neovim.viAlias      = true;
+	#programs.neovim.vimAlias     = true;
+096e4f8799fee4ca74cea2fc227adfa7|file:///home/wsz/.nix/config/nix/configuration.nix|41|1|V|nix
+	services.redshift.enable         = true;
+7aed846f5b3de8a31c56e49a627f5f70|file:///home/wsz/.nix/config/nix/configuration.nix|145|1|v|nix
+	                   
+9c09f19d809e8e166b92905783778d40|file:///home/wsz/.nix/config/nix/configuration.nix|159|42|v|nix
+	killall
+d3846026fd1520271aa9b8481afc46ea|file:///home/wsz/.nix/config/nix/configuration.nix|175|28|V|nix
+	                         # -- Audio
+df3356934d6a998eefa607a4bab26712|file:///home/wsz/.nix/config/nix/configuration.nix|178|35|V|nix
+	                         # -- Utils
+d0ba93bce50eb0363617255558172ca8|file:///home/wsz/.nix/config/nix/configuration.nix|182|30|V|nix
+	                         # -- Desktop GUI
+	                         #authy # broken? unsafe?
+113b058b2eff935aa785639b6b9dc9bb|file:///home/wsz/.nix/config/nix/configuration.nix|177|36|v|nix
+	#chromium firefox qutebrowser surf
+	
+55c8cce0a304e7e743933f3d61f6a1d5|file:///home/wsz/.nix/config/nix/configuration.nix|182|1|V|nix
+	                         #supercolliderPlugins.sc3-plugins
+	                         #haskellPackages.bindings-sc3
+7af9348193dfd66a159ce204e9f8606c|file:///home/wsz/.nix/config/nix/configuration.nix|182|1|V|nix
+	                         #haskellPackages.hsc3
+e1096fa98c9d6904d834fa2d0bcb9b56|file:///home/wsz/.nix/config/nix/configuration.nix|198|1|V|nix
+	                         haskell-language-server
+ea269519d2193c5b577ee208f050c232|file:///home/wsz/.nix/config/nix/configuration.nix|178|58|v|nix
+	element-desktop
+	
+4aa8ecd31f9b821e1742024d9766ac44|file:///home/wsz/.nix/config/nix/configuration.nix|111|91|V|nix
+	# Tlp extra settings # https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
+	#boot.extraModprobeConfig = lib.mkMerge [
+	  ## idle audio card after one second
+	  #"options snd_hda_intel power_save=1"
+	  ## enable wifi power saving (keep uapsd off to maintain low latencies)
+	  #"options iwlwifi power_save=1 uapsd_disable=1"
+	#];
+	
+	#services.udev.extraRules = lib.mkMerge [
+	  ## autosuspend USB devices
+	  #''ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"''
+	  ## autosuspend PCI devices
+	  #''ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="auto"''
+	  ## disable Ethernet Wake-on-LAN
+	  #''ACTION=="add", SUBSYSTEM=="net", NAME=="enp*", RUN+="${pkgs.ethtool}/sbin/ethtool -s $name wol d"''
+	#];
+c2f48010a6b4b77f8b2e36f5040695f7|file:///home/wsz/.nix/config/nix/configuration.nix|316|1|V|nix
+	# ---
+b2421c44ae2c6f2c12430d5c8c777872|file:///home/wsz/.nix/config/nix/configuration.nix|186|1|V|nix
+	                         # -- Data
+	                         # -- Web
+bc95dfc14146aa23e43f2ea7af04d310|file:///home/wsz/.nix/config/nix/configuration.nix|160|30|v|nix
+	            
+37f91a10810c37a0f946c88eecf0bb86|file:///home/wsz/.nix/config/nix/configuration.nix|161|31|v|nix
+	           
+a127fd1f86e4ab650f2216f09992afa4|file:///home/wsz/.nix/config/nix/configuration.nix|161|48|v|nix
+	      

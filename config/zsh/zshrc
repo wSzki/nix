@@ -135,7 +135,7 @@ alias dotfiles="cd $DOTFILES"
 
 
 ########################## TIDAL ######################################
-alias tdv="tdvk ; tidalvim ~/.dot/box/tidal/main.tidal"
+alias tdv="tdvk ; ~/.nix/bin/tidal/bin/tidalvim ~/.nix/bin/tidal/main.tidal"
 alias tidalsnippets="vim /home/wsz/.config/coc/ultisnips/tidal.snippets"
 alias tidald="cd ~/.dot/box/tidal/"
 alias tidalvim="~/.dot/box/tidal/bin/tidalvim"

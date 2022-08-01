@@ -7,4 +7,4 @@ TIDAL_BOOT_PATH=${TIDAL_BOOT_PATH:-"$TIDAL_DATA_DIR/BootTidal.hs"}
 
 # Run GHCI and load Tidal bootstrap file
 #$GHCI -ghci-script $TIDAL_BOOT_PATH "$@"
-ghci -ghci-script ~/.dot/box/tidal/BootTidal.hs
+ghci -ghci-script ~/.nix/bin/tidal/BootTidal.hs

@@ -13,7 +13,7 @@
 set runtimepath^=~/.vim
 set runtimepath+=~/.vim/after
 
-let $dir_dotfiles = '~/.dot/vim'
+let $dir_dotfiles = '~/.config/nvim'
 
 let g:sclang_executable_path = "/usr/bin/sclang"
 let g:python_executable_path = "/usr/bin/python3"

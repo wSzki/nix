@@ -76,7 +76,7 @@ let getState = streamGet tidal
     setB = streamSetB tidal
 :}
 
-:script ~/.dot/box/tidal/synths/mutable.hs
+:script ~/.nix/bin/tidal/synths/mutable.hs
 :set prompt "TIDAL > "
 :set prompt-cont ">>"
 

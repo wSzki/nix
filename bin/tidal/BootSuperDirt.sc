@@ -14,15 +14,15 @@ s.options.maxNodes = 2048 * 64; // increase this if you are getting drop outs an
 s.options.numOutputBusChannels = 2; // set this to your hardware output channel size, if necessary
 // s.options.numOutputBusChannels = 12; // set this to your hardware output channel size, if necessary
 s.options.numInputBusChannels = 2; // set this to your hardware output channel size, if necessary
-s.options.maxLogins = 8;
+//s.options.maxLogins = 8;
 
 s.waitForBoot {
   ~dirt = SuperDirt(2, s); // two output channels, increase if you want to pan across more channels
   loadRelative("synths/*.scd");
   // ~dirt.doNotReadYet = true;
   ~dirt.loadSoundFiles;
-  ~dirt.loadSoundFiles("~/TIDAL/chords/*");
-  ~dirt.loadSoundFiles("~/TIDAL/drums/808/*");
+  //~dirt.loadSoundFiles("~/TIDAL/chords/*");
+  //~dirt.loadSoundFiles("~/TIDAL/drums/808/*");
   //~dirt.loadSoundFiles("~/.sam-ples/*");
   s.sync;
   ~dirt.start(57120, 0!10, NetAddr("0.0.0.0"));

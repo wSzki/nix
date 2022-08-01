@@ -8,6 +8,7 @@
 imports =
 	[ # Include the results of the hardware scan.
 	./hardware-configuration.nix
+    /home/wsz/.config/musnix
     ];
 
 
@@ -15,11 +16,6 @@ imports =
 # System     #
 ##############.
 
-# Touchpad
-services.xserver.libinput.enable                    = true;
-services.xserver.libinput.touchpad.middleEmulation  = true;
-services.xserver.libinput.touchpad.naturalScrolling = true;
-services.xserver.libinput.touchpad.tapping          = true;
 
 # Xautolock ?
 services.physlock.enable          = true;
@@ -27,51 +23,43 @@ services.physlock.allowAnyUser    = true;
 services.xserver.xautolock.enable = true;
 services.xserver.xautolock.locker = "/run/wrappers/bin/physlock";
 
-# Backlight control
-programs.light.enable    = true;
 
-# Neovim
-#environment.variables.EDITOR = "nvim";
-#programs.neovim.enable       = true;
-#programs.neovim.viAlias      = true;
-#programs.neovim.vimAlias     = true;
+services.tlp.enable              = true; # Power management
+musnix.enable                    = true;
 
-# Firewall
-networking.firewall = {
-  enable = true;
-  allowedTCPPorts = [ 80 443 ];
-  allowedUDPPortRanges = [
-    { from = 0; to = 0; }
-    { from = 0; to = 0; }
-  ];
-};
+nixpkgs.config.allowUnfree       = true;
+programs.zsh.enable              = true;
+programs.light.enable            = true;  # Backlight control
+programs.neovim.enable           = false;
+networking.firewall.enable       = true;
+networking.networkmanager.enable = true;
+networking.wireless.enable       = false;  # Enables wireless support via wpa_supplicant.
+services.upower.enable           = false; # Power management
+sound.enable                     = false; # Remove sound.enable or turn it off if you had it set previously, it seems to cause conflicts with pipewire
+security.rtkit.enable            = true;  # rtkit is optional but recommended
+services.pipewire.enable         = true;
+services.redshift.enable         = true;
+services.autorandr.enable        = true;
+
+
 
 #########
 # AUDIO #
 #########
 
-# Remove sound.enable or turn it off if you had it set previously, it seems to cause conflicts with pipewire
-#sound.enable = false;
-
-# rtkit is optional but recommended
-security.rtkit.enable = true;
-services.pipewire     = {
-    enable              = true;
-    alsa.enable         = true;
-    alsa.support32Bit   = true;
-    pulse.enable        = true;
-    jack.enable         = true;
-};
-
 services.pipewire = {
+  alsa.enable         = true;
+  alsa.support32Bit   = true;
+  pulse.enable        = true;
+  jack.enable         = true;
   config.pipewire = {
     "context.properties" = {
-      "link.max-buffers"          = 64;
+      "link.max-buffers"          = 32;
       #"link.max-buffers"         = 16; # version < 3 clients can't handle more than this
       "log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
       "default.clock.rate"        = 48000;
-      "default.clock.quantum"     = 4096;
-      "default.clock.min-quantum" = 32;
+      "default.clock.quantum"     = 2048;
+      "default.clock.min-quantum" = 64;
       "default.clock.max-quantum" = 8192;
     };
   };
@@ -89,45 +77,24 @@ environment.sessionVariables = rec {
   PATH             = [
     "\$DOT/bin/scripts"
     "\$DOT/bin/bookmarks"
+    "\${HOME}/.local/bin"
   ];
 };
 
-##############.
-# Bootloader #
-##############.
 
-boot.loader.systemd-boot.enable      = true;
-boot.loader.efi.canTouchEfiVariables = true;
-boot.loader.efi.efiSysMountPoint     = "/boot/efi";
-systemd.extraConfig = "DefaulTimeOutStopSec=10s";
-
-##############
-# NETWORKING #
-##############
-
-networking.hostName              = "t460"; # Define your hostname.
-networking.networkmanager.enable = true;
-#networking.wireless.enable      = true;  # Enables wireless support via wpa_supplicant.
-
-# Configure network proxy if necessary
-#networking.proxy.default        = "http://user:password@proxy:port/";
-#networking.proxy.noProxy        = "127.0.0.1,localhost,internal.domain";
 
 #######################################
 #                 TLP                 #
 #######################################
 
 # https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
-
-boot.kernelParams = ["intel_pstate=disable"];
-services.tlp = {
-  enable = true;
-  settings = {
+#boot.kernelParams = ["intel_pstate=disable"];
+services.tlp.settings = {
     CPU_BOOST_ON_BAT                = 0;
     CPU_SCALING_GOVERNOR_ON_AC      = "performance";
     CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
     CPU_MAX_PERF_ON_AC              = 100;
-    CPU_MAX_PERF_ON_BAT             = 75;
+    CPU_MAX_PERF_ON_BAT             = 100;
     START_CHARGE_THRESH_BAT0        = 50;
     STOP_CHARGE_THRESH_BAT0         = 90;
     RUNTIME_PM_ON_BAT               = "auto";
@@ -138,55 +105,14 @@ services.tlp = {
     TPACPI_ENABLE                   = 1;
     TPSMAPI_ENABLE                  = 1;
   };
-};
-
-boot.initrd.availableKernelModules = [
-      # trimmed irrelevant ones
-      "thinkpad_acpi"
-    ];
-
-#services.upower.enable = true;
-
-#boot.extraModprobeConfig = lib.mkMerge [
-  ## idle audio card after one second
-  #"options snd_hda_intel power_save=1"
-  ## enable wifi power saving (keep uapsd off to maintain low latencies)
-  #"options iwlwifi power_save=1 uapsd_disable=1"
-#];
-
-#services.udev.extraRules = lib.mkMerge [
-  ## autosuspend USB devices
-  #''ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"''
-  ## autosuspend PCI devices
-  #''ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="auto"''
-  ## disable Ethernet Wake-on-LAN
-  #''ACTION=="add", SUBSYSTEM=="net", NAME=="enp*", RUN+="${pkgs.ethtool}/sbin/ethtool -s $name wol d"''
-#];
+boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 
 
-###########################################
-# Select internationalisation properties. #
-###########################################
-
-time.timeZone            = "Europe/Paris";
-i18n.defaultLocale       = "en_US.utf8";
-i18n.extraLocaleSettings = {
-	LC_ADDRESS           = "fr_FR.utf8";
-	LC_IDENTIFICATION    = "fr_FR.utf8";
-	LC_MEASUREMENT       = "fr_FR.utf8";
-	LC_MONETARY          = "fr_FR.utf8";
-	LC_NAME              = "fr_FR.utf8";
-	LC_NUMERIC           = "fr_FR.utf8";
-	LC_PAPER             = "fr_FR.utf8";
-	LC_TELEPHONE         = "fr_FR.utf8";
-	LC_TIME              = "fr_FR.utf8";
-};
 
 #################
 # Configure X11 #
 #################
 
-services.autorandr.enable         = true;
 services.xserver = {
 	enable                        = true;
     autoRepeatDelay               = 250;
@@ -200,70 +126,24 @@ services.xserver = {
 		package = pkgs.i3-gaps;
 		enable = true;
 		      extraPackages = with pkgs; [
-                   rofi
-                   i3status
-                   i3blocks
-                   arandr
-                   conky
-                   unclutter
-                   feh
+                   rofi  i3status  i3blocks arandr
+                   conky unclutter feh
                  ];
     	};
 };
-
-
-programs.zsh.enable = true;
-
-############
-# REDSHIFT #
-############
-
-services.redshift.enable      = true;
-services.redshift.temperature = {day = 3750; night = 3750;};
-location.latitude             = 0.0;
-location.longitude            = 0.0;
-
-
-#########
-# FONTS #
-#########
-
-fonts.fonts = with pkgs; [
-  noto-fonts
-  liberation_ttf
-  fira-code-symbols
-  proggyfonts
-  scientifica
-  roboto
-  nerdfonts
-];
 
 ###################
 # SYSTEM PACKAGES #
 ###################
 
-nixpkgs.config.allowUnfree = true;
-
 # List packages installed in system profile. To search, run:
 # $ nix search wget
 environment.systemPackages = with pkgs; [
-  vim
-  neovim
-  tmux
-  gnumake
-  xorg.xgamma
-  xorg.xset
-  xorg.xev
-  killall
-  git
-  xclip
-  fzf
-  ack
-  tldr
-  fasd
-  nodejs
-  trash-cli
-  zplug
+  vim     neovim      tmux      wget
+  gnumake xorg.xgamma xorg.xset xorg.xev
+  git     xclip       fzf       ack
+  tldr    fasd        nodejs    trash-cli
+  zplug   killall
 ];
 
 #########
@@ -275,32 +155,18 @@ users.users.wsz  = {
     shell        = pkgs.zsh;
 	isNormalUser = true;
 	description  = "wsz";
-	extraGroups  = [ "networkmanager" "wheel" "video" ];
+	extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
 	packages     = with pkgs; [
-                         # -- Audio
-                         mpv
-                         pulseaudio
-                         pavucontrol
-                         youtube-dl
-                         # -- Data
-                         croc
-                         # -- Web
-                         librewolf
-                         #chromium
-                         #firefox
-                         #qutebrowser
-                         #surf
-                         # -- Utils
-                         zplug
-                         htop
-                         nmap
-                         rsstail
-                         # -- Desktop GUI
-                         #authy
-                         bitwarden
-                         element-desktop
-                         tdesktop
-                         signal-desktop
+                         mpv pulseaudio pavucontrol youtube-dl
+                         croc librewolf  zplug htop
+                         nmap rsstail bitwarden
+                         element-desktop tdesktop signal-desktop
+                         # TEMP
+                         supercollider-with-plugins
+                         ghc
+                         haskell-language-server
+                         cabal-install
+                         cava
 			];
 };
 
@@ -308,27 +174,13 @@ users.users.sc  = {
     shell        = pkgs.zsh;
 	isNormalUser = true;
 	description  = "wsz";
-	extraGroups  = [ "networkmanager" "wheel" "video" ];
+	extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
 	packages     = with pkgs; [
-                         # -- Audio
-                         supercollider-with-plugins
-                         ghc
-                         cabal-install
-                         pulseaudio
-                         pavucontrol
-                         # -- Data
-                         # -- Web
+                         supercollider-with-plugins haskell-language-server
+                         ghc cabal-install pulseaudio pavucontrol
                          librewolf
-                         #chromium
-                         #firefox
-                         #qutebrowser
-                         #surf
-                         # -- Utils
-                         # -- Desktop GUI
-                         #authy
 			];
 };
-
 
 users.users.test  = {
     shell        = pkgs.zsh;
@@ -348,6 +200,59 @@ users.users.none  = {
 	packages     = with pkgs; [
       gnome.gnome-boxes
 			];
+};
+
+# Firewall
+networking.firewall.allowedTCPPorts                 = [ 80 443 ];
+networking.firewall.allowedUDPPortRanges            = [ { from = 0; to = 0; } ];
+
+# Networking
+networking.hostName                                 = "t460"; # Define your hostname.
+# Configure network proxy if necessary
+#networking.proxy.default        = "http://user:password@proxy:port/";
+#networking.proxy.noProxy        = "127.0.0.1,localhost,internal.domain";
+
+# Redshift
+services.redshift.temperature                       = {day = 3750; night = 3750;};
+location.latitude                                   = 0.0;
+location.longitude                                  = 0.0;
+
+# Bootloader
+boot.loader.systemd-boot.enable                     = true;
+boot.loader.efi.canTouchEfiVariables                = true;
+boot.loader.efi.efiSysMountPoint                    = "/boot/efi";
+systemd.extraConfig                                 = ''DefaulTimeOutStopSec=10s'';
+
+# Touchpad
+services.xserver.libinput.enable                    = true;
+services.xserver.libinput.touchpad.middleEmulation  = true;
+services.xserver.libinput.touchpad.naturalScrolling = true;
+services.xserver.libinput.touchpad.tapping          = true;
+
+# Fonts
+fonts.fonts = with pkgs; [
+  noto-fonts
+  liberation_ttf
+  fira-code-symbols
+  proggyfonts
+  scientifica
+  roboto
+  nerdfonts
+];
+
+# Select internationalisation properties.
+time.timeZone            = "Europe/Paris";
+i18n.defaultLocale       = "en_US.utf8";
+i18n.extraLocaleSettings = {
+	LC_ADDRESS           = "fr_FR.utf8";
+	LC_IDENTIFICATION    = "fr_FR.utf8";
+	LC_MEASUREMENT       = "fr_FR.utf8";
+	LC_MONETARY          = "fr_FR.utf8";
+	LC_NAME              = "fr_FR.utf8";
+	LC_NUMERIC           = "fr_FR.utf8";
+	LC_PAPER             = "fr_FR.utf8";
+	LC_TELEPHONE         = "fr_FR.utf8";
+	LC_TIME              = "fr_FR.utf8";
 };
 
 
@@ -381,5 +286,34 @@ users.users.none  = {
 # Before changing this value read the documentation for this option
 # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
 	system.stateVersion = "22.05"; # Did you read the comment?
+
+###########
+# ARCHIVE #
+###########
+
+# ---
+# Tlp extra settings # https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
+
+#boot.extraModprobeConfig = lib.mkMerge [
+  ## idle audio card after one second
+  #"options snd_hda_intel power_save=1"
+  ## enable wifi power saving (keep uapsd off to maintain low latencies)
+  #"options iwlwifi power_save=1 uapsd_disable=1"
+#];
+
+#services.udev.extraRules = lib.mkMerge [
+  ## autosuspend USB devices
+  #''ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"''
+  ## autosuspend PCI devices
+  #''ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="auto"''
+  ## disable Ethernet Wake-on-LAN
+  #''ACTION=="add", SUBSYSTEM=="net", NAME=="enp*", RUN+="${pkgs.ethtool}/sbin/ethtool -s $name wol d"''
+#];
+# ---
+# Neovim
+#environment.variables.EDITOR = "nvim";
+#programs.neovim.viAlias      = true;
+#programs.neovim.vimAlias     = true;
+
 
 }
