@@ -1,5 +1,7 @@
 
 ./config/*
+./config/Authy Desktop
+./config/Bitwarden
 !./config/bat
 !./config/zsh
 !./config/xorg
