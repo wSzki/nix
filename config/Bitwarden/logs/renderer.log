@@ -1,0 +1,18 @@
+[2022-08-01 15:58:50.737] [error] {
+  response: {
+    error: 'invalid_grant',
+    error_description: 'invalid_username_or_password',
+    ErrorModel: {
+      Message: 'Username or password is incorrect. Try again.',
+      Object: 'error'
+    }
+  },
+  message: 'Username or password is incorrect. Try again.',
+  captchaRequired: false,
+  statusCode: 400
+}
+[2022-08-01 15:58:50.745] [error] Received API exception: [object Object]
+[2022-08-01 15:59:53.803] [info]  search indexing: 0.0727944ms
+[2022-08-01 15:59:54.615] [info]  search indexing: 2.2367449ms
+[2022-08-01 16:03:51.324] [info]  search indexing: 2.6374167ms
+[2022-08-01 16:19:08.059] [info]  search indexing: 1.9265031ms

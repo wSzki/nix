@@ -1,7 +1,3 @@
-d1ffc512c3ec0d39ca474ae28837e05f|file:///home/wsz/.nix/configuration.nix|151|1|V|nix
-	  neovim
-8939e84242ebbfbd9903f7d938e048c7|file:///home/wsz/.nix/configuration.nix|150|1|V|nix
-	  vim
 7c3e32f85111c836effbd8c794d8fbca|file:///home/wsz/.nix/configuration.nix|30|1|V|nix
 	programs.neovim.viAlias = true;
 2e7e37bed9d1d421e0faafb3362573ab|file:///home/wsz/.nix/configuration.nix|99|1|V|nix
@@ -690,3 +686,567 @@ bc95dfc14146aa23e43f2ea7af04d310|file:///home/wsz/.nix/config/nix/configuration.
 	           
 a127fd1f86e4ab650f2216f09992afa4|file:///home/wsz/.nix/config/nix/configuration.nix|161|48|v|nix
 	      
+2ed47796b32a3f8c4f2e52ab86e3164a|file:///home/wsz/.nix/bin/tidal/main.tidal|224|1|V|tidal
+	p "buenos" $ "{buenos}%4"
+	|+| n "{[0]}%4"
+a1a5dbd3a88238cee55fbe17dae0dc7b|file:///home/wsz/.nix/bin/tidal/main.tidal|229|1|V|tidal
+	p "pebbles" $ "{lt:0}%1"
+	|+| n "{[0]}%1"
+	# amp 1
+b326b5062b2f0e69046810717534cb09|file:///home/wsz/.nix/config/nix/configuration.nix|27|36|v|nix
+	true
+a79905ea5e8cee23fa2252e2df83ce99|file:///home/wsz/.nix/config/nix/configuration.nix|108|47|V|nix
+	boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
+b43c547b229ce4b9993132d0fe967c21|file:///home/wsz/.nix/bin/nix/init_nix.sh|12|1|V|sh
+	echo "ZDOTDIR=~/.nix/config/zsh/" > .zshenv
+d0e7b6bc734225d85253dab0c192745e|file:///home/wsz/.nix/bin/tidal/main.tidal|271|1|V|tidal
+	p "bueno" $ "{buenos}%4"
+	|+| n "{[0]}%3"
+	# amp 2
+	# pan 2
+	# verbwet  0.0
+	# verbtime 0.6
+	# verbgain 0.6
+	# verbhp   0.6
+8aebe089f2a6256308dbb3831f362cee|file:///home/wsz/.nix/bin/tidal/main.tidal|233|1|V|tidal
+	d1 $ "{bd}%4"
+	#amp 1
+482b624ffedc0ae7fc3802ec665a0682|file:///home/wsz/.nix/config/nix/configuration.nix|37|1|V|nix
+	services.upower.enable           = false; # Power management
+ca233f600920cf964abad629b4ad38ce|file:///home/wsz/.nix/config/nix/configuration.nix|28|39|v|nix
+	e; # Power management
+aed8a52209de5ab354def3347aab90b2|file:///home/wsz/.nix/bin/tidal/main.tidal|35|1|V|tidal
+	p "tides2"
+	$ arp "up"
+	$ n "{^c1 ^c2 ^c3}%1"
+	# "{tides}%1"
+	#amp 0.1
+7a315d7582a5e4fc214ae87ed95b1391|file:///home/wsz/.nix/bin/tidal/main.tidal|18|1|V|tidal
+	setI "c1" $ "c4'm7sharp9'o"
+f279bd0caa540e1bbc13130caad76ddf|file:///home/wsz/.nix/bin/tidal/main.tidal|20|1|V|tidal
+	setI "c2" $ "d4'm7sharp9'o"
+3b05af5a204fe6783694ab234b34adce|file:///home/wsz/.nix/bin/tidal/main.tidal|22|1|V|tidal
+	setI "c3" $ "f4'min7'o"
+b703152bdeb7f97dcb21a3caf59d77ba|file:///home/wsz/.nix/bin/tidal/main.tidal|51|1|V|tidal
+	d2 $ "{tides}%0.25"
+	|+| n (shuffle 2 "{0 4 7 9 11 14 -3}%0.2")
+	# room 1
+	# size 1
+	#amp 0.5
+9f75d14165cf8e61012bac89bf2b23c6|file:///home/wsz/.nix/bin/tidal/main.tidal|51|1|V|tidal
+	d2 $ "{tides}%0.25"
+	|+| n (shuffle 2 "{0 4 7 9 11 14 -3}%0.2")
+	# room 1
+	# size 1
+	#amp 0.0
+53cac3c0646c5fab0cda006291dd8fee|file:///home/wsz/.nix/bin/tidal/main.tidal|24|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{0}%1"
+	|+| n "{0}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 0.9
+	# size 0.9
+	# hpf 500
+66b4e507118902140aa88b5ca544715c|file:///home/wsz/.nix/bin/tidal/main.tidal|24|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{^c1}%1"
+	|+| n "{0}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 0.9
+	# size 0.9
+	# hpf 500
+06b2b6a62e93a47b0e0ef471abfef9d6|file:///home/wsz/.nix/bin/tidal/main.tidal|24|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{^c2}%1"
+	|+| n "{0}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 0.9
+	# size 0.9
+	# hpf 500
+9fd9389d622ebab2eb16c2457e66df29|file:///home/wsz/.nix/bin/tidal/main.tidal|24|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{^c3}%1"
+	|+| n "{0}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 0.9
+	# size 0.9
+	# hpf 500
+9956faa979b87c9d7619dcd17bf5e191|file:///home/wsz/.nix/bin/tidal/main.tidal|24|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{^c2}%1"
+	|+| n "{2}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 0.9
+	# size 0.9
+	# hpf 500
+c07e138f7631c0727d43d99bfe316d30|file:///home/wsz/.nix/bin/tidal/main.tidal|24|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{^c2}%1"
+	|+| n "{3}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 0.9
+	# size 0.9
+	# hpf 500
+031d2bd6a106f9263bc2046071f7c5eb|file:///home/wsz/.nix/bin/tidal/main.tidal|24|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{^c2}%1"
+	|+| n "{-2}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 0.9
+	# size 0.9
+	# hpf 500
+55787452a71ed28e5844128b3cd9000e|file:///home/wsz/.nix/bin/tidal/main.tidal|24|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{^c3}%1"
+	|+| n "{-2}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 0.9
+	# size 0.9
+	# hpf 500
+1d83df3957cb52de7acc71630120751b|file:///home/wsz/.nix/bin/tidal/main.tidal|24|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{^c3}%1"
+	|+| n "{-5}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 0.9
+	# size 0.9
+	# hpf 500
+be18bb5a4521cd1ff7cf704d08cbcdbf|file:///home/wsz/.nix/bin/tidal/main.tidal|24|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{^c3}%1"
+	|+| n "{-5}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 1
+	# size 1
+	# hpf 500
+9eac9276de6f20eda6bccc2daf4b4fc7|file:///home/wsz/.nix/bin/tidal/main.tidal|24|1|V|tidal
+	p "tides" $ slow 2 $ "{tides}%1"
+	|+| n "{^c3}%1"
+	|+| n "{-5}%1"
+	# slope 0.5
+	# lpf 4000
+	# attack 4
+	# hold 4
+	# release 5
+	#room 1
+	# size 1
+	# hpf 500
+	#amp 0
+03b0d8871f26361c8f96a79173104eeb|file:///home/wsz/.nix/bin/tidal/cheatsheet.tidal|30|1|V|tidal
+	choose      :	choose [0,1,..]
+					chooseBy "0 0.25 0.5" [0, 2, 3]
+					wchoose [(0,0.25),(2,0.5),(3,0.25)]
+					wchooseBy "0 0.4 0.7" [(0,0.25),(2,0.5),(3,0.25)]}
+0a3722a415881f56b3a696d47610dda7|file:///home/wsz/.nix/bin/tidal/main.tidal|98|1|V|tidal
+	p "plaits" $ s "{[plaits plaits?]}%8"
+	|+| n "{-24}%8"
+	# amp       1.0
+	# gain      1.0
+	# pan        (select "{1}%8" [fast 64 $ rand])
+	# engine    13
+	# morph      0.89
+	# harm     (select "{1}%8" [fast 64 $ rand])
+	# release (select "{1}%8" [fast 64 $ rand])
+	# level     1.0
+	# lpgdecay  0.0
+	# lpgcolour 0.0
+	# verbwet  0.6
+	# verbtime 0.4
+	# verbgain 0.2
+	# verbhp   0.0
+c0beeea8df91cfc41e6e608b3b6f330e|file:///home/wsz/.nix/bin/tidal/main.tidal|238|1|V|tidal
+	p "hh" $ "{hh}%8"
+	|+| n "{[0]}%8"
+	#amp "{0.5 0.5 2 0.5}%8"
+	#release "{0.1 0.1 0.8 0.1}%8"
+	#amp 2
+c3394af35b8ef498b73423f103eaec4a|file:///home/wsz/.nix/bin/tidal/main.tidal|238|1|V|tidal
+	p "hh" $ "{hh}%8"
+	|+| n "{[0]}%8"
+	#amp "{0.5 0.5 2 0.5}%8"
+	#release "{0.1 0.1 0.8 0.1}%8"
+	#amp 4
+6b22c1e734e18557aab16334e84d5735|file:///home/wsz/.nix/bin/tidal/main.tidal|438|1|V|tidal
+	d9 $ s "{~ ~ supersnare ~}%8" # amp(1.5)
+20351bcf13678c462e4c67d7a403aba3|file:///home/wsz/.nix/bin/tidal/main.tidal|438|1|V|tidal
+	d9 $ s "{~ ~ sn ~}%8" # amp(1.5)
+2edfa9be39cc7746f0434db4084d2aa0|file:///home/wsz/.nix/bin/tidal/main.tidal|180|1|V|tidal
+	p "tides" $ "{tides?}%2"
+	|+| n (shuffle 2 "{0 4 7 9 11 14 -3}%2")
+	# amp 1
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.6
+	# verbtime 0.9
+	# verbgain 0.7
+	# verbhp   0.0
+	# amp 0.4
+c1dedd37c6e4ec2acac7a984cae2c212|file:///home/wsz/.nix/bin/tidal/main.tidal|133|1|V|tidal
+	p "plaits3" $ s "{plaits _ _}%8"
+	|+| n "{-24}%8"
+	# amp       1.0
+	# gain      1.0
+	# pan        (select "{1}%8" [fast 64 $ rand])
+	# engine    13
+	# morph      0.89
+	# harm     (select "{1}%8" [fast 64 $ rand])
+	# release (select "{1}%8" [fast 64 $ rand])
+	# level     1.0
+	# lpgdecay  0.0
+	# lpgcolour 0.0
+	# verbwet  0.6
+	# verbtime 0.4
+	# verbgain 0.2
+	# verbhp   0.0
+8adf89980b9351d1a2ba51212ee5af4e|file:///home/wsz/.nix/bin/tidal/main.tidal|133|1|V|tidal
+	p "plaits3" $ s "{plaits _ _}%8"
+	|+| n "{-24 [-24 -24]?}%8"
+	# amp       1.0
+	# gain      1.0
+	# pan        (select "{1}%8" [fast 64 $ rand])
+	# engine    13
+	# morph      0.89
+	# harm     (select "{1}%8" [fast 64 $ rand])
+	# release (select "{1}%8" [fast 64 $ rand])
+	# level     1.0
+	# lpgdecay  0.0
+	# lpgcolour 0.0
+	# verbwet  0.6
+	# verbtime 0.4
+	# verbgain 0.2
+	# verbhp   0.0
+e7f3ebf7d9278ba531e331c3314e6451|file:///home/wsz/.nix/bin/tidal/main.tidal|161|1|V|tidal
+	d1 $ fast 1 $ "{808bd}%16"
+	|+| n "{0 1 3}%16"
+	# amp "{2 0.1 0.1 0.1}%16"
+8e24f01817df0e7e9753ac1166428e02|file:///home/wsz/.nix/bin/tidal/main.tidal|236|1|V|tidal
+	p "hh" $ "{hh}%16"
+	|+| n "{[0]}%16"
+	#amp "{0.5 0.5 2 0.5}%8"
+	#release "{0.1 0.1 0.8 0.1}%8"
+494576a45bc83437568497ef8b7f1c3a|file:///home/wsz/.nix/bin/tidal/main.tidal|236|1|V|tidal
+	p "hh" $ "{hh}%16"
+	|+| n "{[0]}%4"
+	#amp "{0.5 0.5 2 0.5}%8"
+	#release "{0.1 0.1 0.8 0.1}%8"
+86cd924302d07c9938f040a2b9eca4ca|file:///home/wsz/.nix/bin/tidal/main.tidal|236|1|V|tidal
+	p "hh" $ "{hh}%4"
+	|+| n "{[0]}%4"
+	#amp "{0.5 0.5 2 0.5}%8"
+	#release "{0.1 0.1 0.8 0.1}%8"
+4d2a4c45d1339896d7f4b78be70e86aa|file:///home/wsz/.nix/bin/tidal/main.tidal|236|1|V|tidal
+	p "hh" $ "{hh}%16"
+	|+| n "{[0]}%16"
+	#amp "{0.5 0.5 2 0.5}%16"
+	#release "{0.1 0.1 0.8 0.1}%8"
+9795f754c75d9cd818faf2a4dd103626|file:///home/wsz/.nix/bin/tidal/main.tidal|150|1|V|tidal
+	d8 $ s "sn"
+	# amp "{~ ~0 ~}%8"
+3b75b2057fe9f57bc314fbf9f074dd27|file:///home/wsz/.nix/bin/tidal/main.tidal|150|1|V|tidal
+	d8 $ s "sn"
+	# amp "{~ ~ 2 ~}%8"
+a5639601cd07f87360c2077db03bff3e|file:///home/wsz/.nix/bin/tidal/main.tidal|150|1|V|tidal
+	d8 $ s "sn:4"
+	# amp "{~ ~ 2 ~}%8"
+6bdd02186d55f16e2f24f409ac314047|file:///home/wsz/.nix/bin/tidal/main.tidal|150|1|V|tidal
+	d8 $ s "sn:4"
+	# amp "{~ ~ 2~}%8"
+50e6b26174a3c37bee0491f2e7a5497b|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%2"
+	|+| n (shuffle 2 "{0 4 7 9 11 14 -3}%2")
+	# amp 0.1
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.6
+	# verbtime 0.9
+	# verbgain 0.7
+	# verbhp   0.0
+3883241e20148a1db9cad3d78dbbb0a1|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%8"
+	|+| n (shuffle 2 "{0 4 7 9 11 14 -3}%8")
+	# amp 0.1
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.6
+	# verbtime 0.9
+	# verbgain 0.7
+	# verbhp   0.0
+65713c814ef0072994a1509d94b02974|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%8"
+	|+| n (shuffle 2 "{0 4 7 9 11 14 -3}%8")
+	# amp 0.2
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.6
+	# verbtime 0.9
+	# verbgain 0.7
+	# verbhp   0.0
+f6814f8bebcdb201ee5059535487b9b0|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%8"
+	|+| n (shuffle 2 "{0 4 7? [9 9?]? [11 11]? 14 -3}%8")
+	# amp 0.2
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.6
+	# verbtime 0.9
+	# verbgain 0.7
+	# verbhp   0.0
+39356e9504538f19eda3efa048ccdee7|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%8"
+	|+| n (shuffle 2 "{0 4 7? [9 9?]? [11 11]? 14 -3}%8")
+	# amp 0.3
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.6
+	# verbtime 0.9
+	# verbgain 0.7
+	# verbhp   0.0
+5283ab1ff6bd1a8b42d6e5d2ccd2afc1|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%8"
+	|+| n (shuffle 2 "{0 4 7? [9 9?]? [11 11]? 14 -3}%8")
+	# amp 0.3
+	# release 1
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.6
+	# verbtime 0.9
+	# verbgain 0.7
+	# verbhp   0.0
+952f0fb218260727eded104232386727|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%8"
+	|+| n (shuffle 2 "{0 4 7? [9 9?]? [11 11]? 14 -3}%8")
+	# amp 0.5
+	# release 1
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.6
+	# verbtime 0.9
+	# verbgain 0.7
+	# verbhp   0.0
+ce317a50a53233b4cd3feb2b57a8ce09|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%8"
+	|+| n (shuffle 2 "{0 4 7? [9 9?]? [11 11]? 14 -3}%8")
+	# amp 0.7
+	# release 1
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.6
+	# verbtime 0.9
+	# verbgain 0.7
+	# verbhp   0.0
+890af510512858ee161246d0f4457ea5|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%8"
+	|+| n (shuffle 2 "{0 4 7? [9 9?]? [11 11]? 14 -3}%8")
+	# amp 0.7
+	# release 1
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.8
+	# verbtime 0.9
+	# verbgain 0.7
+	# verbhp   0.0
+b51c551db4c52a4a9adad9dbc147d541|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%8"
+	|+| n (shuffle 2 "{0 4 7? [9 9?]? [11 11]? 14 -3}%8")
+	# amp 0.7
+	# release 1
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.8
+	# verbtime 0.9
+	# verbgain 0.7
+9354ebfd08b9cc65f714196dff0c848b|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%8"
+	|+| n (shuffle 2 "{0 4 7? [9 9?]? [11 11]? 14 -3}%8")
+	# amp 0.7
+	# release 1
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.8
+	# verbtime 0.9
+	# verbgain 0.8
+626a484c59a0a58b23eeb31495de3e93|file:///home/wsz/.nix/bin/tidal/main.tidal|185|1|V|tidal
+	p "tides" $ "{tides?}%8"
+	|+| n (shuffle 2 "{0 4 7? [9 9?]? [11 11]? 14 -3}%8")
+	# amp 0.7
+	# release 1
+	# octave (fast 128 $  irand 5 + 2)
+	# slope (fast 128 $  rand - 0.5 )
+	# verbwet  0.8
+	# verbtime 0.9
+	# verbgain 0.9
+6065db7b01f2801b134943bf9a08ea55|file:///home/wsz/.nix/config/zsh/zshrc|520|5|V|zsh
+	zprof
+51464cddddd3453f9832da935d0aa466|file:///home/wsz/.nix/config/zsh/zshrc|14|1|V|zsh
+	zmodload zsh/zprof
+3a5fce00ef4c7f8d5d95c94bf9da36cc|file:///home/wsz/.nix/config/nix/configuration.nix|322|1|V|nix
+	####################################################################################################################
+d6f6e4e63700f4f845324156c26e5f86|file:///home/wsz/.nix/config/nix/configuration.nix|335|22|v|nix
+	my_username 
+32208a28432ae1866b61748001ed1513|file:///home/wsz/.nix/config/nix/configuration.nix|326|22|V|nix
+	{ config, pkgs, ... }:
+019301a98a1df1103e5151811f944a2d|file:///home/wsz/.nix/config/nix/configuration.nix|337|20|V|nix
+	      enable = true;
+768babae47240f673fd71f909085779c|file:///home/wsz/.nix/config/nix/configuration.nix|340|26|v|nix
+	= {
+	
+aab40fe8324b7e431c19a6fc75d008d6|file:///home/wsz/.nix/config/nix/configuration.nix|340|1|V|nix
+	  programs.zsh.history.size = 10000;
+0ba40da0d6ed684d6d19f8c1a3192a88|file:///home/wsz/.nix/config/nix/configuration.nix|342|3|V|nix
+	  size = 10000;
+e56395c5752d1f616938228e3bacb567|file:///home/wsz/.nix/config/nix/configuration.nix|341|24|v|nix
+	size 
+b7a782741f667201b54880c925faec4b|file:///home/wsz/.nix/config/nix/configuration.nix|341|24|v|nix
+	10000
+5c93a772d0a919a1f9084fb1cd13ddcc|file:///home/wsz/.nix/config/nix/configuration.nix|336|3|V|nix
+	  programs.zsh.shellAliases = {
+	          ll = "ls -l";
+	          update = "sudo nixos-rebuild switch";
+	  };
+ad0f7f8c84d310b2392f0704382606f1|file:///home/wsz/.nix/config/nix/configuration.nix|338|1|V|nix
+	  programs.zsh.zplug.enable = true;
+b3c3e118d2b5cfe44e537de130f57501|file:///home/wsz/.nix/config/nix/configuration.nix|339|22|v|nix
+	enable 
+2b47fd5fd9889ce2c56702704e6c1c21|file:///home/wsz/.nix/config/zsh/zshrc|29|1|V|zsh
+	zplug "aloxaf/fzf-tab"
+33ba2b02e269cf00a8e5a06cb101899f|file:///home/wsz/.nix/config/nix/configuration.nix|340|14|v|nix
+	zplug 
+e588d18bdd5aeefc54572a9aca1a8de6|file:///home/wsz/.nix/config/zsh/zshrc|30|1|V|zsh
+	zplug "laggardkernel/zsh-thefuck", defer:2
+	zplug "supercrabtree/k", defer:2
+	zplug "zsh-users/zsh-autosuggestions"
+	zplug "zsh-users/zsh-syntax-highlighting", defer:2
+	zplug "subnixr/minimal"
+1018fe390e1c831b590b902ff4b07a33|file:///home/wsz/.nix/config/nix/configuration.nix|346|1|V|nix
+	
+	    {;}
+7b3fb4feae2757796dc7476d197ca2dc|file:///home/wsz/.nix/config/nix/configuration.nix|339|21|V|nix
+	  programs.fzf.enable
+	  programs.fzf.enableZshIntegration = true;
+e6d5df0fb15e1d35a4a2d6b07ba2e22c|file:///home/wsz/.nix/config/nix/configuration.nix|326|3|V|nix
+	let
+	  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+	in
+	{
+	  imports = [
+	    (import "${home-manager}/nixos")
+	  ];
+	
+	  home-manager.users.w = {
+	  programs.fzf.enable = true;
+	  programs.fzf.enableZshIntegration = true;
+	  programs.zsh.enable       = true;
+	  programs.zsh.enableAutosuggestions = true;
+	  programs.zsh.enableSyntaxHighlighting = true;
+	  programs.zsh.autocd = true;
+	  programs.zsh.history.size = 10000;
+	  programs.zsh.history.path = "~/.config/zsh/history";
+	  programs.zsh.zplug.enable = true;
+	  programs.zsh.zplug.plugins = [
+	    {name = "aloxaf/fzf-tab";}
+	    {name = "laggardkernel/zsh-thefuck";}
+	    {name = "supercrabtree/k";}
+	    {name = "zsh-users/zsh-autosuggestions";}
+	    {name = "zsh-users/zsh-syntax-highlighting";}
+	    {name = "subnixr/minimal";}
+	  ]
+	  programs.zsh.shellAliases = {
+	    ll     = "ls -l";
+	    update = "sudo nixos-rebuild switch";
+	  };
+	  };
+	};
+	    /* Here goes your home-manager config, eg home.packages = [ pkgs.foo ]; */
+	  };
+	}
+3e2d991d4bd326361c3155bf7abd2c13|file:///home/wsz/.nix/config/nix/configuration.nix|321|1|V|nix
+	let
+	  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+c6505f7b97836af995f47f13676355cf|file:///home/wsz/.nix/config/nix/configuration.nix|324|1|V|nix
+	{
+	  imports = [
+b5e31e7b52e68e4db37e9416eb724b66|file:///home/wsz/.nix/config/nix/configuration.nix|324|1|V|nix
+	    (import "${home-manager}/nixos")
+	  ];
+f4fbffc19051003673fbe19952f53ed8|file:///home/wsz/.nix/config/nix/configuration.nix|350|1|V|nix
+	  };
+	}
+4d35e08fb2c6a08f5c513bd6ad99320f|file:///home/wsz/.nix/config/nix/configuration.nix|349|1|V|nix
+	    /* Here goes your home-manager config, eg home.packages = [ pkgs.foo ]; */
+16859e0b1650db2377b0bb6114a50cbe|file:///home/wsz/.nix/config/nix/configuration.nix|15|40|V|nix
+	        (import "${home-manager}/nixos")
+f6473a39dba88e7df5d551948751dabd|file:///home/wsz/.nix/config/nix/configuration.nix|325|36|V|nix
+	  programs.home-manager.enable = true;
+7b65967be75782283257ed0fe5b3b788|file:///home/wsz/.nix/config/nix/configuration.nix|13|38|V|nix
+	      (import "${home-manager}/nixos")
+41b394758330c83757856aa482c79977|file:///home/wsz/.nix/config/nix/configuration.nix|9|1|v|nix
+	          
+20cbbebc39c4e4fa98cdb7e05483d50f|file:///home/wsz/.nix/config/nix/configuration.nix|10|26|V|nix
+	     (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos")
+53e6bd294d9f68e7a457a835ef28ffb1|file:///home/wsz/.nix/config/nix/configuration.nix|10|26|V|nix
+	      <home-manager/nixos>
+0920542716b06194c231ef2448bdd62d|file:///home/wsz/.nix/config/nix/configuration.nix|196|1|v|nix
+	
+	users.users.none  = {
+	    shell        = pkgs.zsh;
+		isNormalUser = true;
+		description  = "wsz";
+		extraGroups  = [ "networkmanager" ];
+		packages     = with pkgs; [
+	      gnome.gnome-boxes
+				];
+	};
+a2b2d66938b1f023dec6394f12b782b5|file:///home/wsz/.nix/config/nix/configuration.nix|333|22|v|nix
+	test 
+bf8fd7a5aab31d1e22d90298bf6dbc99|file:///home/wsz/.nix/config/nix/configuration.nix|147|3|v|nix
+	zplug   
+4cf005534b3ec38fce74bf6a29b1e100|file:///home/wsz/.nix/config/nix/configuration.nix|214|23|V|nix
+	      gnome.gnome-boxes
+32f429de75944a97dad82bd666e86833|file:///home/wsz/.nix/config/nix/configuration.nix|209|14|V|nix
+	    shell        = pkgs.zsh;
+b31f39cbc7f5a3cf1439a86b2d0a3c88|file:///home/wsz/.nix/config/nix/configuration.nix|208|11|V|nix
+		isNormalUser = true;
+accafa1e5299ca16089ddbd8b51ee702|file:///home/wsz/.nix/config/nix/configuration.nix|208|5|V|nix
+		packages     = with pkgs; [
+b116d744be25a5c5338dc8b490b48bab|file:///home/wsz/.nix/config/nix/configuration.nix|208|5|V|nix
+				];

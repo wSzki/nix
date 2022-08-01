@@ -7,6 +7,7 @@
 {
 imports =
 	[ # Include the results of the hardware scan.
+      <home-manager/nixos>
 	./hardware-configuration.nix
     /home/wsz/.config/musnix
     ];
@@ -24,7 +25,8 @@ services.xserver.xautolock.enable = true;
 services.xserver.xautolock.locker = "/run/wrappers/bin/physlock";
 
 
-services.tlp.enable              = true; # Power management
+services.tlp.enable              = false; # Power management
+services.upower.enable           = false; # Power management
 musnix.enable                    = true;
 
 nixpkgs.config.allowUnfree       = true;
@@ -33,10 +35,9 @@ programs.light.enable            = true;  # Backlight control
 programs.neovim.enable           = false;
 networking.firewall.enable       = true;
 networking.networkmanager.enable = true;
-networking.wireless.enable       = false;  # Enables wireless support via wpa_supplicant.
-services.upower.enable           = false; # Power management
+networking.wireless.enable       = true;  # Enables wireless support via wpa_supplicant.
 sound.enable                     = false; # Remove sound.enable or turn it off if you had it set previously, it seems to cause conflicts with pipewire
-security.rtkit.enable            = true;  # rtkit is optional but recommended
+security.rtkit.enable            = true;  # (pipewire) rtkit is optional but recommended
 services.pipewire.enable         = true;
 services.redshift.enable         = true;
 services.autorandr.enable        = true;
@@ -58,7 +59,7 @@ services.pipewire = {
       #"link.max-buffers"         = 16; # version < 3 clients can't handle more than this
       "log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
       "default.clock.rate"        = 48000;
-      "default.clock.quantum"     = 2048;
+      "default.clock.quantum"     = 4096;
       "default.clock.min-quantum" = 64;
       "default.clock.max-quantum" = 8192;
     };
@@ -88,7 +89,8 @@ environment.sessionVariables = rec {
 #######################################
 
 # https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
-#boot.kernelParams = ["intel_pstate=disable"];
+#boot.kernelParams                 = ["intel_pstate=disable"];
+boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 services.tlp.settings = {
     CPU_BOOST_ON_BAT                = 0;
     CPU_SCALING_GOVERNOR_ON_AC      = "performance";
@@ -105,7 +107,6 @@ services.tlp.settings = {
     TPACPI_ENABLE                   = 1;
     TPSMAPI_ENABLE                  = 1;
   };
-boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 
 
 
@@ -143,7 +144,8 @@ environment.systemPackages = with pkgs; [
   gnumake xorg.xgamma xorg.xset xorg.xev
   git     xclip       fzf       ack
   tldr    fasd        nodejs    trash-cli
-  zplug   killall
+  killall home-manager
+  readline
 ];
 
 #########
@@ -158,7 +160,7 @@ users.users.wsz  = {
 	extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
 	packages     = with pkgs; [
                          mpv pulseaudio pavucontrol youtube-dl
-                         croc librewolf  zplug htop
+                         croc librewolf  htop
                          nmap rsstail bitwarden
                          element-desktop tdesktop signal-desktop
                          # TEMP
@@ -201,6 +203,8 @@ users.users.none  = {
       gnome.gnome-boxes
 			];
 };
+
+
 
 # Firewall
 networking.firewall.allowedTCPPorts                 = [ 80 443 ];
@@ -312,8 +316,50 @@ i18n.extraLocaleSettings = {
 # ---
 # Neovim
 #environment.variables.EDITOR = "nvim";
-#programs.neovim.viAlias      = true;
+#programs.neovim.viAlias      = true;systemctl status "home-manager-$USER.service"
 #programs.neovim.vimAlias     = true;
 
+users.users.evel.isNormalUser = true;
+home-manager.users.evel = { pkgs, ... }: {
+  home.packages = [ pkgs.neofetch pkgs.kakoune ];
+  programs.zsh.enable = true;
+};
+
+
+  users.users.eve.isNormalUser = true;
+  home-manager.users.eve = {
+    programs.fzf.enable = true;
+    programs.fzf.enableZshIntegration = true;
+    programs.zsh.enable       = true;
+    programs.zsh.enableAutosuggestions = true;
+    programs.zsh.enableSyntaxHighlighting = true;
+    programs.zsh.autocd = true;
+    programs.zsh.history.size = 10000;
+    programs.zsh.history.path = "~/.config/zsh/history";
+    programs.zsh.zplug.enable = true;
+    programs.zsh.zplug.plugins = [
+      {name = "aloxaf/fzf-tab";}
+      {name = "laggardkernel/zsh-thefuck";}
+      {name = "supercrabtree/k";}
+      {name = "zsh-users/zsh-autosuggestions";}
+      {name = "zsh-users/zsh-syntax-highlighting";}
+      {name = "subnixr/minimal";}
+    ];
+    programs.zsh.shellAliases = {
+      ll     = "ls -l";
+      update = "sudo nixos-rebuild switch";
+    };
+  };
 
 }
+
+
+
+####################################################################################################################
+####################################################################################################################
+
+
+
+
+
+

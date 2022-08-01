@@ -66,11 +66,11 @@ bindkey    "^F" 			fzf-file-widget
 
 ####################### ZSH COMPLETION SUBSTRING #####################
 
-zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+#zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':completion:*' completer _complete
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
-autoload -Uz compinit
-compinit
+#autoload -Uz compinit
+#compinit
 
 ######################## NIX ###################################
 alias nrc="vim ~/.nix/config/nix/configuration.nix"
@@ -514,3 +514,5 @@ export CPATH=$CPATH:/home/wsz/cub/mlx
 export CPATH=$CPATH:/home/wsz/cub/inc
 
 [ -f "/home/wsz/.ghcup/env" ] && source "/home/wsz/.ghcup/env" # ghcup-env
+
+
