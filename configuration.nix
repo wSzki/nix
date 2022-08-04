@@ -16,7 +16,7 @@
 
 
   environment.systemPackages = with pkgs; [
-    bitwarden
+    fzf
   ];
 
   #system.autoUpgrade.enable = true;
@@ -38,7 +38,14 @@ users.users.wsz  = {
   isNormalUser = true;
   description  = "wsz";
   extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
-  packages     = with pkgs; [ git librewolf fzf ];
+  packages     = with pkgs; [
+    nodejs
+    librewolf
+    trash-cli
+    fzf
+    ack
+    kitty
+  ];
 };
 
 
@@ -64,23 +71,22 @@ home-manager.users.wsz = { pkgs, ... }: {
     enable = true;
     vimAlias = true;
     viAlias = true;
-    withNodeJs = true;
+    #withNodeJs = true; # seems broken
     withPython3 = true;
     plugins = with pkgs.vimPlugins; [
       vim-nix
       nvim-fzf
-      #coc-ultisnips
-      #coc-yank
-      #coc-snippets
-      #coc-html
-      #coc-emmet
-      #coc-nvim
-      #coc-fzf
-      #coc-html
-      #coc-json
+      coc-nvim
+      coc-clangd
+      coc-fzf
+      coc-ultisnips
+      coc-yank
+      coc-snippets
+      coc-html
+      coc-emmet
+      coc-json
       vim-sayonara
       colorizer
-      vim-gruvbox8
       toggleterm-nvim
       gruvbox
       nerdcommenter
@@ -95,22 +101,21 @@ home-manager.users.wsz = { pkgs, ... }: {
       wilder-nvim
       nvim-web-devicons
       i3config-vim
-
-      nvim-lspconfig # read about lsp
-      nvim-cmp # auto completion
-      nvim-tree-lua # ?
-      nvim-treesitter # ?
-      bufferline-nvim # ?
-      galaxyline-nvim # ?
       indentLine # ?
-      {
-        plugin = gruvbox-material;
-        config = ''
-         let g:gruvbox_material_background = 'hard'
-         let g:gruvbox_material_colors_override = {'bg0': ['#191d20', '234']}
-         let g:gruvbox_material_colors_override = {'bg2': ['#191d20', '235']}
-        '';
-      }
+
+      #nvim-lspconfig # read about lsp
+      #nvim-cmp # auto completion
+      #nvim-tree-lua # ?
+      #nvim-treesitter # ?
+      #bufferline-nvim # ?
+      #galaxyline-nvim # ?
+      #{
+        #plugin = gruvbox-material;
+        #config = ''
+         #let g:gruvbox_material_background = 'hard'
+         #colorscheme gruvbox-material
+        #'';
+      #}
     ];
 
     #extraPackages = with pkgs.nodePackages; [
@@ -118,15 +123,20 @@ home-manager.users.wsz = { pkgs, ... }: {
     #];
 
     extraConfig = ''
-         colorscheme gruvbox-material
          set nu
          set mouse=a
          set relativenumber
          set cursorline
+         set background=dark
+         if has ('termguicolors')
+         source ~/ok.vim
+          set termguicolors
+        endif
     '';
   };
   programs.fish.enable = true;
   programs.fish.shellAliases = {
+    del = "trash-put";
     ll     = "ls -l";
     nrc = "vim ~/nix/configuration.nix";
     vim    = "nvim";
@@ -345,7 +355,7 @@ location.longitude                                  = 0.0;
 #boot.loader.systemd-boot.enable                     = true;
 boot.loader.grub.enable=true;
 boot.loader.grub.version=2;
-boot.loader.grub.device="/dev/vda";
+boot.loader.grub.device="/dev/sda";
 #boot.loader.efi.canTouchEfiVariables                = true;
 #boot.loader.efi.efiSysMountPoint                    = "/boot/efi";
 #systemd.extraConfig                                 = ''DefaulTimeOutStopSec=10s'';
