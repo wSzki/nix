@@ -34,6 +34,7 @@
 # System     #
 ##############.
 users.users.wsz  = {
+  #shell        = pkgs.fish;
   shell        = pkgs.fish;
   isNormalUser = true;
   description  = "wsz";
@@ -50,8 +51,9 @@ users.users.wsz  = {
 
 
 home-manager.useGlobalPkgs = true;
-#home-manager.users.wsz = { pkgs, ... }: {
-home-manager.users.wsz = {
+home-manager.users.wsz = { pkgs, ... }: {
+  #home.packages = with pkgs; [zsh];
+#home-manager.users.wsz = {
   xdg.userDirs = {
     enable = true;
     documents = "$HOME/box";
@@ -134,11 +136,49 @@ home-manager.users.wsz = {
         endif
     '';
   };
-  programs.fish.enable = true;
-  programs.fish.plugins = [
-    { name = "forgit"; src = pkgs.fishPlugins.forgit.src; }
-    { name = "done"; src = pkgs.fishPlugins.done.src; }
-    { name = "hydro"; src = pkgs.fishPlugins.hydro.src; }
+
+  programs.zsh = # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enable
+    {
+      enable = true;
+      enableAutosuggestions = true;
+      enableCompletion = true;
+      enableSyntaxHighlighting = true;
+      autocd = true;
+      envExtra="";
+      initExtra="";
+      dirHashes = {
+        docs  = "$HOME/Documents";
+        vids  = "$HOME/Videos";
+        dl    = "$HOME/Downloads";
+      };
+      zplug = {
+        enable = true;
+        plugins = [
+          {name = "aloxaf/fzf-tab";}
+          {name = "subnixr/minimal";}
+          ];
+          };
+          shellAliases = {
+          del = "trash-put";
+          ll     = "ls -l";
+          nrc = "vim ~/nix/configuration.nix";
+          vim    = "nvim";
+          rebuild = "sudo cp ~/nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
+          gitap = "git add . && git status && git commit -m . && git push";
+          };
+          };
+
+          programs.fish.enable = true; # check home manager fish page
+          programs.fish.shellAbbrs = {};
+          programs.fish.functions = {};
+          programs.fish.shellInit = "";
+          programs.fish.loginShellInit = "";
+          programs.fish.interactiveShellInit= "";
+          programs.fish.plugins = [
+            { name = "forgit"; src = pkgs.fishPlugins.forgit.src; }
+            { name = "done"; src = pkgs.fishPlugins.done.src; }
+            { name = "hydro"; src = pkgs.fishPlugins.hydro.src; }
+    #{ name = "pure"; src = pkgs.fishPlugins.pure.src; }
     { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
   ];
   programs.fish.shellAliases = {
@@ -193,13 +233,13 @@ services.pipewire = {
     "context.properties" = {
       "link.max-buffers"          = 32;
 #"link.max-buffers"         = 16; # version < 3 clients can't handle more than this
-"log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
-"default.clock.rate"        = 48000;
-"default.clock.quantum"     = 4096;
-"default.clock.min-quantum" = 64;
-"default.clock.max-quantum" = 8192;
-};
-};
+      "log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
+      "default.clock.rate"        = 48000;
+      "default.clock.quantum"     = 4096;
+      "default.clock.min-quantum" = 64;
+      "default.clock.max-quantum" = 8192;
+    };
+  };
 };
 
 
@@ -208,15 +248,15 @@ services.pipewire = {
 ##############
 
 environment.sessionVariables = rec {
-DOT              = "\${HOME}/.nix";
-FZF_DEFAULT_OPTS = "--height 50%";
-ZDOTDIR          = "\${HOME}/.nix/config/zsh/";
-PATH             = [
-"\$DOT/bin/scripts"
-"\$DOT/bin/bookmarks"
-"\${HOME}/.local/bin"
-];
-};
+  DOT              = "\${HOME}/.nix";
+  FZF_DEFAULT_OPTS = "--height 50%";
+  ZDOTDIR          = "\${HOME}/.nix/config/zsh/";
+  PATH             = [
+      "\$DOT/bin/scripts"
+      "\$DOT/bin/bookmarks"
+      "\${HOME}/.local/bin"
+    ];
+  };
 
 
 
@@ -228,20 +268,20 @@ PATH             = [
 #boot.kernelParams                 = ["intel_pstate=disable"];
 boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 services.tlp.settings = {
-CPU_BOOST_ON_BAT                = 0;
-CPU_SCALING_GOVERNOR_ON_AC      = "performance";
-CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
-CPU_MAX_PERF_ON_AC              = 100;
-CPU_MAX_PERF_ON_BAT             = 100;
-START_CHARGE_THRESH_BAT0        = 50;
-STOP_CHARGE_THRESH_BAT0         = 90;
-RUNTIME_PM_ON_BAT               = "auto";
-RUNTIME_PM_ON_AC                = "on";
-SOUND_POWER_SAVE_ON_AC          = 0;
-SOUND_POWER_SAVE_ON_BAT         = 1;
-NATACPI_ENABLE                  = 1;
-TPACPI_ENABLE                   = 1;
-TPSMAPI_ENABLE                  = 1;
+  CPU_BOOST_ON_BAT                = 0;
+  CPU_SCALING_GOVERNOR_ON_AC      = "performance";
+  CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+  CPU_MAX_PERF_ON_AC              = 100;
+  CPU_MAX_PERF_ON_BAT             = 100;
+  START_CHARGE_THRESH_BAT0        = 50;
+  STOP_CHARGE_THRESH_BAT0         = 90;
+  RUNTIME_PM_ON_BAT               = "auto";
+  RUNTIME_PM_ON_AC                = "on";
+  SOUND_POWER_SAVE_ON_AC          = 0;
+  SOUND_POWER_SAVE_ON_BAT         = 1;
+  NATACPI_ENABLE                  = 1;
+  TPACPI_ENABLE                   = 1;
+  TPSMAPI_ENABLE                  = 1;
 };
 
 
@@ -251,13 +291,13 @@ TPSMAPI_ENABLE                  = 1;
 #################
 
 services.xserver = {
-enable                        = true;
-autoRepeatDelay               = 250;
-autoRepeatInterval            = 25;
-layout                        = "us";
-xkbVariant                    = "";
-desktopManager.xterm.enable   = false;
-displayManager.startx.enable  = false;
+  enable                        = true;
+  autoRepeatDelay               = 250;
+  autoRepeatInterval            = 25;
+  layout                        = "us";
+  xkbVariant                    = "";
+  desktopManager.xterm.enable   = false;
+  displayManager.startx.enable  = false;
 #displayManager.defaultSession = "none+i3";
 windowManager.i3              = {
   package = pkgs.i3-gaps;
