@@ -46,6 +46,12 @@ users.users.wsz  = {
     fzf
     ack
     kitty
+    mpv
+    fasd
+    fd
+    youtube-dl
+    dust
+    nmap
   ];
 };
 
