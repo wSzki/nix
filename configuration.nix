@@ -2,20 +2,137 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, vimUtils, ... }:
 
 {
-imports =
-	[ # Include the results of the hardware scan.
-      <home-manager/nixos>
-	./hardware-configuration.nix
+  imports =
+    [ # Include the results of the hardware scan.
+    <home-manager/nixos>
+    ./hardware-configuration.nix
     /home/wsz/.config/musnix
-    ];
+  ];
 
+
+  environment.systemPackages = with pkgs; [
+    bitwarden
+  ];
+
+  #system.autoUpgrade.enable = true;
+  #system.autoUpdate.enable = true;
+  nix.autoOptimiseStore = true;
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+  };
+
+
+  services.xserver.virtualScreen = {x = 1920; y = 1080;};
 
 ##############.
 # System     #
 ##############.
+users.users.wsz  = {
+  shell        = pkgs.fish;
+  isNormalUser = true;
+  description  = "wsz";
+  extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
+  packages     = with pkgs; [ git librewolf fzf ];
+};
+
+
+home-manager.useGlobalPkgs = true;
+home-manager.users.wsz = { pkgs, ... }: {
+
+  xdg.userDirs = {
+    enable = true;
+    documents = "$HOME/box";
+    download = "$HOME/box";
+    desktop = "$HOME/box";
+    publicShare = "$HOME/box";
+    templates = "$HOME/box";
+  };
+
+
+  programs.git = {
+    enable = true;
+    userName = "wsz";
+    userEmail = "wsz@nix.os";
+  };
+  programs.neovim = {
+    enable = true;
+    vimAlias = true;
+    viAlias = true;
+    withNodeJs = true;
+    withPython3 = true;
+    plugins = with pkgs.vimPlugins; [
+      vim-nix
+      nvim-fzf
+      #coc-ultisnips
+      #coc-yank
+      #coc-snippets
+      #coc-html
+      #coc-emmet
+      #coc-nvim
+      #coc-fzf
+      #coc-html
+      #coc-json
+      vim-sayonara
+      colorizer
+      vim-gruvbox8
+      toggleterm-nvim
+      gruvbox
+      nerdcommenter
+      papercolor-theme
+      vim-visual-multi
+      vim-gitgutter
+      lessspace-vim
+      undotree
+      vim-easy-align
+      nvim-scrollview
+      vim-smoothie
+      wilder-nvim
+      nvim-web-devicons
+      i3config-vim
+
+      nvim-lspconfig # read about lsp
+      nvim-cmp # auto completion
+      nvim-tree-lua # ?
+      nvim-treesitter # ?
+      bufferline-nvim # ?
+      galaxyline-nvim # ?
+      indentLine # ?
+      {
+        plugin = gruvbox-material;
+        config = ''
+         let g:gruvbox_material_background = 'hard'
+         let g:gruvbox_material_colors_override = {'bg0': ['#191d20', '234']}
+         let g:gruvbox_material_colors_override = {'bg2': ['#191d20', '235']}
+        '';
+      }
+    ];
+
+    #extraPackages = with pkgs.nodePackages; [
+      #coc-clangd
+    #];
+
+    extraConfig = ''
+         colorscheme gruvbox-material
+         set nu
+         set mouse=a
+         set relativenumber
+         set cursorline
+    '';
+  };
+  programs.fish.enable = true;
+  programs.fish.shellAliases = {
+    ll     = "ls -l";
+    nrc = "vim ~/nix/configuration.nix";
+    vim    = "nvim";
+    rebuild = "sudo cp ~/nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
+    gitap = "git add . && git status && git commit -m . && git push";
+  };
+};
+
 
 
 # Xautolock ?
@@ -30,9 +147,9 @@ services.upower.enable           = false; # Power management
 musnix.enable                    = true;
 
 nixpkgs.config.allowUnfree       = true;
-programs.zsh.enable              = true;
+#programs.zsh.enable              = true;
 programs.light.enable            = true;  # Backlight control
-programs.neovim.enable           = false;
+#programs.neovim.enable           = false;
 networking.firewall.enable       = true;
 networking.networkmanager.enable = true;
 networking.wireless.enable       = false;  # Enables wireless support via wpa_supplicant.
@@ -49,6 +166,7 @@ services.autorandr.enable        = true;
 #########
 
 services.pipewire = {
+
   alsa.enable         = true;
   alsa.support32Bit   = true;
   pulse.enable        = true;
@@ -56,14 +174,14 @@ services.pipewire = {
   config.pipewire = {
     "context.properties" = {
       "link.max-buffers"          = 32;
-      #"link.max-buffers"         = 16; # version < 3 clients can't handle more than this
-      "log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
-      "default.clock.rate"        = 48000;
-      "default.clock.quantum"     = 4096;
-      "default.clock.min-quantum" = 64;
-      "default.clock.max-quantum" = 8192;
-    };
-  };
+#"link.max-buffers"         = 16; # version < 3 clients can't handle more than this
+"log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
+"default.clock.rate"        = 48000;
+"default.clock.quantum"     = 4096;
+"default.clock.min-quantum" = 64;
+"default.clock.max-quantum" = 8192;
+};
+};
 };
 
 
@@ -72,14 +190,14 @@ services.pipewire = {
 ##############
 
 environment.sessionVariables = rec {
-  DOT              = "\${HOME}/.nix";
-  FZF_DEFAULT_OPTS = "--height 50%";
-  ZDOTDIR          = "\${HOME}/.nix/config/zsh/";
-  PATH             = [
-    "\$DOT/bin/scripts"
-    "\$DOT/bin/bookmarks"
-    "\${HOME}/.local/bin"
-  ];
+DOT              = "\${HOME}/.nix";
+FZF_DEFAULT_OPTS = "--height 50%";
+ZDOTDIR          = "\${HOME}/.nix/config/zsh/";
+PATH             = [
+"\$DOT/bin/scripts"
+"\$DOT/bin/bookmarks"
+"\${HOME}/.local/bin"
+];
 };
 
 
@@ -92,21 +210,21 @@ environment.sessionVariables = rec {
 #boot.kernelParams                 = ["intel_pstate=disable"];
 boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 services.tlp.settings = {
-    CPU_BOOST_ON_BAT                = 0;
-    CPU_SCALING_GOVERNOR_ON_AC      = "performance";
-    CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
-    CPU_MAX_PERF_ON_AC              = 100;
-    CPU_MAX_PERF_ON_BAT             = 100;
-    START_CHARGE_THRESH_BAT0        = 50;
-    STOP_CHARGE_THRESH_BAT0         = 90;
-    RUNTIME_PM_ON_BAT               = "auto";
-    RUNTIME_PM_ON_AC                = "on";
-    SOUND_POWER_SAVE_ON_AC          = 0;
-    SOUND_POWER_SAVE_ON_BAT         = 1;
-    NATACPI_ENABLE                  = 1;
-    TPACPI_ENABLE                   = 1;
-    TPSMAPI_ENABLE                  = 1;
-  };
+CPU_BOOST_ON_BAT                = 0;
+CPU_SCALING_GOVERNOR_ON_AC      = "performance";
+CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+CPU_MAX_PERF_ON_AC              = 100;
+CPU_MAX_PERF_ON_BAT             = 100;
+START_CHARGE_THRESH_BAT0        = 50;
+STOP_CHARGE_THRESH_BAT0         = 90;
+RUNTIME_PM_ON_BAT               = "auto";
+RUNTIME_PM_ON_AC                = "on";
+SOUND_POWER_SAVE_ON_AC          = 0;
+SOUND_POWER_SAVE_ON_BAT         = 1;
+NATACPI_ENABLE                  = 1;
+TPACPI_ENABLE                   = 1;
+TPSMAPI_ENABLE                  = 1;
+};
 
 
 
@@ -115,22 +233,22 @@ services.tlp.settings = {
 #################
 
 services.xserver = {
-	enable                        = true;
-    autoRepeatDelay               = 250;
-    autoRepeatInterval            = 25;
-	layout                        = "us";
-	xkbVariant                    = "";
-    desktopManager.xterm.enable   = false;
-    displayManager.startx.enable  = true;
-    #displayManager.defaultSession = "none+i3";
-	windowManager.i3              = {
-		package = pkgs.i3-gaps;
-		enable = true;
-		      extraPackages = with pkgs; [
-                   rofi  i3status  i3blocks arandr
-                   conky unclutter feh
-                 ];
-    	};
+enable                        = true;
+autoRepeatDelay               = 250;
+autoRepeatInterval            = 25;
+layout                        = "us";
+xkbVariant                    = "";
+desktopManager.xterm.enable   = false;
+displayManager.startx.enable  = false;
+#displayManager.defaultSession = "none+i3";
+windowManager.i3              = {
+  package = pkgs.i3-gaps;
+  enable = true;
+  extraPackages = with pkgs; [
+    rofi  i3status  i3blocks arandr
+    conky unclutter feh
+  ];
+};
 };
 
 ###################
@@ -139,69 +257,69 @@ services.xserver = {
 
 # List packages installed in system profile. To search, run:
 # $ nix search wget
-environment.systemPackages = with pkgs; [
-  vim     neovim      tmux      wget
-  gnumake xorg.xgamma xorg.xset xorg.xev
-  git     xclip       fzf       ack
-  tldr    fasd        nodejs    trash-cli
-  killall home-manager
-  readline
-];
+#environment.systemPackages = with pkgs; [
+#  vim     neovim      tmux      wget
+#  gnumake xorg.xgamma xorg.xset xorg.xev
+#  git     xclip       fzf       ack
+#  tldr    fasd        nodejs    trash-cli
+#  killall home-manager
+#  readline
+#];
 
 #########
 # USERS #
 #########
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
-users.users.wsz  = {
-    shell        = pkgs.zsh;
-	isNormalUser = true;
-	description  = "wsz";
-	extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
-	packages     = with pkgs; [
-                         mpv pulseaudio pavucontrol youtube-dl
-                         croc librewolf  htop
-                         nmap rsstail bitwarden
-                         element-desktop tdesktop signal-desktop
-                         # TEMP
-                         supercollider-with-plugins
-                         ghc
-                         haskell-language-server
-                         cabal-install
-                         cava
-			];
-};
+#users.users.wsz  = {
+#  shell        = pkgs.fish;
+#  isNormalUser = true;
+#  description  = "wsz";
+#  extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
+#  packages     = with pkgs; [
+#    mpv pulseaudio pavucontrol youtube-dl
+#    croc librewolf  htop
+#    nmap rsstail bitwarden
+#    element-desktop tdesktop signal-desktop
+# TEMP
+#supercollider-with-plugins
+#ghc
+#haskell-language-server
+#cabal-install
+#cava
+#                   ];
+#  };
 
 users.users.sc  = {
-    shell        = pkgs.zsh;
-	isNormalUser = true;
-	description  = "wsz";
-	extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
-	packages     = with pkgs; [
-                         supercollider-with-plugins haskell-language-server
-                         ghc cabal-install pulseaudio pavucontrol
-                         librewolf
-			];
+  shell        = pkgs.zsh;
+  isNormalUser = true;
+  description  = "wsz";
+  extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
+  packages     = with pkgs; [
+    supercollider-with-plugins haskell-language-server
+    ghc cabal-install pulseaudio pavucontrol
+    librewolf
+  ];
 };
 
 users.users.test  = {
-    shell        = pkgs.zsh;
-	isNormalUser = true;
-	description  = "wsz";
-	extraGroups  = [ "networkmanager" "wheel" "video" ];
-	packages     = with pkgs; [
-                         librewolf
-			];
+  shell        = pkgs.zsh;
+  isNormalUser = true;
+  description  = "wsz";
+  extraGroups  = [ "networkmanager" "wheel" "video" ];
+  packages     = with pkgs; [
+    librewolf
+  ];
 };
 
 users.users.none  = {
-    shell        = pkgs.zsh;
-	isNormalUser = true;
-	description  = "wsz";
-	extraGroups  = [ "networkmanager" ];
-	packages     = with pkgs; [
-      gnome.gnome-boxes
-			];
+  shell        = pkgs.zsh;
+  isNormalUser = true;
+  description  = "wsz";
+  extraGroups  = [ "networkmanager" ];
+  packages     = with pkgs; [
+    gnome.gnome-boxes
+  ];
 };
 
 
@@ -222,10 +340,13 @@ location.latitude                                   = 0.0;
 location.longitude                                  = 0.0;
 
 # Bootloader
-boot.loader.systemd-boot.enable                     = true;
-boot.loader.efi.canTouchEfiVariables                = true;
-boot.loader.efi.efiSysMountPoint                    = "/boot/efi";
-systemd.extraConfig                                 = ''DefaulTimeOutStopSec=10s'';
+#boot.loader.systemd-boot.enable                     = true;
+boot.loader.grub.enable=true;
+boot.loader.grub.version=2;
+boot.loader.grub.device="/dev/vda";
+#boot.loader.efi.canTouchEfiVariables                = true;
+#boot.loader.efi.efiSysMountPoint                    = "/boot/efi";
+#systemd.extraConfig                                 = ''DefaulTimeOutStopSec=10s'';
 
 # Touchpad
 services.xserver.libinput.enable                    = true;
@@ -248,15 +369,15 @@ fonts.fonts = with pkgs; [
 time.timeZone            = "Europe/Paris";
 i18n.defaultLocale       = "en_US.utf8";
 i18n.extraLocaleSettings = {
-	LC_ADDRESS           = "fr_FR.utf8";
-	LC_IDENTIFICATION    = "fr_FR.utf8";
-	LC_MEASUREMENT       = "fr_FR.utf8";
-	LC_MONETARY          = "fr_FR.utf8";
-	LC_NAME              = "fr_FR.utf8";
-	LC_NUMERIC           = "fr_FR.utf8";
-	LC_PAPER             = "fr_FR.utf8";
-	LC_TELEPHONE         = "fr_FR.utf8";
-	LC_TIME              = "fr_FR.utf8";
+  LC_ADDRESS           = "fr_FR.utf8";
+  LC_IDENTIFICATION    = "fr_FR.utf8";
+  LC_MEASUREMENT       = "fr_FR.utf8";
+  LC_MONETARY          = "fr_FR.utf8";
+  LC_NAME              = "fr_FR.utf8";
+  LC_NUMERIC           = "fr_FR.utf8";
+  LC_PAPER             = "fr_FR.utf8";
+  LC_TELEPHONE         = "fr_FR.utf8";
+  LC_TIME              = "fr_FR.utf8";
 };
 
 
@@ -289,7 +410,7 @@ i18n.extraLocaleSettings = {
 # this value at the release version of the first install of this system.
 # Before changing this value read the documentation for this option
 # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-	system.stateVersion = "22.05"; # Did you read the comment?
+system.stateVersion = "22.05"; # Did you read the comment?
 
 ###########
 # ARCHIVE #
@@ -299,19 +420,19 @@ i18n.extraLocaleSettings = {
 # Tlp extra settings # https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
 
 #boot.extraModprobeConfig = lib.mkMerge [
-  ## idle audio card after one second
-  #"options snd_hda_intel power_save=1"
-  ## enable wifi power saving (keep uapsd off to maintain low latencies)
-  #"options iwlwifi power_save=1 uapsd_disable=1"
+## idle audio card after one second
+#"options snd_hda_intel power_save=1"
+## enable wifi power saving (keep uapsd off to maintain low latencies)
+#"options iwlwifi power_save=1 uapsd_disable=1"
 #];
 
 #services.udev.extraRules = lib.mkMerge [
-  ## autosuspend USB devices
-  #''ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"''
-  ## autosuspend PCI devices
-  #''ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="auto"''
-  ## disable Ethernet Wake-on-LAN
-  #''ACTION=="add", SUBSYSTEM=="net", NAME=="enp*", RUN+="${pkgs.ethtool}/sbin/ethtool -s $name wol d"''
+## autosuspend USB devices
+#''ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"''
+## autosuspend PCI devices
+#''ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="auto"''
+## disable Ethernet Wake-on-LAN
+#''ACTION=="add", SUBSYSTEM=="net", NAME=="enp*", RUN+="${pkgs.ethtool}/sbin/ethtool -s $name wol d"''
 #];
 # ---
 # Neovim
@@ -319,37 +440,7 @@ i18n.extraLocaleSettings = {
 #programs.neovim.viAlias      = true;systemctl status "home-manager-$USER.service"
 #programs.neovim.vimAlias     = true;
 
-users.users.evel.isNormalUser = true;
-home-manager.users.evel = { pkgs, ... }: {
-  home.packages = [ pkgs.neofetch pkgs.kakoune ];
-  programs.zsh.enable = true;
-};
 
-
-  users.users.eve.isNormalUser = true;
-  home-manager.users.eve = {
-    programs.fzf.enable = true;
-    programs.fzf.enableZshIntegration = true;
-    programs.zsh.enable       = true;
-    programs.zsh.enableAutosuggestions = true;
-    programs.zsh.enableSyntaxHighlighting = true;
-    programs.zsh.autocd = true;
-    programs.zsh.history.size = 10000;
-    programs.zsh.history.path = "~/.config/zsh/history";
-    programs.zsh.zplug.enable = true;
-    programs.zsh.zplug.plugins = [
-      {name = "aloxaf/fzf-tab";}
-      {name = "laggardkernel/zsh-thefuck";}
-      {name = "supercrabtree/k";}
-      {name = "zsh-users/zsh-autosuggestions";}
-      {name = "zsh-users/zsh-syntax-highlighting";}
-      {name = "subnixr/minimal";}
-    ];
-    programs.zsh.shellAliases = {
-      ll     = "ls -l";
-      update = "sudo nixos-rebuild switch";
-    };
-  };
 
 }
 
