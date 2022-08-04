@@ -50,8 +50,8 @@ users.users.wsz  = {
 
 
 home-manager.useGlobalPkgs = true;
-home-manager.users.wsz = { pkgs, ... }: {
-
+#home-manager.users.wsz = { pkgs, ... }: {
+home-manager.users.wsz = {
   xdg.userDirs = {
     enable = true;
     documents = "$HOME/box";
@@ -135,6 +135,12 @@ home-manager.users.wsz = { pkgs, ... }: {
     '';
   };
   programs.fish.enable = true;
+  programs.fish.plugins = [
+    { name = "forgit"; src = pkgs.fishPlugins.forgit.src; }
+    { name = "done"; src = pkgs.fishPlugins.done.src; }
+    { name = "hydro"; src = pkgs.fishPlugins.hydro.src; }
+    { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
+  ];
   programs.fish.shellAliases = {
     del = "trash-put";
     ll     = "ls -l";
