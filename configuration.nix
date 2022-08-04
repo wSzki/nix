@@ -4,6 +4,8 @@
 
 { config, pkgs, lib, vimUtils, ... }:
 
+# check this  https://github.com/notusknot
+
 {
   imports =
     [ # Include the results of the hardware scan.
