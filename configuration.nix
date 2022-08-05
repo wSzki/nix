@@ -40,6 +40,11 @@ users.users.wsz  = {
   description  = "wsz";
   extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
   packages     = with pkgs; [
+    unclutter
+    redshift
+    bitwarden
+    tldr
+    acpilight
     nodejs
     librewolf
     trash-cli
@@ -50,7 +55,6 @@ users.users.wsz  = {
     fasd
     fd
     youtube-dl
-    dust
     nmap
   ];
 };
@@ -137,65 +141,65 @@ home-manager.users.wsz = { pkgs, ... }: {
          set cursorline
          set background=dark
          if has ('termguicolors')
-         source ~/ok.vim
+         source ~/nix/color.vim
           set termguicolors
         endif
     '';
   };
 
   programs.zsh = # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enable
-    {
+  {
+    enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    enableSyntaxHighlighting = true;
+    autocd = true;
+    envExtra="";
+    initExtra="";
+    dirHashes = {
+      docs  = "$HOME/Documents";
+      vids  = "$HOME/Videos";
+      dl    = "$HOME/Downloads";
+    };
+    zplug = {
       enable = true;
-      enableAutosuggestions = true;
-      enableCompletion = true;
-      enableSyntaxHighlighting = true;
-      autocd = true;
-      envExtra="";
-      initExtra="";
-      dirHashes = {
-        docs  = "$HOME/Documents";
-        vids  = "$HOME/Videos";
-        dl    = "$HOME/Downloads";
-      };
-      zplug = {
-        enable = true;
-        plugins = [
-          {name = "aloxaf/fzf-tab";}
-          {name = "subnixr/minimal";}
-          ];
-          };
-          shellAliases = {
-          del = "trash-put";
-          ll     = "ls -l";
-          nrc = "vim ~/nix/configuration.nix";
-          vim    = "nvim";
-          rebuild = "sudo cp ~/nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
-          gitap = "git add . && git status && git commit -m . && git push";
-          };
-          };
+      plugins = [
+        {name = "aloxaf/fzf-tab";}
+        {name = "subnixr/minimal";}
+      ];
+    };
+    shellAliases = {
+      del = "trash-put";
+      ll     = "ls -l";
+      nrc = "vim ~/nix/configuration.nix";
+      vim    = "nvim";
+      rebuild = "sudo cp ~/nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
+      gitap = "git add . && git status && git commit -m . && git push";
+    };
+  };
 
-          programs.fish.enable = true; # check home manager fish page
-          programs.fish.shellAbbrs = {};
-          programs.fish.functions = {};
-          programs.fish.shellInit = "";
-          programs.fish.loginShellInit = "";
-          programs.fish.interactiveShellInit= "";
-          programs.fish.plugins = [
-            { name = "forgit"; src = pkgs.fishPlugins.forgit.src; }
-            { name = "done"; src = pkgs.fishPlugins.done.src; }
-            { name = "hydro"; src = pkgs.fishPlugins.hydro.src; }
+  programs.fish.enable = true; # check home manager fish page
+  programs.fish.shellAbbrs = {};
+  programs.fish.functions = {};
+  programs.fish.shellInit = "";
+  programs.fish.loginShellInit = "";
+  programs.fish.interactiveShellInit= "";
+  programs.fish.plugins = [
+    { name = "forgit"; src = pkgs.fishPlugins.forgit.src; }
+    { name = "done"; src = pkgs.fishPlugins.done.src; }
+    { name = "hydro"; src = pkgs.fishPlugins.hydro.src; }
     #{ name = "pure"; src = pkgs.fishPlugins.pure.src; }
     { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
-  ];
-  programs.fish.shellAliases = {
+    ];
+    programs.fish.shellAliases = {
     del = "trash-put";
     ll     = "ls -l";
     nrc = "vim ~/nix/configuration.nix";
     vim    = "nvim";
     rebuild = "sudo cp ~/nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
     gitap = "git add . && git status && git commit -m . && git push";
-  };
-};
+    };
+    };
 
 
 
@@ -231,22 +235,22 @@ services.autorandr.enable        = true;
 
 services.pipewire = {
 
-  alsa.enable         = true;
-  alsa.support32Bit   = true;
-  pulse.enable        = true;
-  jack.enable         = true;
-  config.pipewire = {
-    "context.properties" = {
-      "link.max-buffers"          = 32;
+alsa.enable         = true;
+alsa.support32Bit   = true;
+pulse.enable        = true;
+jack.enable         = true;
+config.pipewire = {
+"context.properties" = {
+"link.max-buffers"          = 32;
 #"link.max-buffers"         = 16; # version < 3 clients can't handle more than this
       "log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
       "default.clock.rate"        = 48000;
       "default.clock.quantum"     = 4096;
       "default.clock.min-quantum" = 64;
       "default.clock.max-quantum" = 8192;
-    };
-  };
-};
+      };
+      };
+      };
 
 
 ##############
@@ -254,15 +258,15 @@ services.pipewire = {
 ##############
 
 environment.sessionVariables = rec {
-  DOT              = "\${HOME}/.nix";
-  FZF_DEFAULT_OPTS = "--height 50%";
-  ZDOTDIR          = "\${HOME}/.nix/config/zsh/";
-  PATH             = [
+DOT              = "\${HOME}/.nix";
+FZF_DEFAULT_OPTS = "--height 50%";
+ZDOTDIR          = "\${HOME}/.nix/config/zsh/";
+PATH             = [
       "\$DOT/bin/scripts"
       "\$DOT/bin/bookmarks"
       "\${HOME}/.local/bin"
-    ];
-  };
+      ];
+      };
 
 
 
@@ -274,20 +278,20 @@ environment.sessionVariables = rec {
 #boot.kernelParams                 = ["intel_pstate=disable"];
 boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 services.tlp.settings = {
-  CPU_BOOST_ON_BAT                = 0;
-  CPU_SCALING_GOVERNOR_ON_AC      = "performance";
-  CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
-  CPU_MAX_PERF_ON_AC              = 100;
-  CPU_MAX_PERF_ON_BAT             = 100;
-  START_CHARGE_THRESH_BAT0        = 50;
-  STOP_CHARGE_THRESH_BAT0         = 90;
-  RUNTIME_PM_ON_BAT               = "auto";
-  RUNTIME_PM_ON_AC                = "on";
-  SOUND_POWER_SAVE_ON_AC          = 0;
-  SOUND_POWER_SAVE_ON_BAT         = 1;
-  NATACPI_ENABLE                  = 1;
-  TPACPI_ENABLE                   = 1;
-  TPSMAPI_ENABLE                  = 1;
+CPU_BOOST_ON_BAT                = 0;
+CPU_SCALING_GOVERNOR_ON_AC      = "performance";
+CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+CPU_MAX_PERF_ON_AC              = 100;
+CPU_MAX_PERF_ON_BAT             = 100;
+START_CHARGE_THRESH_BAT0        = 50;
+STOP_CHARGE_THRESH_BAT0         = 90;
+RUNTIME_PM_ON_BAT               = "auto";
+RUNTIME_PM_ON_AC                = "on";
+SOUND_POWER_SAVE_ON_AC          = 0;
+SOUND_POWER_SAVE_ON_BAT         = 1;
+NATACPI_ENABLE                  = 1;
+TPACPI_ENABLE                   = 1;
+TPSMAPI_ENABLE                  = 1;
 };
 
 
@@ -295,23 +299,32 @@ services.tlp.settings = {
 #################
 # Configure X11 #
 #################
+ services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd startx";
+        user = "wsz";
+      };
+    };
+  };
 
 services.xserver = {
-  enable                        = true;
-  autoRepeatDelay               = 250;
-  autoRepeatInterval            = 25;
-  layout                        = "us";
-  xkbVariant                    = "";
-  desktopManager.xterm.enable   = false;
-  displayManager.startx.enable  = false;
+enable                        = true;
+autoRepeatDelay               = 250;
+autoRepeatInterval            = 25;
+layout                        = "us";
+xkbVariant                    = "";
+desktopManager.xterm.enable   = false;
+displayManager.startx.enable  = true;
 #displayManager.defaultSession = "none+i3";
 windowManager.i3              = {
-  package = pkgs.i3-gaps;
-  enable = true;
-  extraPackages = with pkgs; [
-    rofi  i3status  i3blocks arandr
-    conky unclutter feh
-  ];
+package = pkgs.i3-gaps;
+enable = true;
+extraPackages = with pkgs; [
+rofi  i3status  i3blocks arandr
+conky unclutter feh
+];
 };
 };
 
@@ -355,35 +368,35 @@ windowManager.i3              = {
 #  };
 
 users.users.sc  = {
-  shell        = pkgs.zsh;
-  isNormalUser = true;
-  description  = "wsz";
-  extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
-  packages     = with pkgs; [
-    supercollider-with-plugins haskell-language-server
-    ghc cabal-install pulseaudio pavucontrol
-    librewolf
-  ];
+shell        = pkgs.zsh;
+isNormalUser = true;
+description  = "wsz";
+extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
+packages     = with pkgs; [
+supercollider-with-plugins haskell-language-server
+ghc cabal-install pulseaudio pavucontrol
+librewolf
+];
 };
 
 users.users.test  = {
-  shell        = pkgs.zsh;
-  isNormalUser = true;
-  description  = "wsz";
-  extraGroups  = [ "networkmanager" "wheel" "video" ];
-  packages     = with pkgs; [
-    librewolf
-  ];
+shell        = pkgs.zsh;
+isNormalUser = true;
+description  = "wsz";
+extraGroups  = [ "networkmanager" "wheel" "video" ];
+packages     = with pkgs; [
+librewolf
+];
 };
 
 users.users.none  = {
-  shell        = pkgs.zsh;
-  isNormalUser = true;
-  description  = "wsz";
-  extraGroups  = [ "networkmanager" ];
-  packages     = with pkgs; [
-    gnome.gnome-boxes
-  ];
+shell        = pkgs.zsh;
+isNormalUser = true;
+description  = "wsz";
+extraGroups  = [ "networkmanager" ];
+packages     = with pkgs; [
+gnome.gnome-boxes
+];
 };
 
 
@@ -403,13 +416,14 @@ services.redshift.temperature                       = {day = 3750; night = 3750;
 location.latitude                                   = 0.0;
 location.longitude                                  = 0.0;
 
-# Bootloader
-#boot.loader.systemd-boot.enable                     = true;
-boot.loader.grub.enable=true;
-boot.loader.grub.version=2;
-boot.loader.grub.device="/dev/sda";
-#boot.loader.efi.canTouchEfiVariables                = true;
-#boot.loader.efi.efiSysMountPoint                    = "/boot/efi";
+# BOOTLOADER
+#boot.loader.systemd-boot.enable = true; # VM
+#boot.loader.grub.enable = true; # VM
+#boot.loader.grub.version = 2; # VM
+#boot.loader.grub.device = "/dev/sda"; # VM
+boot.loader.systemd-boot.enable                     = true;
+boot.loader.efi.canTouchEfiVariables                = true;
+boot.loader.efi.efiSysMountPoint                    = "/boot/efi";
 #systemd.extraConfig                                 = ''DefaulTimeOutStopSec=10s'';
 
 # Touchpad
@@ -420,28 +434,28 @@ services.xserver.libinput.touchpad.tapping          = true;
 
 # Fonts
 fonts.fonts = with pkgs; [
-  noto-fonts
-  liberation_ttf
-  fira-code-symbols
-  proggyfonts
-  scientifica
-  roboto
-  nerdfonts
+noto-fonts
+liberation_ttf
+fira-code-symbols
+proggyfonts
+scientifica
+roboto
+nerdfonts
 ];
 
 # Select internationalisation properties.
 time.timeZone            = "Europe/Paris";
 i18n.defaultLocale       = "en_US.utf8";
 i18n.extraLocaleSettings = {
-  LC_ADDRESS           = "fr_FR.utf8";
-  LC_IDENTIFICATION    = "fr_FR.utf8";
-  LC_MEASUREMENT       = "fr_FR.utf8";
-  LC_MONETARY          = "fr_FR.utf8";
-  LC_NAME              = "fr_FR.utf8";
-  LC_NUMERIC           = "fr_FR.utf8";
-  LC_PAPER             = "fr_FR.utf8";
-  LC_TELEPHONE         = "fr_FR.utf8";
-  LC_TIME              = "fr_FR.utf8";
+LC_ADDRESS           = "fr_FR.utf8";
+LC_IDENTIFICATION    = "fr_FR.utf8";
+LC_MEASUREMENT       = "fr_FR.utf8";
+LC_MONETARY          = "fr_FR.utf8";
+LC_NAME              = "fr_FR.utf8";
+LC_NUMERIC           = "fr_FR.utf8";
+LC_PAPER             = "fr_FR.utf8";
+LC_TELEPHONE         = "fr_FR.utf8";
+LC_TIME              = "fr_FR.utf8";
 };
 
 
