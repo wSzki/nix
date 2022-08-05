@@ -109,6 +109,7 @@ home-manager.users.wsz = { pkgs, ... }: {
       lessspace-vim
       undotree
       neoformat
+      vim-textobj-entire
       {
         plugin = vim-easy-align;
         config = ''
@@ -119,12 +120,12 @@ home-manager.users.wsz = { pkgs, ... }: {
       {
         plugin = vim-visual-multi;
         config = ''
-        let g:VM_maps = {}
-        let g:VM_maps["Select All"]                  = '\\a'
-        let g:VM_maps["Add Cursor Down"]             = '<S-Down>'
-        let g:VM_maps["Add Cursor Up"]               = '<S-Up>'
-        let g:VM_maps["Add Cursor At Pos"]           = '\\\'
-        let g:VM_maps['Find Under']                  = '<C-n>'
+          let g:VM_maps = {}
+          let g:VM_maps["Select All"]                  = '\\a'
+          let g:VM_maps["Add Cursor Down"]             = '<S-Down>'
+          let g:VM_maps["Add Cursor Up"]               = '<S-Up>'
+          let g:VM_maps["Add Cursor At Pos"]           = '\\\'
+          let g:VM_maps['Find Under']                  = '<C-n>'
         '';
       }
       nvim-scrollview
@@ -178,7 +179,7 @@ home-manager.users.wsz = { pkgs, ... }: {
 
       source ~/nix/color.vim
       set clipboard=unnamed,unnamedplus
-      set scrolloff=5
+      set scrolloff=1000
       set noswapfile
       set nu
       set mouse=a
@@ -198,37 +199,6 @@ home-manager.users.wsz = { pkgs, ... }: {
       endfunction
 
     '';
-  };
-
-  programs.zsh = # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enable
-  {
-    enable = true;
-    enableAutosuggestions = true;
-    enableCompletion = true;
-    enableSyntaxHighlighting = true;
-    autocd = true;
-    envExtra="";
-    initExtra="";
-    dirHashes = {
-      docs  = "$HOME/Documents";
-      vids  = "$HOME/Videos";
-      dl    = "$HOME/Downloads";
-    };
-    zplug = {
-      enable = true;
-      plugins = [
-        {name = "aloxaf/fzf-tab";}
-        {name = "subnixr/minimal";}
-      ];
-    };
-    shellAliases = {
-      del = "trash-put";
-      ll     = "ls -l";
-      nrc = "vim ~/nix/configuration.nix";
-      vim    = "nvim";
-      rebuild = "sudo cp ~/nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
-      gitap = "git add . && git status && git commit -m . && git push";
-    };
   };
 
   programs.fish.enable = true; # check home manager fish page
@@ -254,6 +224,38 @@ home-manager.users.wsz = { pkgs, ... }: {
     gitap = "git add . && git status && git commit -m . && git push";
     nixsearch = "librewolf https://search.nixos.org/packages";
   };
+
+  #programs.zsh = # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enable
+  #{
+    #enable = true;
+    #enableAutosuggestions = true;
+    #enableCompletion = true;
+    #enableSyntaxHighlighting = true;
+    #autocd = true;
+    #envExtra="";
+    #initExtra="";
+    #dirHashes = {
+      #docs  = "$HOME/Documents";
+      #vids  = "$HOME/Videos";
+      #dl    = "$HOME/Downloads";
+    #};
+    #zplug = {
+      #enable = true;
+      #plugins = [
+        #{name = "aloxaf/fzf-tab";}
+        #{name = "subnixr/minimal";}
+      #];
+    #};
+    #shellAliases = {
+      #del = "trash-put";
+      #ll     = "ls -l";
+      #nrc = "vim ~/nix/configuration.nix";
+      #vim    = "nvim";
+      #rebuild = "sudo cp ~/nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
+      #gitap = "git add . && git status && git commit -m . && git push";
+    #};
+  #};
+
 };
 
 
