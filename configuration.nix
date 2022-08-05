@@ -17,6 +17,10 @@
 
   environment.systemPackages = with pkgs; [
     fzf
+    ack
+    fasd
+    fd
+    tldr
   ];
 
   #system.autoUpgrade.enable = true;
@@ -40,20 +44,18 @@ users.users.wsz  = {
   description  = "wsz";
   extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
   packages     = with pkgs; [
+    barrier
+    bat
+    xclip
     unclutter
     redshift
     bitwarden
-    tldr
     acpilight
     nodejs
     librewolf
     trash-cli
-    fzf
-    ack
     kitty
     mpv
-    fasd
-    fd
     youtube-dl
     nmap
   ];
@@ -180,7 +182,16 @@ home-manager.users.wsz = { pkgs, ... }: {
 
   programs.fish.enable = true; # check home manager fish page
   programs.fish.shellAbbrs = {};
-  programs.fish.functions = {};
+  programs.fish.functions = {
+function fish_user_key_bindings
+  if command -s fzf-share >/dev/null
+    source (fzf-share)/key-bindings.fish
+  end
+
+  fzf_key_bindings
+end
+
+  };
   programs.fish.shellInit = "";
   programs.fish.loginShellInit = "";
   programs.fish.interactiveShellInit= "";
