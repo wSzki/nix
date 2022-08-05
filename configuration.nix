@@ -14,6 +14,17 @@
     /home/wsz/.config/musnix
   ];
 
+  # BOOTLOADER
+boot.loader.systemd-boot.enable      = true;
+boot.loader.efi.canTouchEfiVariables = true;
+boot.loader.efi.efiSysMountPoint     = "/boot/efi";
+systemd.extraConfig                  = ''DefaulTimeOutStopSec=10s'';
+#boot.loader.systemd-boot.enable      = true;       # VM
+#boot.loader.grub.enable              = true;       # VM
+#boot.loader.grub.version             = 2;          # VM
+#boot.loader.grub.device              = "/dev/sda"; # VM
+
+
 
   environment.systemPackages = with pkgs; [
     fzf
@@ -28,7 +39,7 @@
   nix.autoOptimiseStore = true;
   nix.gc = {
     automatic = true;
-    dates = "daily";
+    dates     = "daily";
   };
 
 
@@ -37,7 +48,7 @@
 ##############.
 # System     #
 ##############.
-users.users.wsz  = {
+users.users.wsz = {
   #shell        = pkgs.fish;
   shell        = pkgs.fish;
   isNormalUser = true;
@@ -45,6 +56,7 @@ users.users.wsz  = {
   extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
   packages     = with pkgs; [
     barrier
+    xdotool
     bat
     xclip
     unclutter
@@ -99,6 +111,16 @@ home-manager.users.wsz = { pkgs, ... }: {
       coc-html
       coc-emmet
       coc-json
+      {
+        plugin = undotree;
+        config = ''
+          let g:undotree_WindowLayout         = 2
+          let g:undotree_ShortIndicators      = 1
+          let g:undotree_SetFocusWhenToggle   = 1
+          let g:undotree_HighlightChangedText = 1
+          let g:undotree_HelpLine             = 1
+        '';
+      }
       vim-sayonara
       colorizer
       toggleterm-nvim
@@ -155,6 +177,12 @@ home-manager.users.wsz = { pkgs, ... }: {
     #];
 
     extraConfig = ''
+
+      if has('persistent_undo')         "check if your vim version supports
+      set undodir=$HOME/.undo     "directory where the undo files will be stored
+      set undofile                    "turn on the feature
+      endif
+
       autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
 
       set encoding=utf-8
@@ -201,27 +229,27 @@ home-manager.users.wsz = { pkgs, ... }: {
     '';
   };
 
-  programs.fish.enable = true; # check home manager fish page
-  programs.fish.shellAbbrs = {};
-  programs.fish.functions = {
-  };
-  programs.fish.shellInit = "";
-  programs.fish.loginShellInit = "";
-  programs.fish.interactiveShellInit= "";
-  programs.fish.plugins = [
-    { name = "forgit"; src = pkgs.fishPlugins.forgit.src; }
-    { name = "done"; src = pkgs.fishPlugins.done.src; }
-    { name = "hydro"; src = pkgs.fishPlugins.hydro.src; }
-    #{ name = "pure"; src = pkgs.fishPlugins.pure.src; }
+  programs.fish.enable               = true; # check home manager fish page
+  programs.fish.shellAbbrs           = {};
+  programs.fish.functions            = {};
+  programs.fish.shellInit            = "";
+  programs.fish.loginShellInit       = "";
+  programs.fish.interactiveShellInit = "";
+  programs.fish.plugins              = [
+    { name = "forgit"; src   = pkgs.fishPlugins.forgit.src; }
+    { name = "done"; src     = pkgs.fishPlugins.done.src; }
+    { name = "hydro"; src    = pkgs.fishPlugins.hydro.src; }
     { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
+    #{ name = "pure"; src     = pkgs.fishPlugins.pure.src; }
   ];
   programs.fish.shellAliases = {
-    del = "trash-put";
-    ll     = "ls -l";
-    nrc = "vim ~/nix/configuration.nix";
-    vim    = "nvim";
-    rebuild = "sudo cp ~/nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
-    gitap = "git add . && git status && git commit -m . && git push";
+    v         = "xdotool key v i m Control_L+Alt_L+f";
+    del       = "trash-put";
+    ll        = "ls -l";
+    nrc       = "vim ~/nix/configuration.nix";
+    vim       = "nvim";
+    rebuild   = "sudo cp ~/nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
+    gitap     = "git add . && git status && git commit -m . && git push";
     nixsearch = "librewolf https://search.nixos.org/packages";
   };
 
@@ -300,13 +328,13 @@ services.pipewire = {
     "context.properties" = {
       "link.max-buffers"          = 32;
 #"link.max-buffers"         = 16; # version < 3 clients can't handle more than this
-      "log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
-      "default.clock.rate"        = 48000;
-      "default.clock.quantum"     = 4096;
-      "default.clock.min-quantum" = 64;
-      "default.clock.max-quantum" = 8192;
-    };
-  };
+"log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
+"default.clock.rate"        = 48000;
+"default.clock.quantum"     = 4096;
+"default.clock.min-quantum" = 64;
+"default.clock.max-quantum" = 8192;
+};
+};
 };
 
 
@@ -315,15 +343,15 @@ services.pipewire = {
 ##############
 
 environment.sessionVariables = rec {
-  DOT              = "\${HOME}/.nix";
-  FZF_DEFAULT_OPTS = "--height 50%";
-  ZDOTDIR          = "\${HOME}/.nix/config/zsh/";
-  PATH             = [
-      "\$DOT/bin/scripts"
-      "\$DOT/bin/bookmarks"
-      "\${HOME}/.local/bin"
-    ];
-  };
+DOT              = "\${HOME}/.nix";
+FZF_DEFAULT_OPTS = "--height 50%";
+ZDOTDIR          = "\${HOME}/.nix/config/zsh/";
+PATH             = [
+"\$DOT/bin/scripts"
+"\$DOT/bin/bookmarks"
+"\${HOME}/.local/bin"
+];
+};
 
 
 
@@ -335,20 +363,20 @@ environment.sessionVariables = rec {
 #boot.kernelParams                 = ["intel_pstate=disable"];
 boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 services.tlp.settings = {
-  CPU_BOOST_ON_BAT                = 0;
-  CPU_SCALING_GOVERNOR_ON_AC      = "performance";
-  CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
-  CPU_MAX_PERF_ON_AC              = 100;
-  CPU_MAX_PERF_ON_BAT             = 100;
-  START_CHARGE_THRESH_BAT0        = 50;
-  STOP_CHARGE_THRESH_BAT0         = 90;
-  RUNTIME_PM_ON_BAT               = "auto";
-  RUNTIME_PM_ON_AC                = "on";
-  SOUND_POWER_SAVE_ON_AC          = 0;
-  SOUND_POWER_SAVE_ON_BAT         = 1;
-  NATACPI_ENABLE                  = 1;
-  TPACPI_ENABLE                   = 1;
-  TPSMAPI_ENABLE                  = 1;
+CPU_BOOST_ON_BAT                = 0;
+CPU_SCALING_GOVERNOR_ON_AC      = "performance";
+CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+CPU_MAX_PERF_ON_AC              = 100;
+CPU_MAX_PERF_ON_BAT             = 100;
+START_CHARGE_THRESH_BAT0        = 50;
+STOP_CHARGE_THRESH_BAT0         = 90;
+RUNTIME_PM_ON_BAT               = "auto";
+RUNTIME_PM_ON_AC                = "on";
+SOUND_POWER_SAVE_ON_AC          = 0;
+SOUND_POWER_SAVE_ON_BAT         = 1;
+NATACPI_ENABLE                  = 1;
+TPACPI_ENABLE                   = 1;
+TPSMAPI_ENABLE                  = 1;
 };
 
 
@@ -357,32 +385,32 @@ services.tlp.settings = {
 # Configure X11 #
 #################
 services.greetd = {
-  enable = true;
-  settings = {
-    default_session = {
-      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd startx";
-      user = "wsz";
-    };
-  };
-};
+enable = true;
+settings = {
+default_session = {
+command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd startx";
+user = "wsz";
+      };
+      };
+      };
 
-services.xserver = {
-  enable                        = true;
-  autoRepeatDelay               = 250;
-  autoRepeatInterval            = 25;
-  layout                        = "us";
-  xkbVariant                    = "";
-  desktopManager.xterm.enable   = false;
-  displayManager.startx.enable  = true;
+      services.xserver = {
+      enable                        = true;
+      autoRepeatDelay               = 250;
+      autoRepeatInterval            = 25;
+      layout                        = "us";
+      xkbVariant                    = "";
+      desktopManager.xterm.enable   = false;
+      displayManager.startx.enable  = true;
 #displayManager.defaultSession = "none+i3";
-windowManager.i3              = {
-  package = pkgs.i3-gaps;
-  enable = true;
-  extraPackages = with pkgs; [
-    rofi  i3status  i3blocks arandr
-    conky unclutter feh
-  ];
-};
+      windowManager.i3              = {
+      package = pkgs.i3-gaps;
+      enable = true;
+      extraPackages = with pkgs; [
+      rofi  i3status  i3blocks arandr
+      conky unclutter feh
+      ];
+      };
       };
 
 ###################
@@ -424,96 +452,87 @@ windowManager.i3              = {
 #                   ];
 #  };
 
-users.users.sc  = {
-  shell        = pkgs.zsh;
-  isNormalUser = true;
-  description  = "wsz";
-  extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
-  packages     = with pkgs; [
-    supercollider-with-plugins haskell-language-server
-    ghc cabal-install pulseaudio pavucontrol
-    librewolf
-  ];
-};
+      users.users.sc  = {
+      shell        = pkgs.zsh;
+      isNormalUser = true;
+      description  = "wsz";
+      extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
+      packages     = with pkgs; [
+      supercollider-with-plugins haskell-language-server
+      ghc cabal-install pulseaudio pavucontrol
+      librewolf
+      ];
+      };
 
-users.users.test  = {
-  shell        = pkgs.zsh;
-  isNormalUser = true;
-  description  = "wsz";
-  extraGroups  = [ "networkmanager" "wheel" "video" ];
-  packages     = with pkgs; [
-    librewolf
-  ];
-};
+      users.users.test  = {
+      shell        = pkgs.zsh;
+      isNormalUser = true;
+      description  = "wsz";
+      extraGroups  = [ "networkmanager" "wheel" "video" ];
+      packages     = with pkgs; [
+      librewolf
+      ];
+      };
 
-users.users.none  = {
-  shell        = pkgs.zsh;
-  isNormalUser = true;
-  description  = "wsz";
-  extraGroups  = [ "networkmanager" ];
-  packages     = with pkgs; [
-    gnome.gnome-boxes
-  ];
-};
+      users.users.none  = {
+      shell        = pkgs.zsh;
+      isNormalUser = true;
+      description  = "wsz";
+      extraGroups  = [ "networkmanager" ];
+      packages     = with pkgs; [
+      gnome.gnome-boxes
+      ];
+      };
 
 
 
 # Firewall
-networking.firewall.allowedTCPPorts                 = [ 80 443 ];
-networking.firewall.allowedUDPPortRanges            = [ { from = 0; to = 0; } ];
+      networking.firewall.allowedTCPPorts                 = [ 80 443 ];
+      networking.firewall.allowedUDPPortRanges            = [ { from = 0; to = 0; } ];
 
 # Networking
-networking.hostName                                 = "t460"; # Define your hostname.
+      networking.hostName                                 = "t460"; # Define your hostname.
 # Configure network proxy if necessary
 #networking.proxy.default        = "http://user:password@proxy:port/";
 #networking.proxy.noProxy        = "127.0.0.1,localhost,internal.domain";
 
 # Redshift
-services.redshift.temperature                       = {day = 3750; night = 3750;};
-location.latitude                                   = 0.0;
-location.longitude                                  = 0.0;
+      services.redshift.temperature                       = {day = 3750; night = 3750;};
+      location.latitude                                   = 0.0;
+      location.longitude                                  = 0.0;
 
-# BOOTLOADER
-#boot.loader.systemd-boot.enable = true; # VM
-#boot.loader.grub.enable = true; # VM
-#boot.loader.grub.version = 2; # VM
-#boot.loader.grub.device = "/dev/sda"; # VM
-boot.loader.systemd-boot.enable                     = true;
-boot.loader.efi.canTouchEfiVariables                = true;
-boot.loader.efi.efiSysMountPoint                    = "/boot/efi";
-#systemd.extraConfig                                 = ''DefaulTimeOutStopSec=10s'';
 
 # Touchpad
-services.xserver.libinput.enable                    = true;
-services.xserver.libinput.touchpad.middleEmulation  = true;
-services.xserver.libinput.touchpad.naturalScrolling = true;
-services.xserver.libinput.touchpad.tapping          = true;
+  services.xserver.libinput.enable                    = true;
+  services.xserver.libinput.touchpad.middleEmulation  = true;
+  services.xserver.libinput.touchpad.naturalScrolling = true;
+  services.xserver.libinput.touchpad.tapping          = true;
 
 # Fonts
-fonts.fonts = with pkgs; [
-noto-fonts
-liberation_ttf
-fira-code-symbols
-proggyfonts
-scientifica
-roboto
-nerdfonts
-];
+  fonts.fonts = with pkgs; [
+  noto-fonts
+  liberation_ttf
+  fira-code-symbols
+  proggyfonts
+  scientifica
+  roboto
+  nerdfonts
+  ];
 
 # Select internationalisation properties.
-time.timeZone            = "Europe/Paris";
-i18n.defaultLocale       = "en_US.utf8";
-i18n.extraLocaleSettings = {
-LC_ADDRESS           = "fr_FR.utf8";
-LC_IDENTIFICATION    = "fr_FR.utf8";
-LC_MEASUREMENT       = "fr_FR.utf8";
-LC_MONETARY          = "fr_FR.utf8";
-LC_NAME              = "fr_FR.utf8";
-LC_NUMERIC           = "fr_FR.utf8";
-LC_PAPER             = "fr_FR.utf8";
-LC_TELEPHONE         = "fr_FR.utf8";
-LC_TIME              = "fr_FR.utf8";
-};
+  time.timeZone            = "Europe/Paris";
+  i18n.defaultLocale       = "en_US.utf8";
+  #i18n.extraLocaleSettings = {
+  #LC_ADDRESS           = "fr_FR.utf8";
+  #LC_IDENTIFICATION    = "fr_FR.utf8";
+  #LC_MEASUREMENT       = "fr_FR.utf8";
+  #LC_MONETARY          = "fr_FR.utf8";
+  #LC_NAME              = "fr_FR.utf8";
+  #LC_NUMERIC           = "fr_FR.utf8";
+  #LC_PAPER             = "fr_FR.utf8";
+  #LC_TELEPHONE         = "fr_FR.utf8";
+  #LC_TIME              = "fr_FR.utf8";
+  #};
 
 
 ############
@@ -545,7 +564,7 @@ LC_TIME              = "fr_FR.utf8";
 # this value at the release version of the first install of this system.
 # Before changing this value read the documentation for this option
 # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "22.05"; # Did you read the comment?
 
 ###########
 # ARCHIVE #
@@ -577,7 +596,7 @@ system.stateVersion = "22.05"; # Did you read the comment?
 
 
 
-}
+  }
 
 
 
