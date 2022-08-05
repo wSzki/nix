@@ -84,7 +84,7 @@ hi CursorLineNR          gui=NONE   guifg=#EBCB8B guibg=NONE
 hi Define                gui=NONE   guifg=#EBCB8B guibg=NONE
 hi MoreMsg               gui=NONE   guifg=#EBCB8B guibg=NONE
 hi Tag                   gui=NONE   guifg=#EBCB8B guibg=NONE
-hi String                gui=NONE   guifg=#EBCB8B guibg=NONE
+hi String                gui=NONE   guifg=#A3BE8C guibg=NONE
 hi MatchParen            gui=NONE   guifg=#EBCB8B guibg=NONE
 hi Macro                 gui=NONE   guifg=#EBCB8B guibg=NONE
 hi DiffChange            gui=NONE   guifg=#EBCB8B guibg=NONE

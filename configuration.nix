@@ -105,17 +105,34 @@ home-manager.users.wsz = { pkgs, ... }: {
       gruvbox
       nerdcommenter
       papercolor-theme
-      vim-visual-multi
       vim-gitgutter
       lessspace-vim
       undotree
-      vim-easy-align
+      neoformat
+      {
+        plugin = vim-easy-align;
+        config = ''
+          xmap ga <Plug>(EasyAlign)
+          nmap ga <Plug>(EasyAlign)
+        '';
+      }
+      {
+        plugin = vim-visual-multi;
+        config = ''
+        let g:VM_maps = {}
+        let g:VM_maps["Select All"]                  = '\\a'
+        let g:VM_maps["Add Cursor Down"]             = '<S-Down>'
+        let g:VM_maps["Add Cursor Up"]               = '<S-Up>'
+        let g:VM_maps["Add Cursor At Pos"]           = '\\\'
+        let g:VM_maps['Find Under']                  = '<C-n>'
+        '';
+      }
       nvim-scrollview
       vim-smoothie
       wilder-nvim
       nvim-web-devicons
       i3config-vim
-      indentLine # ?
+      #indentLine # ?
 
       #nvim-lspconfig # read about lsp
       #nvim-cmp # auto completion
@@ -137,15 +154,49 @@ home-manager.users.wsz = { pkgs, ... }: {
     #];
 
     extraConfig = ''
-         set nu
-         set mouse=a
-         set relativenumber
-         set cursorline
-         set background=dark
-         if has ('termguicolors')
-         source ~/nix/color.vim
-          set termguicolors
-        endif
+      autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
+
+      set encoding=utf-8
+      set complete-=5
+      set lazyredraw
+      set re=1
+      set timeoutlen=1000
+      set ttimeoutlen=0
+      set synmaxcol=400
+      syntax sync minlines=256
+      set linebreak
+      set nowrap
+
+      set list
+      set listchars=space:.,tab:•-,trail:~,extends:>,precedes:<
+
+      filetype indent on
+      filetype plugin on
+      set autoindent
+      set cindent
+      set smartindent
+
+      source ~/nix/color.vim
+      set clipboard=unnamed,unnamedplus
+      set scrolloff=5
+      set noswapfile
+      set nu
+      set mouse=a
+      set relativenumber
+      set cursorline
+      set background=dark
+      if has ('termguicolors')
+        set termguicolors
+      endif
+      let &t_SI .= "\<Esc>[?2004h"
+      let &t_EI .= "\<Esc>[?2004l"
+      inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+      function! XTermPasteBegin()
+        set pastetoggle=<Esc>[201~
+        set paste
+        return ""
+      endfunction
+
     '';
   };
 
@@ -183,14 +234,6 @@ home-manager.users.wsz = { pkgs, ... }: {
   programs.fish.enable = true; # check home manager fish page
   programs.fish.shellAbbrs = {};
   programs.fish.functions = {
-function fish_user_key_bindings
-  if command -s fzf-share >/dev/null
-    source (fzf-share)/key-bindings.fish
-  end
-
-  fzf_key_bindings
-end
-
   };
   programs.fish.shellInit = "";
   programs.fish.loginShellInit = "";
@@ -201,16 +244,17 @@ end
     { name = "hydro"; src = pkgs.fishPlugins.hydro.src; }
     #{ name = "pure"; src = pkgs.fishPlugins.pure.src; }
     { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
-    ];
-    programs.fish.shellAliases = {
+  ];
+  programs.fish.shellAliases = {
     del = "trash-put";
     ll     = "ls -l";
     nrc = "vim ~/nix/configuration.nix";
     vim    = "nvim";
     rebuild = "sudo cp ~/nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
     gitap = "git add . && git status && git commit -m . && git push";
-    };
-    };
+    nixsearch = "librewolf https://search.nixos.org/packages";
+  };
+};
 
 
 
@@ -246,22 +290,22 @@ services.autorandr.enable        = true;
 
 services.pipewire = {
 
-alsa.enable         = true;
-alsa.support32Bit   = true;
-pulse.enable        = true;
-jack.enable         = true;
-config.pipewire = {
-"context.properties" = {
-"link.max-buffers"          = 32;
+  alsa.enable         = true;
+  alsa.support32Bit   = true;
+  pulse.enable        = true;
+  jack.enable         = true;
+  config.pipewire = {
+    "context.properties" = {
+      "link.max-buffers"          = 32;
 #"link.max-buffers"         = 16; # version < 3 clients can't handle more than this
       "log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
       "default.clock.rate"        = 48000;
       "default.clock.quantum"     = 4096;
       "default.clock.min-quantum" = 64;
       "default.clock.max-quantum" = 8192;
-      };
-      };
-      };
+    };
+  };
+};
 
 
 ##############
@@ -269,15 +313,15 @@ config.pipewire = {
 ##############
 
 environment.sessionVariables = rec {
-DOT              = "\${HOME}/.nix";
-FZF_DEFAULT_OPTS = "--height 50%";
-ZDOTDIR          = "\${HOME}/.nix/config/zsh/";
-PATH             = [
+  DOT              = "\${HOME}/.nix";
+  FZF_DEFAULT_OPTS = "--height 50%";
+  ZDOTDIR          = "\${HOME}/.nix/config/zsh/";
+  PATH             = [
       "\$DOT/bin/scripts"
       "\$DOT/bin/bookmarks"
       "\${HOME}/.local/bin"
-      ];
-      };
+    ];
+  };
 
 
 
@@ -289,20 +333,20 @@ PATH             = [
 #boot.kernelParams                 = ["intel_pstate=disable"];
 boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 services.tlp.settings = {
-CPU_BOOST_ON_BAT                = 0;
-CPU_SCALING_GOVERNOR_ON_AC      = "performance";
-CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
-CPU_MAX_PERF_ON_AC              = 100;
-CPU_MAX_PERF_ON_BAT             = 100;
-START_CHARGE_THRESH_BAT0        = 50;
-STOP_CHARGE_THRESH_BAT0         = 90;
-RUNTIME_PM_ON_BAT               = "auto";
-RUNTIME_PM_ON_AC                = "on";
-SOUND_POWER_SAVE_ON_AC          = 0;
-SOUND_POWER_SAVE_ON_BAT         = 1;
-NATACPI_ENABLE                  = 1;
-TPACPI_ENABLE                   = 1;
-TPSMAPI_ENABLE                  = 1;
+  CPU_BOOST_ON_BAT                = 0;
+  CPU_SCALING_GOVERNOR_ON_AC      = "performance";
+  CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+  CPU_MAX_PERF_ON_AC              = 100;
+  CPU_MAX_PERF_ON_BAT             = 100;
+  START_CHARGE_THRESH_BAT0        = 50;
+  STOP_CHARGE_THRESH_BAT0         = 90;
+  RUNTIME_PM_ON_BAT               = "auto";
+  RUNTIME_PM_ON_AC                = "on";
+  SOUND_POWER_SAVE_ON_AC          = 0;
+  SOUND_POWER_SAVE_ON_BAT         = 1;
+  NATACPI_ENABLE                  = 1;
+  TPACPI_ENABLE                   = 1;
+  TPSMAPI_ENABLE                  = 1;
 };
 
 
@@ -310,34 +354,34 @@ TPSMAPI_ENABLE                  = 1;
 #################
 # Configure X11 #
 #################
- services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd startx";
-        user = "wsz";
-      };
+services.greetd = {
+  enable = true;
+  settings = {
+    default_session = {
+      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd startx";
+      user = "wsz";
     };
   };
+};
 
 services.xserver = {
-enable                        = true;
-autoRepeatDelay               = 250;
-autoRepeatInterval            = 25;
-layout                        = "us";
-xkbVariant                    = "";
-desktopManager.xterm.enable   = false;
-displayManager.startx.enable  = true;
+  enable                        = true;
+  autoRepeatDelay               = 250;
+  autoRepeatInterval            = 25;
+  layout                        = "us";
+  xkbVariant                    = "";
+  desktopManager.xterm.enable   = false;
+  displayManager.startx.enable  = true;
 #displayManager.defaultSession = "none+i3";
 windowManager.i3              = {
-package = pkgs.i3-gaps;
-enable = true;
-extraPackages = with pkgs; [
-rofi  i3status  i3blocks arandr
-conky unclutter feh
-];
+  package = pkgs.i3-gaps;
+  enable = true;
+  extraPackages = with pkgs; [
+    rofi  i3status  i3blocks arandr
+    conky unclutter feh
+  ];
 };
-};
+      };
 
 ###################
 # SYSTEM PACKAGES #
@@ -379,35 +423,35 @@ conky unclutter feh
 #  };
 
 users.users.sc  = {
-shell        = pkgs.zsh;
-isNormalUser = true;
-description  = "wsz";
-extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
-packages     = with pkgs; [
-supercollider-with-plugins haskell-language-server
-ghc cabal-install pulseaudio pavucontrol
-librewolf
-];
+  shell        = pkgs.zsh;
+  isNormalUser = true;
+  description  = "wsz";
+  extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
+  packages     = with pkgs; [
+    supercollider-with-plugins haskell-language-server
+    ghc cabal-install pulseaudio pavucontrol
+    librewolf
+  ];
 };
 
 users.users.test  = {
-shell        = pkgs.zsh;
-isNormalUser = true;
-description  = "wsz";
-extraGroups  = [ "networkmanager" "wheel" "video" ];
-packages     = with pkgs; [
-librewolf
-];
+  shell        = pkgs.zsh;
+  isNormalUser = true;
+  description  = "wsz";
+  extraGroups  = [ "networkmanager" "wheel" "video" ];
+  packages     = with pkgs; [
+    librewolf
+  ];
 };
 
 users.users.none  = {
-shell        = pkgs.zsh;
-isNormalUser = true;
-description  = "wsz";
-extraGroups  = [ "networkmanager" ];
-packages     = with pkgs; [
-gnome.gnome-boxes
-];
+  shell        = pkgs.zsh;
+  isNormalUser = true;
+  description  = "wsz";
+  extraGroups  = [ "networkmanager" ];
+  packages     = with pkgs; [
+    gnome.gnome-boxes
+  ];
 };
 
 
