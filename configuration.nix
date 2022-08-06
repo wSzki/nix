@@ -276,9 +276,10 @@ home-manager.users.wsz = { pkgs, ... }: {
       ll        = "ls -l";
       nrc       = "vim ~/.nix/configuration.nix";
       vim       = "nvim";
-      rebuild   = "sudo cp ~/.nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
+      rebuild   = "sudo cp ~/.nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch && source ~/.zshrc";
       gitap     = "git add . && git status && git commit -m . && git push";
       nixsearch = "librewolf https://search.nixos.org/packages";
+      dockerd  ="nix-shell -p docker--run 'sudo dockerd'";
     };
   };
   #---VIM (home manager component)
