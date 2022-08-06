@@ -23,7 +23,36 @@ systemd.extraConfig                  = ''DefaulTimeOutStopSec=10s'';
 #boot.loader.grub.version             = 2;          # VM
 #boot.loader.grub.device              = "/dev/sda"; # VM
 #---ENV
-environment.systemPackages   = with pkgs; [ fzf ack fasd fd tldr ];
+environment.variables = { EDITOR = "vim"; };
+environment.systemPackages   = with pkgs; [
+  wget
+  zip
+  unzip
+  git
+  fzf
+  ack
+  fasd fd
+  tldr
+  tmux
+  (neovim.override {
+    vimAlias = true;
+    configure = {
+      packages.myPlugins = with pkgs.vimPlugins; {
+        start = [ vim-gruvbox8 ];
+        opt = [];
+      };
+      customRC = ''
+        set nu
+        syn on
+        set realtivenumber
+        set cursorline
+        set noswapfile
+        set nowrap
+      '';
+    };
+  }
+)
+];
 environment.sessionVariables = rec {
     DOT              = "~/.dot";
     FZF_DEFAULT_OPTS = "--height 50%";
@@ -36,10 +65,11 @@ time.timeZone              = "Europe/Paris";
 i18n.defaultLocale         = "en_US.utf8";
 nixpkgs.config.allowUnfree = true;
 nix.autoOptimiseStore      = true;
-nix.gc                     = {
-  automatic = true;
-  dates     = "daily";
-};
+nix.gc.automatic = true;
+nix.gc.dates     = "daily";
+nix.extraOptions = ''
+    experimental-features = nix-command flakes
+    '';
 #system.autoUpgrade.enable = true;
 #system.autoUpdate.enable = true;
 #---USERS
@@ -65,6 +95,8 @@ users.users.wsz = {
     mpv
     youtube-dl
     nmap
+    supercollider-with-plugins haskell-language-server
+    ghc cabal-install pulseaudio pavucontrol
   ];
 };
 users.users.tidal  = {
@@ -102,8 +134,8 @@ services.pipewire = {
 #---TLP
 # https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
 #boot.kernelParams                 = ["intel_pstate=disable"];
-services.tlp.enable              = false; # Power management
-services.upower.enable           = false; # Power management
+services.tlp.enable              = true; # Power management
+services.upower.enable           = true; # Power management
 boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 services.tlp.settings = {
   CPU_BOOST_ON_BAT                = 0;
@@ -132,7 +164,7 @@ services.redshift.enable          = false;
 services.redshift.temperature     = {day = 3750; night = 3750;};
 location.latitude                 = 0.0;
 location.longitude                = 0.0;
-services.autorandr.enable         = false;
+services.autorandr.enable         = true;
 services.xserver = {
   enable                        = true;
   autoRepeatDelay               = 250;
@@ -186,30 +218,6 @@ home-manager.users.wsz = { pkgs, ... }: {
     userName = "wsz";
     userEmail = "wsz@nix.os";
   };
-  #---FISH
-  programs.fish.enable               = true; # check home manager fish page
-  programs.fish.shellAbbrs           = {};
-  programs.fish.functions            = {};
-  programs.fish.shellInit            = "";
-  programs.fish.loginShellInit       = "";
-  programs.fish.interactiveShellInit = "";
-  programs.fish.plugins              = [
-    { name = "forgit"; src   = pkgs.fishPlugins.forgit.src; }
-    { name = "done"; src     = pkgs.fishPlugins.done.src; }
-    { name = "hydro"; src    = pkgs.fishPlugins.hydro.src; }
-    { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
-    #{ name = "pure"; src     = pkgs.fishPlugins.pure.src; }
-  ];
-  programs.fish.shellAliases = {
-    v         = "xdotool key v i m KP_Space Control_L+Alt_L+f";
-    del       = "trash-put";
-    ll        = "ls -l";
-    nrc       = "vim ~/.dot/configuration.nix";
-    vim       = "nvim";
-    rebuild   = "sudo cp ~/.dot/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
-    gitap     = "git add . && git status && git commit -m . && git push";
-    nixsearch = "librewolf https://search.nixos.org/packages";
-  };
   #---ZSH
   programs.zsh = {
     enable                   = true;
@@ -258,20 +266,47 @@ home-manager.users.wsz = { pkgs, ... }: {
       ];
     };
     shellAliases = {
+
       j         = "fasd_cd -d";
       v         = "xdotool key v i m space asterisk asterisk Tab";
       c         = "xdotool key c d space asterisk asterisk Tab";
-      ls        = "k";
       l         = "k";
+      ls        = "k";
+      sl        = "k";
+      lsa       = "k -ah";
       del       = "trash-put";
       ll        = "ls -l";
-      nrc       = "vim ~/.dot/configuration.nix";
+      nrc       = "vim ~/.nix/configuration.nix";
       vim       = "nvim";
-      rebuild   = "sudo cp ~/.dot/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
+      rebuild   = "sudo cp ~/.nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
       gitap     = "git add . && git status && git commit -m . && git push";
       nixsearch = "librewolf https://search.nixos.org/packages";
-   };
-};
+    };
+  };
+  #---FISH
+  programs.fish.enable               = true; # check home manager fish page
+  programs.fish.shellAbbrs           = {};
+  programs.fish.functions            = {};
+  programs.fish.shellInit            = "";
+  programs.fish.loginShellInit       = "";
+  programs.fish.interactiveShellInit = "";
+  programs.fish.plugins              = [
+    { name = "forgit"; src   = pkgs.fishPlugins.forgit.src; }
+    { name = "done"; src     = pkgs.fishPlugins.done.src; }
+    { name = "hydro"; src    = pkgs.fishPlugins.hydro.src; }
+    { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
+    #{ name = "pure"; src     = pkgs.fishPlugins.pure.src; }
+  ];
+  programs.fish.shellAliases = {
+    v         = "xdotool key v i m KP_Space Control_L+Alt_L+f";
+    del       = "trash-put";
+    ll        = "ls -l";
+    nrc       = "vim ~/.nix/configuration.nix";
+    vim       = "nvim";
+    rebuild   = "sudo cp ~/.nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
+    gitap     = "git add . && git status && git commit -m . && git push";
+    nixsearch = "librewolf https://search.nixos.org/packages";
+  };
   #---VIM
   programs.neovim = {
     enable = true;
@@ -335,7 +370,7 @@ home-manager.users.wsz = { pkgs, ... }: {
       wilder-nvim
       nvim-web-devicons
       i3config-vim
-      indentLine
+      #indentLine
 
       #nvim-lspconfig # read about lsp
       #nvim-cmp # auto completion
@@ -385,7 +420,7 @@ home-manager.users.wsz = { pkgs, ... }: {
       set cindent
       set smartindent
 
-      source ~/.dot/color.vim
+      source ~/.nix/color.vim
       set clipboard=unnamed,unnamedplus
       set scrolloff=1000
       set noswapfile
