@@ -60,6 +60,9 @@ users.users.wsz = {
   description  = "wsz";
   extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
   packages     = with pkgs; [
+    tdesktop signal-desktop element-desktop bitwarden
+    tor-browser-bundle-bin
+    gotop
     libclang
     neovim
     cava
@@ -256,6 +259,7 @@ home-manager.users.wsz = { pkgs, ... }: {
       ];
     };
     shellAliases = {
+      back = "cd ~/.nix && gitap && cd -";
       vrc = "vim ~/.nix/extraConfig.vim";
       search = "nix search nixpkgs";
       ns = "nix-shell -p";
@@ -283,6 +287,7 @@ home-manager.users.wsz = { pkgs, ... }: {
     vimAlias    = true;
     viAlias     = true;
     withPython3 = true;
+    extraPackages = [];
     extraConfig = "source ~/.nix/extraConfig.vim";
     #withNodeJs = true; # seems broken
     plugins     = with pkgs.vimPlugins; [
@@ -354,7 +359,6 @@ home-manager.users.wsz = { pkgs, ... }: {
   };
 
 };
-
 ########################################################################################
 
 ###########
