@@ -1,5 +1,5 @@
 
-let bisou = "#191d20"
+"#191d20"
 "#262727
 "#191d20
 "#3c3836
@@ -18,8 +18,8 @@ let bisou = "#191d20"
 "#32302f
 "#d4be98
 "#ddc7a1
-let s:red = "#ea6962"
-let _ylw_light = "#EBCB8B"
+"#ea6962"
+"#EBCB8B"
 "#d8a657
 "#A3BE8C
 "#D08770

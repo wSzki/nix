@@ -23,8 +23,9 @@ systemd.extraConfig                  = ''DefaulTimeOutStopSec=10s'';
 #boot.loader.grub.version             = 2;          # VM
 #boot.loader.grub.device              = "/dev/sda"; # VM
 #---ENV
-environment.variables = { EDITOR = "vim"; };
+#environment.variables = { EDITOR = "vim"; };
 environment.systemPackages   = with pkgs; [
+  vim
   wget
   zip
   unzip
@@ -34,30 +35,12 @@ environment.systemPackages   = with pkgs; [
   fasd fd
   tldr
   tmux
-  (neovim.override {
-    vimAlias = true;
-    configure = {
-      packages.myPlugins = with pkgs.vimPlugins; {
-        start = [ vim-gruvbox8 ];
-        opt = [];
-      };
-      customRC = ''
-        set nu
-        syn on
-        set realtivenumber
-        set cursorline
-        set noswapfile
-        set nowrap
-      '';
-    };
-  }
-)
 ];
 environment.sessionVariables = rec {
     DOT              = "~/.dot";
     FZF_DEFAULT_OPTS = "--height 50%";
-    #ZDOTDIR          = "$DOT/config/zsh/";
     PATH             = [];
+    #ZDOTDIR          = "$DOT/config/zsh/";
 };
 #---NIX
 system.stateVersion        = "22.05";
@@ -67,9 +50,7 @@ nixpkgs.config.allowUnfree = true;
 nix.autoOptimiseStore      = true;
 nix.gc.automatic = true;
 nix.gc.dates     = "daily";
-nix.extraOptions = ''
-    experimental-features = nix-command flakes
-    '';
+nix.extraOptions = "experimental-features = nix-command flakes";
 #system.autoUpgrade.enable = true;
 #system.autoUpdate.enable = true;
 #---USERS
@@ -79,6 +60,10 @@ users.users.wsz = {
   description  = "wsz";
   extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
   packages     = with pkgs; [
+    libclang
+    neovim
+    cava
+    xdotool
     xorg.xgamma
     barrier
     xdotool
@@ -134,7 +119,7 @@ services.pipewire = {
 #---TLP
 # https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
 #boot.kernelParams                 = ["intel_pstate=disable"];
-services.tlp.enable              = true; # Power management
+services.tlp.enable              = false; # Power management
 services.upower.enable           = true; # Power management
 boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 services.tlp.settings = {
@@ -229,14 +214,17 @@ home-manager.users.wsz = { pkgs, ... }: {
     '';
     initExtra = ''
       eval "$(fasd --init auto)"
+      #---FZF
       source "$(fzf-share)/key-bindings.zsh"
       source "$(fzf-share)/completion.zsh"
+      #---PROMPT
       MNML_PROMPT=(mnml_status mnml_cwd)
       MNML_RPROMPT=(mnml_ssh mnml_jobs mnml_git mnml_err)
       MNML_INFOLN=()
       MNML_MAGICENTER=()
       MNML_OK_COLOR=5
       MNML_ERR_COLOR=3
+      #---ZSH COLORS
       ZSH_HIGHLIGHT_STYLES[path]='fg=gray, italic'
       ZSH_HIGHLIGHT_STYLES[builtin]='fg=yellow, bold'
       ZSH_HIGHLIGHT_STYLES[alias]='fg=yellow, bold'
@@ -247,6 +235,7 @@ home-manager.users.wsz = { pkgs, ... }: {
       ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=magenta'
       ZSH_HIGHLIGHT_STYLES[precommand]='fg=magenta'
       ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(buffer-empty)
+      #---ZSH HISTORY
       HISTSIZE=10000
       SAVEHIST=10000
       setopt HIST_IGNORE_ALL_DUPS
@@ -260,13 +249,14 @@ home-manager.users.wsz = { pkgs, ... }: {
       plugins = [
         { name = "aloxaf/fzf-tab";}
         { name = "supercrabtree/k";}
-        #{ name = "zsh-users/zsh-autosuggestions";}
-        #{ name = "zsh-users/zsh-syntax-highlighting";}
         { name = "subnixr/minimal";}
       ];
     };
     shellAliases = {
-
+      vrc = "vim ~/.config/nvim/init.vim";
+      search = "nix search nixpkgs";
+      ns = "nix-shell -p";
+      tdvk="tmux kill-session -t tidal";
       j         = "fasd_cd -d";
       v         = "xdotool key v i m space asterisk asterisk Tab";
       c         = "xdotool key c d space asterisk asterisk Tab";
@@ -283,166 +273,82 @@ home-manager.users.wsz = { pkgs, ... }: {
       nixsearch = "librewolf https://search.nixos.org/packages";
     };
   };
-  #---FISH
-  programs.fish.enable               = true; # check home manager fish page
-  programs.fish.shellAbbrs           = {};
-  programs.fish.functions            = {};
-  programs.fish.shellInit            = "";
-  programs.fish.loginShellInit       = "";
-  programs.fish.interactiveShellInit = "";
-  programs.fish.plugins              = [
-    { name = "forgit"; src   = pkgs.fishPlugins.forgit.src; }
-    { name = "done"; src     = pkgs.fishPlugins.done.src; }
-    { name = "hydro"; src    = pkgs.fishPlugins.hydro.src; }
-    { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
-    #{ name = "pure"; src     = pkgs.fishPlugins.pure.src; }
-  ];
-  programs.fish.shellAliases = {
-    v         = "xdotool key v i m KP_Space Control_L+Alt_L+f";
-    del       = "trash-put";
-    ll        = "ls -l";
-    nrc       = "vim ~/.nix/configuration.nix";
-    vim       = "nvim";
-    rebuild   = "sudo cp ~/.nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
-    gitap     = "git add . && git status && git commit -m . && git push";
-    nixsearch = "librewolf https://search.nixos.org/packages";
-  };
-  #---VIM
+  #---VIM (home manager component)
   programs.neovim = {
-    enable = true;
-    vimAlias = true;
-    viAlias = true;
-    #withNodeJs = true; # seems broken
+    enable      = true;
+    vimAlias    = true;
+    viAlias     = true;
     withPython3 = true;
-    plugins = with pkgs.vimPlugins; [
-      vim-nix
-      nvim-fzf
+    extraConfig = "source ~/.nix/extraConfig.vim";
+    #withNodeJs = true; # seems broken
+    plugins     = with pkgs.vimPlugins; [
+      #---COC
       coc-nvim
+      coc-cmake
       coc-clangd
       coc-fzf
       coc-ultisnips
       coc-yank
       coc-snippets
+      coc-diagnostic
+      coc-explorer
+      #---WEB
       coc-html
+      coc-css
       coc-emmet
       coc-json
-      {
-        plugin = undotree;
-        config = ''
-          let g:undotree_WindowLayout         = 2
-          let g:undotree_ShortIndicators      = 1
-          let g:undotree_SetFocusWhenToggle   = 1
-          let g:undotree_HighlightChangedText = 1
-          let g:undotree_HelpLine             = 1
-        '';
-      }
-      vim-sayonara
-      colorizer
-      toggleterm-nvim
-      gruvbox
-      nerdcommenter
-      papercolor-theme
-      vim-gitgutter
-      lessspace-vim
-      undotree
-      neoformat
-      vim-textobj-entire
-      {
-        plugin = vim-easy-align;
-        config = ''
-          xmap ga <Plug>(EasyAlign)
-          nmap ga <Plug>(EasyAlign)
-        '';
-      }
-      {
-        plugin = vim-visual-multi;
-        config = ''
-          let g:VM_maps = {}
-          let g:VM_maps["Select All"]                  = '\\a'
-          let g:VM_maps["Add Cursor Down"]             = '<S-Down>'
-          let g:VM_maps["Add Cursor Up"]               = '<S-Up>'
-          let g:VM_maps["Add Cursor At Pos"]           = '\\\'
-          let g:VM_maps['Find Under']                  = '<C-n>'
-        '';
-      }
-      nvim-scrollview
-      vim-smoothie
-      wilder-nvim
-      nvim-web-devicons
-      i3config-vim
-      #indentLine
-
-      #nvim-lspconfig # read about lsp
-      #nvim-cmp # auto completion
-      #nvim-tree-lua # ?
-      #nvim-treesitter # ?
-      #bufferline-nvim # ?
-      #galaxyline-nvim # ?
+      coc-eslint
+      coc-tsserver
+      coc-tslint-plugin
+      coc-tailwindcss
+      #---MISC
+      #vim-nix
+      #nvim-fzf
+      #vim-sayonara
+      #colorizer
+      #toggleterm-nvim
+      #nerdcommenter
+      #vim-gitgutter
+      #lessspace-vim
+      #undotree
+      #neoformat
+      #vim-textobj-entire
+      #nvim-scrollview
+      #vim-smoothie
+      #wilder-nvim
+      #nvim-web-devicons
+      #i3config-vim
       #{
-        #plugin = gruvbox-material;
+        #plugin = undotree;
         #config = ''
-         #let g:gruvbox_material_background = 'hard'
-         #colorscheme gruvbox-material
+          #let g:undotree_WindowLayout         = 2
+          #let g:undotree_ShortIndicators      = 1
+          #let g:undotree_SetFocusWhenToggle   = 1
+          #let g:undotree_HighlightChangedText = 1
+          #let g:undotree_HelpLine             = 1
+        #'';
+      #}
+      #{
+        #plugin = vim-easy-align;
+        #config = ''
+          #xmap ga <Plug>(EasyAlign)
+          #nmap ga <Plug>(EasyAlign)
+        #'';
+      #}
+      #{
+        #plugin = vim-visual-multi;
+        #config = ''
+          #let g:VM_maps = {}
+          #let g:VM_maps["Select All"]                  = '\\a'
+          #let g:VM_maps["Add Cursor Down"]             = '<S-Down>'
+          #let g:VM_maps["Add Cursor Up"]               = '<S-Up>'
+          #let g:VM_maps["Add Cursor At Pos"]           = '\\\'
+          #let g:VM_maps['Find Under']                  = '<C-n>'
         #'';
       #}
     ];
-
-    #extraPackages = with pkgs.nodePackages; [
-      #coc-clangd
-    #];
-
-    extraConfig = ''
-
-      if has('persistent_undo')         "check if your vim version supports
-      set undodir=$HOME/.undo     "directory where the undo files will be stored
-      set undofile                    "turn on the feature
-      endif
-
-      autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
-
-      set encoding=utf-8
-      set complete-=5
-      set lazyredraw
-      set re=1
-      set timeoutlen=1000
-      set ttimeoutlen=0
-      set synmaxcol=400
-      syntax sync minlines=256
-      set linebreak
-      set nowrap
-
-      set list
-      set listchars=space:.,tab:•-,trail:~,extends:>,precedes:<
-
-      filetype indent on
-      filetype plugin on
-      set autoindent
-      set cindent
-      set smartindent
-
-      source ~/.nix/color.vim
-      set clipboard=unnamed,unnamedplus
-      set scrolloff=1000
-      set noswapfile
-      set nu
-      set mouse=a
-      set relativenumber
-      set nocursorline
-      set background=dark
-      if has ('termguicolors')
-        set termguicolors
-      endif
-      let &t_SI .= "\<Esc>[?2004h"
-      let &t_EI .= "\<Esc>[?2004l"
-      inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-      function! XTermPasteBegin()
-        set pastetoggle=<Esc>[201~
-        set paste
-        return ""
-      endfunction
-
-    '';
   };
+
 };
 
 ########################################################################################
@@ -450,6 +356,168 @@ home-manager.users.wsz = { pkgs, ... }: {
 ###########
 # ARCHIVE #
 ###########
+
+  #---FISH
+  #programs.fish.enable               = true; # check home manager fish page
+  #programs.fish.shellAbbrs           = {};
+  #programs.fish.functions            = {};
+  #programs.fish.shellInit            = "";
+  #programs.fish.loginShellInit       = "";
+  #programs.fish.interactiveShellInit = "";
+  #programs.fish.plugins              = [
+    #{ name = "forgit"; src   = pkgs.fishPlugins.forgit.src; }
+    #{ name = "done"; src     = pkgs.fishPlugins.done.src; }
+    #{ name = "hydro"; src    = pkgs.fishPlugins.hydro.src; }
+    #{ name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
+    ##{ name = "pure"; src     = pkgs.fishPlugins.pure.src; }
+  #];
+  #programs.fish.shellAliases = {
+    #v         = "xdotool key v i m KP_Space Control_L+Alt_L+f";
+    #del       = "trash-put";
+    #ll        = "ls -l";
+    #nrc       = "vim ~/.nix/configuration.nix";
+    #vim       = "nvim";
+    #rebuild   = "sudo cp ~/.nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
+    #gitap     = "git add . && git status && git commit -m . && git push";
+    #nixsearch = "librewolf https://search.nixos.org/packages";
+  #};
+
+  #---VIM (home manager component)
+  #programs.neovim = {
+    #enable = true;
+    #vimAlias = true;
+    #viAlias = true;
+    ##withNodeJs = true; # seems broken
+    #withPython3 = true;
+    #plugins = with pkgs.vimPlugins; [
+      #vim-nix
+      #nvim-fzf
+      #coc-nvim
+      #coc-clangd
+      #coc-fzf
+      #coc-ultisnips
+      #coc-yank
+      #coc-snippets
+      #coc-html
+      #coc-emmet
+      #coc-json
+      #{
+        #plugin = undotree;
+        #config = ''
+          #let g:undotree_WindowLayout         = 2
+          #let g:undotree_ShortIndicators      = 1
+          #let g:undotree_SetFocusWhenToggle   = 1
+          #let g:undotree_HighlightChangedText = 1
+          #let g:undotree_HelpLine             = 1
+        #'';
+      #}
+      #vim-sayonara
+      #colorizer
+      #toggleterm-nvim
+      #gruvbox
+      #nerdcommenter
+      #papercolor-theme
+      #vim-gitgutter
+      #lessspace-vim
+      #undotree
+      #neoformat
+      #vim-textobj-entire
+      #{
+        #plugin = vim-easy-align;
+        #config = ''
+          #xmap ga <Plug>(EasyAlign)
+          #nmap ga <Plug>(EasyAlign)
+        #'';
+      #}
+      #{
+        #plugin = vim-visual-multi;
+        #config = ''
+          #let g:VM_maps = {}
+          #let g:VM_maps["Select All"]                  = '\\a'
+          #let g:VM_maps["Add Cursor Down"]             = '<S-Down>'
+          #let g:VM_maps["Add Cursor Up"]               = '<S-Up>'
+          #let g:VM_maps["Add Cursor At Pos"]           = '\\\'
+          #let g:VM_maps['Find Under']                  = '<C-n>'
+        #'';
+      #}
+      #nvim-scrollview
+      #vim-smoothie
+      #wilder-nvim
+      #nvim-web-devicons
+      #i3config-vim
+      ##indentLine
+
+      ##nvim-lspconfig # read about lsp
+      ##nvim-cmp # auto completion
+      ##nvim-tree-lua # ?
+      ##nvim-treesitter # ?
+      ##bufferline-nvim # ?
+      ##galaxyline-nvim # ?
+      ##{
+        ##plugin = gruvbox-material;
+        ##config = ''
+         ##let g:gruvbox_material_background = 'hard'
+         ##colorscheme gruvbox-material
+        ##'';
+      ##}
+    #];
+
+    ##extraPackages = with pkgs.nodePackages; [
+      ##coc-clangd
+    ##];
+
+    #extraConfig = ''
+
+      #if has('persistent_undo')         "check if your vim version supports
+      #set undodir=$HOME/.undo     "directory where the undo files will be stored
+      #set undofile                    "turn on the feature
+      #endif
+
+      #autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
+
+      #set encoding=utf-8
+      #set complete-=5
+      #set lazyredraw
+      #set re=1
+      #set timeoutlen=1000
+      #set ttimeoutlen=0
+      #set synmaxcol=400
+      #syntax sync minlines=256
+      #set linebreak
+      #set nowrap
+
+      #set list
+      #set listchars=space:.,tab:•-,trail:~,extends:>,precedes:<
+
+      #filetype indent on
+      #filetype plugin on
+      #set autoindent
+      #set cindent
+      #set smartindent
+
+      #source ~/.nix/color.vim
+      #set clipboard=unnamed,unnamedplus
+      #set scrolloff=1000
+      #set noswapfile
+      #set nu
+      #set mouse=a
+      #set relativenumber
+      #set nocursorline
+      #set background=dark
+      #if has ('termguicolors')
+        #set termguicolors
+      #endif
+      #let &t_SI .= "\<Esc>[?2004h"
+      #let &t_EI .= "\<Esc>[?2004l"
+      #inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+      #function! XTermPasteBegin()
+        #set pastetoggle=<Esc>[201~
+        #set paste
+        #return ""
+      #endfunction
+
+    #'';
+  #};
 
 # Select internationalisation properties.
 #time.timeZone            = "Europe/Paris";
