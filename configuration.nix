@@ -185,6 +185,9 @@ fonts.fonts = with pkgs; [
   noto-fonts
   liberation_ttf
   fira-code-symbols
+  material-icons
+  font-awesome
+  nixos-icons
   proggyfonts
   scientifica
   roboto
@@ -253,7 +256,7 @@ home-manager.users.wsz = { pkgs, ... }: {
       ];
     };
     shellAliases = {
-      vrc = "vim ~/.config/nvim/init.vim";
+      vrc = "vim ~/.nix/extraConfig.vim";
       search = "nix search nixpkgs";
       ns = "nix-shell -p";
       tdv = "~/.nix/bin/tidal/bin/tidalvim";
