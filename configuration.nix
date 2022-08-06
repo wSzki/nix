@@ -25,6 +25,19 @@ systemd.extraConfig                  = ''DefaulTimeOutStopSec=10s'';
 #boot.loader.grub.device              = "/dev/sda"; # VM
 
 
+##############
+#    ENV     #
+##############
+environment.sessionVariables = rec {
+DOT              = "$\{HOME}/.dot";
+FZF_DEFAULT_OPTS = "--height 50%";
+#ZDOTDIR          = "$DOT/config/zsh/";
+PATH             = [
+      #"\$DOT/bin/scripts"
+      #"\$DOT/bin/bookmarks"
+      #"\${HOME}/.local/bin"
+      ];
+};
 
   environment.systemPackages = with pkgs; [
     fzf
@@ -55,6 +68,7 @@ users.users.wsz = {
   description  = "wsz";
   extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
   packages     = with pkgs; [
+    xorg.xgamma
     barrier
     xdotool
     bat
@@ -205,7 +219,7 @@ home-manager.users.wsz = { pkgs, ... }: {
       set cindent
       set smartindent
 
-      source ~/nix/color.vim
+      source ~/.dot/color.vim
       set clipboard=unnamed,unnamedplus
       set scrolloff=1000
       set noswapfile
@@ -246,9 +260,9 @@ home-manager.users.wsz = { pkgs, ... }: {
     v         = "xdotool key v i m Control_L+Alt_L+f";
     del       = "trash-put";
     ll        = "ls -l";
-    nrc       = "vim ~/nix/configuration.nix";
+    nrc       = "vim ~/.dot/configuration.nix";
     vim       = "nvim";
-    rebuild   = "sudo cp ~/nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
+    rebuild   = "sudo cp ~/.dot/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
     gitap     = "git add . && git status && git commit -m . && git push";
     nixsearch = "librewolf https://search.nixos.org/packages";
   };
@@ -338,20 +352,6 @@ services.pipewire = {
 };
 
 
-##############
-#    ENV     #
-##############
-
-environment.sessionVariables = rec {
-DOT              = "\${HOME}/.nix";
-FZF_DEFAULT_OPTS = "--height 50%";
-ZDOTDIR          = "\${HOME}/.nix/config/zsh/";
-PATH             = [
-"\$DOT/bin/scripts"
-"\$DOT/bin/bookmarks"
-"\${HOME}/.local/bin"
-];
-};
 
 
 
@@ -384,15 +384,15 @@ TPSMAPI_ENABLE                  = 1;
 #################
 # Configure X11 #
 #################
-services.greetd = {
-enable = true;
-settings = {
-default_session = {
-command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd startx";
-user = "wsz";
-      };
-      };
-      };
+#services.greetd = {
+#enable = true;
+#settings = {
+#default_session = {
+#command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd startx";
+#user = "wsz";
+      #};
+      #};
+      #};
 
       services.xserver = {
       enable                        = true;
