@@ -10,12 +10,65 @@
 "                                                                              "
 " **************************************************************************** "
 
-" Wilder init
-""""""""""""""
+"---WILDER
 function! UpdateRemotePlugins(...)
 	let &rtp=&rtp " Needed to refresh runtime files
 	UpdateRemotePlugins
 endfunction
+"---UNDODIR
+if has('persistent_undo')         "check if your vim version supports
+	set undodir=$HOME/.undo     "directory where the undo files will be stored
+	set undofile                    "turn on the feature
+endif
+"---FIX PASTINF FROM CLIPBOARD
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+function! XTermPasteBegin()
+	set pastetoggle=<Esc>[201~
+	set paste
+	return ""
+endfunction
+"---COLORS
+if has ('termguicolors')
+	set termguicolors
+endif
+set background=dark
+
+
+
+autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
+
+set encoding=utf-8
+set complete-=5
+set lazyredraw
+set re=1
+set timeoutlen=1000
+set ttimeoutlen=0
+set synmaxcol=400
+syntax sync minlines=256
+set linebreak
+set nowrap
+
+set list
+set listchars=space:.,tab:•-,trail:~,extends:>,precedes:<
+
+filetype indent on
+filetype plugin on
+set autoindent
+set cindent
+set smartindent
+
+set clipboard=unnamed,unnamedplus
+set scrolloff=1000
+set noswapfile
+set nu
+set mouse=a
+set relativenumber
+set nocursorline
+
+
+
 
 " PLug call
 """"""""""""
@@ -229,55 +282,6 @@ hi StatusLineNC          gui=NONE   guibg=#272935 guifg=#dadada
 hi Search                gui=NONE   guibg=#c481ff guifg=#dadada
 hi VertSplit             gui=NONE   guifg=#454545 guibg=NONE
 hi Visual                gui=NONE   guifg=NONE    guibg=#454545
-
-
-if has('persistent_undo')         "check if your vim version supports
-	set undodir=$HOME/.undo     "directory where the undo files will be stored
-	set undofile                    "turn on the feature
-endif
-
-autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
-
-set encoding=utf-8
-set complete-=5
-set lazyredraw
-set re=1
-set timeoutlen=1000
-set ttimeoutlen=0
-set synmaxcol=400
-syntax sync minlines=256
-set linebreak
-set nowrap
-
-set list
-set listchars=space:.,tab:•-,trail:~,extends:>,precedes:<
-
-filetype indent on
-filetype plugin on
-set autoindent
-set cindent
-set smartindent
-
-set clipboard=unnamed,unnamedplus
-set scrolloff=1000
-set noswapfile
-set nu
-set mouse=a
-set relativenumber
-set nocursorline
-set background=dark
-if has ('termguicolors')
-	set termguicolors
-endif
-let &t_SI .= "\<Esc>[?2004h"
-let &t_EI .= "\<Esc>[?2004l"
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-function! XTermPasteBegin()
-	set pastetoggle=<Esc>[201~
-	set paste
-	return ""
-endfunction
-
 
 
 
