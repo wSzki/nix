@@ -7,9 +7,10 @@
 # check this  https://github.com/notusknot
 
 {
-imports = [
-  <home-manager/nixos>
-  ./hardware-configuration.nix
+  imports = [
+    <home-manager/nixos>
+    #<musnix>
+    ./hardware-configuration.nix
   /home/wsz/.config/musnix
 ];
 
@@ -37,11 +38,11 @@ environment.systemPackages   = with pkgs; [
   tmux
 ];
 environment.sessionVariables = rec {
-    DOT              = "~/.dot";
-    FZF_DEFAULT_OPTS = "--height 50%";
-    PATH             = [];
+  DOT              = "\$HOME/.dot";
+  FZF_DEFAULT_OPTS = "--height 50%";
+  PATH             = [];
     #ZDOTDIR          = "$DOT/config/zsh/";
-};
+  };
 #---NIX
 system.stateVersion        = "22.05";
 time.timeZone              = "Europe/Paris";
@@ -99,8 +100,11 @@ users.users.tidal  = {
   ];
 };
 #---AUDIO
-sound.enable             = false; # Remove sound.enable or turn it off if you had it set previously, it seems to cause conflicts with pipewire
+#sound.enable             = false; # Remove sound.enable or turn it off if you had it set previously, it seems to cause conflicts with pipewire
 musnix.enable            = true;
+musnix.kernel.optimize   = true;
+musnix.kernel.realtime   = true;
+musnix.kernel.latencytop = true;
 security.rtkit.enable    = true;  # (pipewire) rtkit is optional but recommended
 services.pipewire.enable = true;
 services.pipewire = {
@@ -110,36 +114,36 @@ services.pipewire = {
   jack.enable         = true;
   config.pipewire = {
     "context.properties" = {
-               "link.max-buffers"          = 16; # default 16 version < 3 clients can't handle more than this
-               "log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
-               "default.clock.rate"        = 48000;
-               "default.clock.quantum"     = 2048;
-               "default.clock.min-quantum" = 64;
-               "default.clock.max-quantum" = 8192;
-                           };
-                     };
-};
+      "link.max-buffers"          = 16; # default 16 version < 3 clients can't handle more than this
+      "log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
+      "default.clock.rate"        = 48000;
+      "default.clock.quantum"     = 2048;
+      "default.clock.min-quantum" = 1024;
+      "default.clock.max-quantum" = 8192;
+      };
+      };
+      };
 #---TLP
 # https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
 #boot.kernelParams                 = ["intel_pstate=disable"];
 services.tlp.enable              = false; # Power management
-services.upower.enable           = true; # Power management
+services.upower.enable           = false; # Power management
 boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 services.tlp.settings = {
-  CPU_BOOST_ON_BAT                = 0;
-  CPU_SCALING_GOVERNOR_ON_AC      = "performance";
-  CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
-  CPU_MAX_PERF_ON_AC              = 100;
-  CPU_MAX_PERF_ON_BAT             = 100;
-  START_CHARGE_THRESH_BAT0        = 50;
-  STOP_CHARGE_THRESH_BAT0         = 90;
-  RUNTIME_PM_ON_BAT               = "auto";
-  RUNTIME_PM_ON_AC                = "on";
-  SOUND_POWER_SAVE_ON_AC          = 0;
-  SOUND_POWER_SAVE_ON_BAT         = 1;
-  NATACPI_ENABLE                  = 1;
-  TPACPI_ENABLE                   = 1;
-  TPSMAPI_ENABLE                  = 1;
+CPU_BOOST_ON_BAT                = 0;
+CPU_SCALING_GOVERNOR_ON_AC      = "performance";
+CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+CPU_MAX_PERF_ON_AC              = 100;
+CPU_MAX_PERF_ON_BAT             = 100;
+START_CHARGE_THRESH_BAT0        = 50;
+STOP_CHARGE_THRESH_BAT0         = 90;
+RUNTIME_PM_ON_BAT               = "auto";
+RUNTIME_PM_ON_AC                = "on";
+SOUND_POWER_SAVE_ON_AC          = 0;
+SOUND_POWER_SAVE_ON_BAT         = 1;
+NATACPI_ENABLE                  = 1;
+TPACPI_ENABLE                   = 1;
+TPSMAPI_ENABLE                  = 1;
 };
 #--XORG X11
 programs.light.enable             = true;  # Backlight control
@@ -154,13 +158,13 @@ location.latitude                 = 0.0;
 location.longitude                = 0.0;
 services.autorandr.enable         = true;
 services.xserver = {
-  enable                        = true;
-  autoRepeatDelay               = 250;
-  autoRepeatInterval            = 25;
-  layout                        = "us";
-  xkbVariant                    = "";
-  desktopManager.xterm.enable   = false;
-  displayManager.startx.enable  = true;
+enable                        = true;
+autoRepeatDelay               = 250;
+autoRepeatInterval            = 25;
+layout                        = "us";
+xkbVariant                    = "";
+desktopManager.xterm.enable   = false;
+displayManager.startx.enable  = true;
   #displayManager.defaultSession = "none+i3";
   windowManager.i3              = {
     package = pkgs.i3-gaps;
@@ -259,6 +263,7 @@ home-manager.users.wsz = { pkgs, ... }: {
       ];
     };
     shellAliases = {
+      xrc = "vim ~/.xinitrc";
       back = "cd ~/.nix && gitap && cd -";
       vrc = "vim ~/.nix/extraConfig.vim";
       search = "nix search nixpkgs";
@@ -360,6 +365,29 @@ home-manager.users.wsz = { pkgs, ... }: {
   };
 
 };
+
+
+
+#systemd.services.wszaudio = {
+  #enable = true;
+  #wantedBy = [ "multi-user.target" ];
+  ##after = [ "network.target" ];
+  #description = "Start audio";
+  #serviceConfig = {
+        ##Type = "simple";
+        #Type = "forking";
+        #User = "root";
+        #ExecStart = ''
+          #echo 2048 > /sys/class/rtc/rtc0/max_user_freq"
+          #echo 2048 > /proc/sys/dev/hpet/max-user-freq"
+          #sysctl vm.swappiness=10
+          #sysctl fs.inotify.max_user_watches=600000
+        #'';
+        ##ExecStop = "";
+      #};
+    #};
+
+
 ########################################################################################
 
 ###########

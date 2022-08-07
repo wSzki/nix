@@ -1,0 +1,10 @@
+if [[ "$(xrandr | grep "DP-2-1 connected")" != "" ]]; then
+	if [[ "$(xrandr | grep "DP-2-2 connected")" != "" ]]; then
+		~/.dot/bin/scripts/one_display.sh
+		~/.dot/bin/scripts/three_displays.sh
+		echo "" > ~/.dot/var/monitors
+	fi
+else
+		~/.dot/bin/scripts/one_display.sh
+		echo "" > ~/.dot/var/monitors
+fi

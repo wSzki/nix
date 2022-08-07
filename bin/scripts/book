@@ -1,0 +1,12 @@
+#!/bin/sh
+
+dest=~/.nix/bin/bookmarks
+
+read -ep "URL : " url
+read -ep "Name : " name
+
+touch $dest/$name
+chmod +x $dest/$name
+
+echo "#!/bin/sh" > $dest/$name
+echo "librewolf --new-window '$url'" > $dest/$name

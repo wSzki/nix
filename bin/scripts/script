@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NAME=$1
+
+if [ $NAME ]; then
+	if [ -f $NAME ]; then
+		echo "Error: Script already present"
+	else
+		cd ~/.nix/bin/scripts/
+		touch $1
+		chmod +x $1
+		echo "#!/bin/sh" >> $1
+		echo "" >> $1
+		vim $1
+	fi
+else
+	echo "Error: Needs script name"
+fi
