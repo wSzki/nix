@@ -50,7 +50,7 @@ system.stateVersion        = "22.05";
 time.timeZone              = "Europe/Paris";
 i18n.defaultLocale         = "en_US.utf8";
 nixpkgs.config.allowUnfree = true;
-nix.autoOptimiseStore      = true;
+nix.settings.auto-optimise-store      = true;
 nix.gc.automatic = true;
 nix.gc.dates     = "daily";
 nix.extraOptions = "experimental-features = nix-command flakes";
@@ -81,7 +81,7 @@ users.users.wsz = {
     youtube-dl
     nmap
     supercollider-with-plugins haskell-language-server
-    ghc cabal-install pulseaudio pavucontrol
+    ghc cabal-install pulseaudio pavucontrol supercolliderPlugins.sc3-plugins
   ];
 };
 users.users.tidal  = {
@@ -90,16 +90,16 @@ users.users.tidal  = {
   description  = "tidal";
   extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
   packages     = with pkgs; [
-    supercollider-with-plugins haskell-language-server
-    ghc cabal-install pulseaudio pavucontrol
+    supercollider haskell-language-server
+    ghc cabal-install pulseaudio pavucontrol supercolliderPlugins.sc3-plugins
     librewolf
   ];
 };
 #---AUDIO
 #sound.enable             = false; # Remove sound.enable or turn it off if you had it set previously, it seems to cause conflicts with pipewire
 musnix.enable            = false;
-musnix.kernel.optimize   = true;
-musnix.kernel.realtime   = true;
+#musnix.kernel.optimize   = true; # rebuild kernel
+#musnix.kernel.realtime   = true; # rebuilds kernel
 musnix.kernel.latencytop = true;
 security.rtkit.enable    = true;  # (pipewire) rtkit is optional but recommended
 services.pipewire.enable = true;
@@ -146,13 +146,13 @@ programs.light.enable             = true;  # Backlight control
 services.physlock.enable          = true;
 services.physlock.allowAnyUser    = true;
 services.xserver.virtualScreen    = {x = 1920; y = 1080;};
-services.xserver.xautolock.enable = true;
-services.xserver.xautolock.locker = "/run/wrappers/bin/physlock";
-services.redshift.enable          = false;
-services.redshift.temperature     = {day = 3750; night = 3750;};
-location.latitude                 = 0.0;
-location.longitude                = 0.0;
-services.autorandr.enable         = true;
+#services.xserver.xautolock.enable = true;
+#services.xserver.xautolock.locker = "/run/wrappers/bin/physlock";
+#services.redshift.enable          = false;
+#services.redshift.temperature     = {day = 3750; night = 3750;};
+#location.latitude                 = 0.0;
+#location.longitude                = 0.0;
+#services.autorandr.enable         = true;
 services.xserver = {
 enable                        = true;
 autoRepeatDelay               = 250;
@@ -167,8 +167,8 @@ displayManager.startx.enable  = true;
     enable = true;
     extraPackages = with pkgs; [
       rofi  i3status  i3blocks arandr
-      conky unclutter feh
-      xorg.xgamma redshift acpilight
+      conky unclutter feh xautolock
+      xorg.xgamma redshift acpilight autorandr
     ];
   };
 };
@@ -221,6 +221,8 @@ home-manager.users.wsz = { pkgs, ... }: {
     '';
     initExtra = ''
       eval "$(fasd --init auto)"
+      zstyle ":completion:*" completer _complete
+      zstyle ":completion:*" matcher-list "" "m:{[:lower:][:upper:]}={[:upper:][:lower:]}" "+l:|=* r:|=*"
       #---FZF
       source "$(fzf-share)/key-bindings.zsh"
       source "$(fzf-share)/completion.zsh"
@@ -260,6 +262,9 @@ home-manager.users.wsz = { pkgs, ... }: {
       ];
     };
     shellAliases = {
+      gch = "got checkout";
+      gcl = "git clone";
+      tmp = "cd ~/.tmp";
       xrc = "vim ~/.xinitrc";
       back = "cd ~/.nix && gitap && cd -";
       vrc = "vim ~/.nix/extraConfig.vim";
