@@ -9,9 +9,9 @@
 {
   imports = [
     <home-manager/nixos>
-    #<musnix>
+    <musnix>
+    #/home/wsz/.config/musnix
     ./hardware-configuration.nix
-  /home/wsz/.config/musnix
 ];
 
 #---BOOTLOADER
@@ -33,7 +33,9 @@ environment.systemPackages   = with pkgs; [
   git
   fzf
   ack
-  fasd fd
+  fasd
+  fd
+  trash-cli
   tldr
   tmux
 ];
@@ -68,18 +70,12 @@ users.users.wsz = {
     neovim
     cava
     xdotool
-    xorg.xgamma
     barrier
-    xdotool
     bat
     xclip
-    unclutter
-    redshift
     bitwarden
-    acpilight
     nodejs
     librewolf
-    trash-cli
     kitty
     mpv
     youtube-dl
@@ -101,7 +97,7 @@ users.users.tidal  = {
 };
 #---AUDIO
 #sound.enable             = false; # Remove sound.enable or turn it off if you had it set previously, it seems to cause conflicts with pipewire
-musnix.enable            = true;
+musnix.enable            = false;
 musnix.kernel.optimize   = true;
 musnix.kernel.realtime   = true;
 musnix.kernel.latencytop = true;
@@ -117,8 +113,8 @@ services.pipewire = {
       "link.max-buffers"          = 16; # default 16 version < 3 clients can't handle more than this
       "log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
       "default.clock.rate"        = 48000;
-      "default.clock.quantum"     = 2048;
-      "default.clock.min-quantum" = 1024;
+      "default.clock.quantum"     = 512;
+      "default.clock.min-quantum" = 512;
       "default.clock.max-quantum" = 8192;
       };
       };
@@ -126,8 +122,8 @@ services.pipewire = {
 #---TLP
 # https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
 #boot.kernelParams                 = ["intel_pstate=disable"];
-services.tlp.enable              = false; # Power management
-services.upower.enable           = false; # Power management
+services.tlp.enable              = true; # Power management
+services.upower.enable           = true; # Power management
 boot.initrd.availableKernelModules = [ "thinkpad_acpi" ];
 services.tlp.settings = {
 CPU_BOOST_ON_BAT                = 0;
@@ -172,6 +168,7 @@ displayManager.startx.enable  = true;
     extraPackages = with pkgs; [
       rofi  i3status  i3blocks arandr
       conky unclutter feh
+      xorg.xgamma redshift acpilight
     ];
   };
 };
@@ -363,6 +360,31 @@ home-manager.users.wsz = { pkgs, ... }: {
       #}
     ];
   };
+    #---FISH
+  programs.fish.enable               = true; # check home manager fish page
+  programs.fish.shellAbbrs           = {};
+  programs.fish.functions            = {};
+  programs.fish.shellInit            = "";
+  programs.fish.loginShellInit       = "";
+  programs.fish.interactiveShellInit = "";
+  programs.fish.plugins              = [
+    { name = "forgit"; src   = pkgs.fishPlugins.forgit.src; }
+    { name = "done"; src     = pkgs.fishPlugins.done.src; }
+    { name = "hydro"; src    = pkgs.fishPlugins.hydro.src; }
+    { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
+    #{ name = "pure"; src     = pkgs.fishPlugins.pure.src; }
+  ];
+  programs.fish.shellAliases = {
+    v         = "xdotool key v i m KP_Space Control_L+Alt_L+f";
+    del       = "trash-put";
+    ll        = "ls -l";
+    nrc       = "vim ~/.nix/configuration.nix";
+    vim       = "nvim";
+    rebuild   = "sudo cp ~/.nix/configuration.nix /etc/nixos/ && sudo nixos-rebuild switch";
+    gitap     = "git add . && git status && git commit -m . && git push";
+    nixsearch = "librewolf https://search.nixos.org/packages";
+  };
+
 
 };
 
