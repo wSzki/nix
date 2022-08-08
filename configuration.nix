@@ -35,6 +35,8 @@ environment.systemPackages   = with pkgs; [
   ack
   fasd
   fd
+  fftw
+  fftwFloat
   trash-cli
   tldr
   tmux
@@ -66,6 +68,7 @@ users.users.wsz = {
     tdesktop signal-desktop element-desktop bitwarden
     tor-browser-bundle-bin
     gotop
+    tree
     libclang
     neovim
     cava
@@ -80,8 +83,11 @@ users.users.wsz = {
     mpv
     youtube-dl
     nmap
-    supercollider-with-plugins haskell-language-server
-    ghc cabal-install pulseaudio pavucontrol supercolliderPlugins.sc3-plugins
+    supercollider-with-sc3-plugins
+    #supercollider-with-plugins
+    #supercolliderPlugins.sc3-plugins
+    haskell-language-server
+    ghc cabal-install pulseaudio pavucontrol
   ];
 };
 users.users.tidal  = {
@@ -90,16 +96,19 @@ users.users.tidal  = {
   description  = "tidal";
   extraGroups  = [ "networkmanager" "wheel" "video" "audio" ];
   packages     = with pkgs; [
-    supercollider haskell-language-server
-    ghc cabal-install pulseaudio pavucontrol supercolliderPlugins.sc3-plugins
+    supercollider-with-sc3-plugins
+    #supercollider
+    #supercolliderPlugins.sc3-plugins
+    haskell-language-server
+    ghc cabal-install pulseaudio pavucontrol
     librewolf
   ];
 };
 #---AUDIO
 #sound.enable             = false; # Remove sound.enable or turn it off if you had it set previously, it seems to cause conflicts with pipewire
-musnix.enable            = false;
-#musnix.kernel.optimize   = true; # rebuild kernel
-#musnix.kernel.realtime   = true; # rebuilds kernel
+musnix.enable            = true;
+musnix.kernel.optimize   = true; # rebuild kernel
+musnix.kernel.realtime   = true; # rebuilds kernel
 musnix.kernel.latencytop = true;
 security.rtkit.enable    = true;  # (pipewire) rtkit is optional but recommended
 services.pipewire.enable = true;
@@ -112,9 +121,9 @@ services.pipewire = {
     "context.properties" = {
       "link.max-buffers"          = 16; # default 16 version < 3 clients can't handle more than this
       "log.level"                 = 2; # https://docs.pipewire.org/page_daemon.html
-      "default.clock.rate"        = 48000;
-      "default.clock.quantum"     = 512;
-      "default.clock.min-quantum" = 512;
+      "default.clock.rate"        = 44100;
+      "default.clock.quantum"     = 64;
+      "default.clock.min-quantum" = 64;
       "default.clock.max-quantum" = 8192;
       };
       };
@@ -129,9 +138,12 @@ services.tlp.settings = {
 CPU_BOOST_ON_BAT                = 0;
 CPU_SCALING_GOVERNOR_ON_AC      = "performance";
 CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+CPU_SCALING_GOVERNOR_ON_BAT     = "powersave";
+CPU_ENERGY_PERF_POLICY_ON_AC    = "performance"; # balance_performance
+CPU_ENERGY_PERF_POLICY_ON_BAT   = "balance_power";
 CPU_MAX_PERF_ON_AC              = 100;
 CPU_MAX_PERF_ON_BAT             = 100;
-START_CHARGE_THRESH_BAT0        = 50;
+START_CHARGE_THRESH_BAT0        = 750;
 STOP_CHARGE_THRESH_BAT0         = 90;
 RUNTIME_PM_ON_BAT               = "auto";
 RUNTIME_PM_ON_AC                = "on";
@@ -140,6 +152,8 @@ SOUND_POWER_SAVE_ON_BAT         = 1;
 NATACPI_ENABLE                  = 1;
 TPACPI_ENABLE                   = 1;
 TPSMAPI_ENABLE                  = 1;
+BAY_POWEROFF_ON_AC              = 1;
+BAY_POWEROFF_ON_BAT             = 1;
 };
 #--XORG X11
 programs.light.enable             = true;  # Backlight control
